@@ -365,10 +365,12 @@ namespace GlassBell
             <ContentPresenter IsHitTestVisible='False' Content='{TemplateBinding SelectionBoxItem}' Margin='9,4,26,4' VerticalAlignment='Center' HorizontalAlignment='Left'/>
             <Path IsHitTestVisible='False' FlowDirection='LeftToRight' HorizontalAlignment='Right' VerticalAlignment='Center' Margin='0,1,10,0'
                   Data='M 0 0 L 4 4 L 8 0' Stroke='#AEAEB2' StrokeThickness='1.5' StrokeStartLineCap='Round' StrokeEndLineCap='Round'/>
+            <!-- the whole list at once, without a ScrollViewer: the list opens upwards, so the pointer rests below it,
+                 and a ComboBox scrolls its list whenever the pointer is past the list's edge -->
             <Popup IsOpen='{TemplateBinding IsDropDownOpen}' Placement='Top' AllowsTransparency='True' Focusable='False' PopupAnimation='Fade'>
               <Border Background='#2C2C2E' BorderBrush='#48484A' BorderThickness='1' CornerRadius='8' Padding='4' Margin='0,0,0,4'
-                      MinWidth='{TemplateBinding ActualWidth}' MaxHeight='{TemplateBinding MaxDropDownHeight}'>
-                <ScrollViewer VerticalScrollBarVisibility='Auto'><ItemsPresenter KeyboardNavigation.DirectionalNavigation='Contained'/></ScrollViewer>
+                      MinWidth='{TemplateBinding ActualWidth}'>
+                <ItemsPresenter KeyboardNavigation.DirectionalNavigation='Contained'/>
               </Border>
             </Popup>
           </Grid>
@@ -383,7 +385,7 @@ namespace GlassBell
     <Setter Property='Template'>
       <Setter.Value>
         <ControlTemplate TargetType='{x:Type ComboBoxItem}'>
-          <Border x:Name='B' CornerRadius='5' Padding='9,5' Background='Transparent' SnapsToDevicePixels='True'>
+          <Border x:Name='B' CornerRadius='5' Padding='9,4' Background='Transparent' SnapsToDevicePixels='True'>
             <ContentPresenter/>
           </Border>
           <ControlTemplate.Triggers>
@@ -469,7 +471,7 @@ namespace GlassBell
                 Text = "", FontFamily = new FontFamily("Segoe Fluent Icons, Segoe MDL2 Assets"), FontSize = 14,   // a globe
                 Foreground = Hue("#8E8E93"), VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 1, 7, 0)
             });
-            var box = new ComboBox { Style = (Style)FindResource("Combo"), MinWidth = 120, MaxDropDownHeight = 330 };
+            var box = new ComboBox { Style = (Style)FindResource("Combo"), MinWidth = 120 };
             AutomationProperties.SetName(box, L.T("settings.language"));
             AutomationProperties.SetAutomationId(box, "language");
             box.Items.Add(new ComboBoxItem { Content = L.T("settings.languageAuto"), Tag = "auto" });
