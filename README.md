@@ -79,6 +79,10 @@ This builds `bin\GlassBell.exe` and `dist\GlassBell-Setup.exe` with the C# compi
 
 The translations were made with AI and checked only for completeness and fit, not by native speakers. Corrections are welcome: each language is one plain text file in [`lang/`](lang), and [`lang/en.txt`](lang/en.txt) explains every line.
 
+## Support
+
+GlassBell is free. If it is useful to you, you can support its development on [Patreon](https://www.patreon.com/vibegineer).
+
 ## License
 
 [MIT](LICENSE). macOS is a trademark of Apple Inc.; GlassBell is not affiliated with Apple.
