@@ -3,6 +3,8 @@
 # ---- banners ----
 banner.app = إعلام
 banner.now = الآن
+banner.close = إغلاق
+banner.closeAll = إغلاق الكل
 preview.title = معاينة
 preview.body = هكذا يبدو الشعار مع إعداداتك.
 test.title1 = كل شيء يعمل
@@ -13,6 +15,7 @@ test.body2 = هل أنت هنا؟ ألقِ نظرة لو سمحت على ما أ
 # ---- tray icon menu ----
 tray.settings = الإعدادات…
 tray.test = إعلام تجريبي
+tray.closeAll = إغلاق كل الإعلامات
 tray.autostart = بدء التشغيل مع Windows
 tray.exit = إنهاء
 
@@ -56,6 +59,12 @@ settings.live = خلفية حية
 settings.liveHint = يتكيف الزجاج باستمرار مع ما خلفه، حتى أثناء حركة الشعار. يستهلك طاقة أكبر.
 settings.liveFps = إطارات في الثانية
 settings.liveFpsHint = كلما زادت، كانت الحركة أنعم، لكن الحمل على المعالج يزداد.
+settings.engine = العرض
+engine.gpu = بطاقة الرسومات
+engine.classic = كلاسيكي
+settings.engineHint = «بطاقة الرسومات» تواكب الشاشة بمعدل تحديثها وبالكاد تستخدم المعالج. «كلاسيكي» هي الطريقة السابقة، تحسبًا لمشكلات بطاقة الرسومات.
+settings.liveFpsGpu = مع بطاقة الرسومات، يتبع الزجاج الشاشة بمعدل تحديثها.
+settings.engineFailed = لا تستطيع بطاقة الرسومات هذه رسم الإعلامات بهذه الطريقة، لذلك تُستخدم الطريقة الكلاسيكية.
 settings.color = اللون
 color.auto = تلقائي (يتبع نسق Windows)
 color.autoName = تلقائي — يتبع نسق Windows

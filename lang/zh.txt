@@ -3,6 +3,8 @@
 # ---- banners ----
 banner.app = 通知
 banner.now = 刚刚
+banner.close = 关闭
+banner.closeAll = 全部关闭
 preview.title = 预览
 preview.body = 按你的设置，横幅会显示成这样。
 test.title1 = 一切正常
@@ -13,6 +15,7 @@ test.body2 = 在吗？有空的话帮我看看我刚才发给你的东西呗—�
 # ---- tray icon menu ----
 tray.settings = 设置…
 tray.test = 测试通知
+tray.closeAll = 关闭所有通知
 tray.autostart = 随 Windows 启动
 tray.exit = 退出
 
@@ -56,6 +59,12 @@ settings.live = 实时背景
 settings.liveHint = 即使在横幅移动时，玻璃也会根据其后方的内容持续调整。会消耗更多电量。
 settings.liveFps = 每秒帧数
 settings.liveFpsHint = 越高越流畅，但占用的处理器资源也越多。
+settings.engine = 渲染方式
+engine.gpu = 显卡
+engine.classic = 经典
+settings.engineHint = “显卡”以屏幕自身的刷新率跟随画面，几乎不占用处理器。“经典”是以前的方式，供显卡出现问题时使用。
+settings.liveFpsGpu = 使用显卡渲染时，玻璃会以屏幕自身的刷新率跟随画面。
+settings.engineFailed = 此显卡无法以这种方式绘制横幅，因此使用经典方式。
 settings.color = 颜色
 color.auto = 自动（跟随 Windows 主题）
 color.autoName = 自动——跟随 Windows 主题

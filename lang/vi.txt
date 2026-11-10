@@ -3,6 +3,8 @@
 # ---- banners ----
 banner.app = Thông báo
 banner.now = vừa xong
+banner.close = Đóng
+banner.closeAll = Đóng tất cả
 preview.title = Xem trước
 preview.body = Với cài đặt của bạn, biểu ngữ sẽ trông như thế này.
 test.title1 = Đã hoạt động
@@ -13,6 +15,7 @@ test.body2 = Có đó không? Xem giúp mình cái mình vừa gửi nhé — ti
 # ---- tray icon menu ----
 tray.settings = Cài đặt…
 tray.test = Thông báo thử nghiệm
+tray.closeAll = Đóng mọi thông báo
 tray.autostart = Khởi động cùng Windows
 tray.exit = Thoát
 
@@ -56,6 +59,12 @@ settings.live = Nền động
 settings.liveHint = Kính liên tục điều chỉnh theo những gì phía sau, ngay cả khi biểu ngữ đang di chuyển. Tiêu thụ nhiều điện năng hơn.
 settings.liveFps = Khung hình mỗi giây
 settings.liveFpsHint = Càng cao càng mượt, nhưng càng tốn tài nguyên bộ xử lý.
+settings.engine = Kết xuất
+engine.gpu = Card đồ họa
+engine.classic = Cổ điển
+settings.engineHint = “Card đồ họa” theo kịp màn hình ở tần số quét của chính nó và gần như không dùng bộ xử lý. “Cổ điển” là cách cũ, phòng khi card đồ họa gặp sự cố.
+settings.liveFpsGpu = Với card đồ họa, kính bám theo màn hình ở tần số quét của chính nó.
+settings.engineFailed = Card đồ họa này không vẽ được thông báo theo cách này, nên cách cổ điển được dùng.
 settings.color = Màu
 color.auto = Tự động (theo chủ đề Windows)
 color.autoName = Tự động — theo chủ đề Windows

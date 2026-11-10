@@ -3,6 +3,8 @@
 # ---- banners ----
 banner.app = Notificación
 banner.now = ahora
+banner.close = Cerrar
+banner.closeAll = Cerrar todo
 preview.title = Vista previa
 preview.body = Así se ve un banner con tu configuración.
 test.title1 = Todo funciona
@@ -13,6 +15,7 @@ test.body2 = ¿Estás ahí? Échale un vistazo a lo que te mandé, porfa: es un 
 # ---- tray icon menu ----
 tray.settings = Configuración…
 tray.test = Notificación de prueba
+tray.closeAll = Cerrar todas las notificaciones
 tray.autostart = Iniciar con Windows
 tray.exit = Salir
 
@@ -56,6 +59,12 @@ settings.live = Fondo en tiempo real
 settings.liveHint = El vidrio se adapta continuamente a lo que tiene detrás, incluso mientras el banner se mueve. Consume más energía.
 settings.liveFps = Fotogramas por segundo
 settings.liveFpsHint = Cuanto más alto, más fluido, pero usa más el procesador.
+settings.engine = Renderizado
+engine.gpu = Tarjeta gráfica
+engine.classic = Clásico
+settings.engineHint = «Tarjeta gráfica» sigue a la pantalla a su propia frecuencia y apenas usa el procesador. «Clásico» es el método anterior, por si la tarjeta gráfica da problemas.
+settings.liveFpsGpu = Con la tarjeta gráfica, el vidrio sigue a la pantalla a su propia frecuencia.
+settings.engineFailed = Esta tarjeta gráfica no puede dibujar las notificaciones así, por lo que se usa el método clásico.
 settings.color = Color
 color.auto = Automático (según el tema de Windows)
 color.autoName = Automático — según el tema de Windows

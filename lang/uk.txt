@@ -3,6 +3,8 @@
 # ---- banners ----
 banner.app = Сповіщення
 banner.now = зараз
+banner.close = Закрити
+banner.closeAll = Закрити всі
 preview.title = Попередній перегляд
 preview.body = Так виглядає банер із вашими настройками.
 test.title1 = Усе працює
@@ -13,6 +15,7 @@ test.body2 = Ти тут? Глянь, будь ласка, що я скинув 
 # ---- tray icon menu ----
 tray.settings = Настройки…
 tray.test = Тестове сповіщення
+tray.closeAll = Закрити всі сповіщення
 tray.autostart = Запускати разом із Windows
 tray.exit = Вихід
 
@@ -56,6 +59,12 @@ settings.live = Живий фон
 settings.liveHint = Скло постійно підлаштовується під те, що за ним, навіть поки банер рухається. Споживає більше енергії.
 settings.liveFps = Кадрів на секунду
 settings.liveFpsHint = Що вище, то плавніше, але то більше навантаження на процесор.
+settings.engine = Відтворення
+engine.gpu = Відеокарта
+engine.classic = Класичне
+settings.engineHint = «Відеокарта» встигає за екраном на його частоті й майже не навантажує процесор. «Класичне» — попередній спосіб, на випадок проблем із відеокартою.
+settings.liveFpsGpu = З відеокартою скло стежить за екраном на його частоті.
+settings.engineFailed = Ця відеокарта не вміє так малювати сповіщення, тому використовується класичний спосіб.
 settings.color = Колір
 color.auto = Авто (за темою Windows)
 color.autoName = Авто — за темою Windows

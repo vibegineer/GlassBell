@@ -3,6 +3,8 @@
 # ---- banners ----
 banner.app = বিজ্ঞপ্তি
 banner.now = এখন
+banner.close = বন্ধ করুন
+banner.closeAll = সব বন্ধ করুন
 preview.title = পূর্বরূপ
 preview.body = আপনার সেটিংসে ব্যানারটি এমন দেখায়।
 test.title1 = সবকিছু কাজ করছে
@@ -13,6 +15,7 @@ test.body2 = আছো? প্লিজ, তোমাকে যা পাঠা�
 # ---- tray icon menu ----
 tray.settings = সেটিংস…
 tray.test = পরীক্ষামূলক বিজ্ঞপ্তি
+tray.closeAll = সব বিজ্ঞপ্তি বন্ধ করুন
 tray.autostart = Windows-এর সাথে শুরু করুন
 tray.exit = প্রস্থান
 
@@ -56,6 +59,12 @@ settings.live = লাইভ পটভূমি
 settings.liveHint = ব্যানার নড়ার সময়ও কাচ তার পেছনের জিনিসের সঙ্গে ক্রমাগত নিজেকে মানিয়ে নেয়। বেশি শক্তি খরচ করে।
 settings.liveFps = প্রতি সেকেন্ডে ফ্রেম
 settings.liveFpsHint = যত বেশি, তত মসৃণ, তবে প্রসেসরের ওপর চাপও তত বেশি।
+settings.engine = রেন্ডারিং
+engine.gpu = গ্রাফিক্স কার্ড
+engine.classic = ক্লাসিক
+settings.engineHint = “গ্রাফিক্স কার্ড” স্ক্রিনের নিজস্ব রিফ্রেশ রেটে তাল মিলিয়ে চলে এবং প্রসেসর প্রায় ব্যবহার করে না। “ক্লাসিক” আগের পদ্ধতি, গ্রাফিক্স কার্ডে সমস্যা হলে ব্যবহারের জন্য।
+settings.liveFpsGpu = গ্রাফিক্স কার্ডে কাচ স্ক্রিনের নিজস্ব রিফ্রেশ রেটে তাকে অনুসরণ করে।
+settings.engineFailed = এই গ্রাফিক্স কার্ড এভাবে ব্যানার আঁকতে পারে না, তাই ক্লাসিক পদ্ধতি ব্যবহার করা হচ্ছে।
 settings.color = রং
 color.auto = স্বয়ংক্রিয় (Windows থিম অনুসরণ করে)
 color.autoName = স্বয়ংক্রিয় — Windows থিম অনুসরণ করে

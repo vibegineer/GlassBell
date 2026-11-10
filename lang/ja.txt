@@ -3,6 +3,8 @@
 # ---- banners ----
 banner.app = 通知
 banner.now = たった今
+banner.close = 閉じる
+banner.closeAll = すべて閉じる
 preview.title = プレビュー
 preview.body = 現在の設定では、バナーはこのように表示されます。
 test.title1 = 正常に動作しています
@@ -13,6 +15,7 @@ test.body2 = 今いる？さっき送ったやつ、ちょっと見てもらえ�
 # ---- tray icon menu ----
 tray.settings = 設定…
 tray.test = テスト通知
+tray.closeAll = すべての通知を閉じる
 tray.autostart = Windows の起動時に開始
 tray.exit = 終了
 
@@ -56,6 +59,12 @@ settings.live = ライブ背景
 settings.liveHint = バナーの移動中も、ガラスが背後の内容に合わせて常に調整されます。消費電力が増えます。
 settings.liveFps = フレームレート
 settings.liveFpsHint = 高いほど滑らかですが、プロセッサの負荷も増えます。
+settings.engine = 描画方式
+engine.gpu = グラフィックス カード
+engine.classic = クラシック
+settings.engineHint = 「グラフィックス カード」は画面のリフレッシュ レートで追従し、プロセッサをほとんど使いません。「クラシック」は従来の方式で、グラフィックス カードに問題がある場合に使います。
+settings.liveFpsGpu = グラフィックス カードでは、ガラスが画面のリフレッシュ レートで追従します。
+settings.engineFailed = このグラフィックス カードではこの方式でバナーを描画できないため、クラシック方式を使用しています。
 settings.color = 色
 color.auto = 自動（Windows のテーマに従う）
 color.autoName = 自動 — Windows のテーマに従う

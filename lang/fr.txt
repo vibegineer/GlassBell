@@ -3,6 +3,8 @@
 # ---- banners ----
 banner.app = Notification
 banner.now = maintenant
+banner.close = Fermer
+banner.closeAll = Tout fermer
 preview.title = Aperçu
 preview.body = Voici à quoi ressemble une bannière avec vos paramètres.
 test.title1 = Tout fonctionne
@@ -13,6 +15,7 @@ test.body2 = Tu es là ? Jette un œil à ce que je t'ai envoyé, s'il te plaî
 # ---- tray icon menu ----
 tray.settings = Paramètres…
 tray.test = Notification de test
+tray.closeAll = Fermer toutes les notifications
 tray.autostart = Lancer au démarrage de Windows
 tray.exit = Quitter
 
@@ -56,6 +59,12 @@ settings.live = Arrière-plan en temps réel
 settings.liveHint = Le verre s'adapte en permanence à ce qui se trouve derrière lui, même pendant que la bannière se déplace. Consomme plus d'énergie.
 settings.liveFps = Images par seconde
 settings.liveFpsHint = Plus c’est élevé, plus c’est fluide, mais plus le processeur est sollicité.
+settings.engine = Rendu
+engine.gpu = Carte graphique
+engine.classic = Classique
+settings.engineHint = « Carte graphique » suit l’écran à sa propre fréquence et sollicite à peine le processeur. « Classique » est l’ancienne méthode, au cas où la carte graphique pose problème.
+settings.liveFpsGpu = Avec la carte graphique, le verre suit l’écran à sa propre fréquence.
+settings.engineFailed = Cette carte graphique ne peut pas dessiner les bannières ainsi : la méthode classique est utilisée.
 settings.color = Couleur
 color.auto = Automatique (selon le thème de Windows)
 color.autoName = Automatique — selon le thème de Windows

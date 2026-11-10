@@ -3,6 +3,8 @@
 # ---- banners ----
 banner.app = Notifica
 banner.now = ora
+banner.close = Chiudi
+banner.closeAll = Chiudi tutto
 preview.title = Anteprima
 preview.body = Ecco come appare un banner con le tue impostazioni.
 test.title1 = Tutto funziona
@@ -13,6 +15,7 @@ test.body2 = Ci sei? Dai un'occhiata a quello che ti ho mandato, per favore – 
 # ---- tray icon menu ----
 tray.settings = Impostazioni…
 tray.test = Notifica di prova
+tray.closeAll = Chiudi tutte le notifiche
 tray.autostart = Avvia con Windows
 tray.exit = Esci
 
@@ -56,6 +59,12 @@ settings.live = Sfondo in tempo reale
 settings.liveHint = Il vetro si adatta di continuo a ciò che ha dietro, anche mentre il banner si muove. Consuma più energia.
 settings.liveFps = Fotogrammi al secondo
 settings.liveFpsHint = Più è alto, più è fluido, ma più impegna il processore.
+settings.engine = Rendering
+engine.gpu = Scheda video
+engine.classic = Classico
+settings.engineHint = “Scheda video” segue lo schermo alla sua frequenza di aggiornamento e quasi non usa il processore. “Classico” è il metodo precedente, se la scheda video dà problemi.
+settings.liveFpsGpu = Con la scheda video, il vetro segue lo schermo alla sua frequenza di aggiornamento.
+settings.engineFailed = Questa scheda video non può disegnare i banner così, quindi si usa il metodo classico.
 settings.color = Colore
 color.auto = Automatico (segue il tema di Windows)
 color.autoName = Automatico – segue il tema di Windows

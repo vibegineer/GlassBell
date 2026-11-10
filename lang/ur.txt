@@ -3,6 +3,8 @@
 # ---- banners ----
 banner.app = اطلاع
 banner.now = ابھی
+banner.close = بند کریں
+banner.closeAll = سب بند کریں
 preview.title = پیش منظر
 preview.body = آپ کی ترتیبات کے ساتھ بینر ایسا نظر آتا ہے۔
 test.title1 = سب کچھ کام کر رہا ہے
@@ -13,6 +15,7 @@ test.body2 = سنو، ہو؟ پلیز ذرا دیکھو کہ میں نے تمہ�
 # ---- tray icon menu ----
 tray.settings = ترتیبات…
 tray.test = آزمائشی اطلاع
+tray.closeAll = تمام اطلاعات بند کریں
 tray.autostart = Windows کے ساتھ شروع کریں
 tray.exit = خارج ہوں
 
@@ -56,6 +59,12 @@ settings.live = لائیو پس منظر
 settings.liveHint = بینر کے حرکت کرتے وقت بھی شیشہ اپنے پیچھے کی چیزوں کے مطابق مسلسل ڈھلتا رہتا ہے۔ زیادہ پاور استعمال کرتا ہے۔
 settings.liveFps = فریم فی سیکنڈ
 settings.liveFpsHint = جتنا زیادہ، اتنا ہموار، لیکن پروسیسر پر بوجھ بھی زیادہ۔
+settings.engine = رینڈرنگ
+engine.gpu = گرافکس کارڈ
+engine.classic = کلاسک
+settings.engineHint = «گرافکس کارڈ» اسکرین کی اپنی ریفریش ریٹ پر ساتھ چلتا ہے اور پروسیسر تقریباً استعمال نہیں کرتا۔ «کلاسک» پرانا طریقہ ہے، اگر گرافکس کارڈ میں مسئلہ ہو۔
+settings.liveFpsGpu = گرافکس کارڈ کے ساتھ شیشہ اسکرین کی اپنی ریفریش ریٹ پر اس کا ساتھ دیتا ہے۔
+settings.engineFailed = یہ گرافکس کارڈ بینرز اس طرح نہیں بنا سکتا، اس لیے کلاسک طریقہ استعمال ہو رہا ہے۔
 settings.color = رنگ
 color.auto = خودکار (Windows تھیم کے مطابق)
 color.autoName = خودکار — Windows تھیم کے مطابق
