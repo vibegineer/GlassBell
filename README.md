@@ -13,13 +13,15 @@ GlassBell runs in the background, picks up every notification Windows receives a
 ## Features
 
 - **Every app.** GlassBell reads the notifications of all apps (Windows notification listener) and shows them as its own banners, up to four stacked at once.
-- **Real glass, drawn on the GPU.** Refraction at the edges, dispersion, highlights, adaptive tint and shadow. Four quality levels, and an optional live background that follows what is behind the banner even while it moves.
+- **Real glass, drawn by the graphics card.** Refraction at the edges, dispersion, highlights, adaptive tint and shadow. Four quality levels, and an optional live background that follows what is behind the banner even while it moves.
+- **At the refresh rate of the screen.** The graphics card takes the screen behind the banners and draws them in one go, so the glass keeps up with a 60, 144 or 240 Hz display (or faster) and the processor stays nearly idle. The classic renderer of version 1.0 is still there in the settings, and takes over by itself if the graphics card cannot do this.
+- **Close one or all.** A round × over the corner of the banner under the pointer closes it, and with two or more banners a **Close all** button appears under them. Also in the tray menu and as `--close-all`.
 - **Fast.** A single banner is on screen 30–60 ms after the notification arrives (measured on the developer's PC).
 - **Click to open.** A click on a banner opens what the notification points to, the same as a click on the Windows one.
 - **Sound.** Three chimes synthesized in code (no audio files); the volume can follow the system volume.
 - **Settings with a live preview**, a tray icon, start with Windows.
 - **20 languages.** The interface follows the Windows display language (other languages get English), or the language picked at the bottom of the settings.
-- **Light.** About 1% of one CPU core while idle and 120–150 MB of memory, also after hundreds of banners (measured on the developer's PC).
+- **Light.** Next to nothing while idle, a few percent of one CPU core while banners are on screen, and about 100 MB of memory, also after hundreds of banners (measured on the developer's PC).
 
 ## Install
 
@@ -29,7 +31,7 @@ GlassBell runs in the background, picks up every notification Windows receives a
 
 The icon next to the clock opens the settings. To remove GlassBell: Settings → Apps → Installed apps → GlassBell → Uninstall.
 
-**Requirements:** Windows 11, 64-bit. Everything else (.NET Framework 4.8, Direct3D) is part of Windows.
+**Requirements:** Windows 11, 64-bit. Everything else (.NET Framework 4.8, Direct3D 11) is part of Windows.
 
 ## Command line
 
@@ -44,6 +46,7 @@ GlassBell.exe --title "Build finished" --body "All 214 tests passed" --app "CI"
 | `GlassBell.exe` | starts GlassBell if needed and opens the settings |
 | `--title T --body B [--app A] [--app-id AUMID] [--seconds S]` | shows a banner (`--app-id` takes the icon of an installed app) |
 | `--test` | shows two sample banners |
+| `--close-all` | closes every banner on the screen |
 | `--settings` / `--quit` | opens the settings / closes GlassBell |
 | `--install` / `--uninstall` | turns start with Windows on / off (for a copy used without the installer) |
 | `--stats` | writes the memory use of the running copy to the log |
@@ -69,7 +72,7 @@ This builds `bin\GlassBell.exe` and `dist\GlassBell-Setup.exe` with the C# compi
 
 | Folder | Contents |
 |---|---|
-| `src/` | the program: banners, glass renderer, notification mirroring, settings, chimes |
+| `src/` | the program: banners, the graphics card renderer (`GpuEngine.cs`, `Dx.cs`), the classic glass renderer, notification mirroring, settings, chimes |
 | `setup/` | the installer and uninstaller |
 | `lang/` | the interface texts, one file per language |
 | `assets/` | the icon |
