@@ -365,12 +365,10 @@ namespace GlassBell
             <ContentPresenter IsHitTestVisible='False' Content='{TemplateBinding SelectionBoxItem}' Margin='9,4,26,4' VerticalAlignment='Center' HorizontalAlignment='Left'/>
             <Path IsHitTestVisible='False' FlowDirection='LeftToRight' HorizontalAlignment='Right' VerticalAlignment='Center' Margin='0,1,10,0'
                   Data='M 0 0 L 4 4 L 8 0' Stroke='#AEAEB2' StrokeThickness='1.5' StrokeStartLineCap='Round' StrokeEndLineCap='Round'/>
-            <!-- the whole list at once, without a ScrollViewer: the list opens upwards, so the pointer rests below it,
-                 and a ComboBox scrolls its list whenever the pointer is past the list's edge -->
-            <Popup IsOpen='{TemplateBinding IsDropDownOpen}' Placement='Top' AllowsTransparency='True' Focusable='False' PopupAnimation='Fade'>
+            <Popup x:Name='PART_Popup' IsOpen='{TemplateBinding IsDropDownOpen}' Placement='Top' AllowsTransparency='True' Focusable='False' PopupAnimation='Fade'>
               <Border Background='#2C2C2E' BorderBrush='#48484A' BorderThickness='1' CornerRadius='8' Padding='4' Margin='0,0,0,4'
-                      MinWidth='{TemplateBinding ActualWidth}'>
-                <ItemsPresenter KeyboardNavigation.DirectionalNavigation='Contained'/>
+                      MinWidth='{TemplateBinding ActualWidth}' MaxHeight='{TemplateBinding MaxDropDownHeight}'>
+                <ScrollViewer VerticalScrollBarVisibility='Auto'><ItemsPresenter KeyboardNavigation.DirectionalNavigation='Contained'/></ScrollViewer>
               </Border>
             </Popup>
           </Grid>
@@ -390,6 +388,7 @@ namespace GlassBell
           </Border>
           <ControlTemplate.Triggers>
             <Trigger Property='IsHighlighted' Value='True'><Setter TargetName='B' Property='Background' Value='#3A3A3C'/></Trigger>
+            <Trigger Property='IsMouseOver' Value='True'><Setter TargetName='B' Property='Background' Value='#3A3A3C'/></Trigger>
             <Trigger Property='IsSelected' Value='True'><Setter TargetName='B' Property='Background' Value='#0A84FF'/></Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -462,6 +461,16 @@ namespace GlassBell
 
         public void SelectTab(int index) { if (index >= 0 && index < tabButtons.Count) tabButtons[index].IsChecked = true; }
 
+        // An entry the pointer does not focus. A ComboBox focuses the entry the pointer enters, and a focused entry is
+        // scrolled fully into view, so resting on the half-visible bottom entry scrolled the list, then the next one did,
+        // and so on. The hover colour comes from IsMouseOver in the style; clicks, the wheel, the scroll bar, the arrow
+        // keys and showing the picked language when the list opens work as before.
+        sealed class ListEntry : ComboBoxItem
+        {
+            protected override void OnMouseEnter(MouseEventArgs e) { }
+            protected override void OnMouseMove(MouseEventArgs e) { }
+        }
+
         // the interface language: "as in Windows" or one of the languages, each written in itself
         FrameworkElement BuildLanguagePicker()
         {
@@ -471,14 +480,15 @@ namespace GlassBell
                 Text = "", FontFamily = new FontFamily("Segoe Fluent Icons, Segoe MDL2 Assets"), FontSize = 14,   // a globe
                 Foreground = Hue("#8E8E93"), VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 1, 7, 0)
             });
-            var box = new ComboBox { Style = (Style)FindResource("Combo"), MinWidth = 120 };
+            var box = new ComboBox { Style = (Style)FindResource("Combo"), MinWidth = 120, MaxDropDownHeight = 330 };
             AutomationProperties.SetName(box, L.T("settings.language"));
             AutomationProperties.SetAutomationId(box, "language");
-            box.Items.Add(new ComboBoxItem { Content = L.T("settings.languageAuto"), Tag = "auto" });
+            var entryStyle = (Style)FindResource(typeof(ComboBoxItem));
+            box.Items.Add(new ListEntry { Content = L.T("settings.languageAuto"), Tag = "auto", Style = entryStyle });
             for (int i = 0; i < L.Codes.Length; i++)
-                box.Items.Add(new ComboBoxItem
+                box.Items.Add(new ListEntry
                 {
-                    Content = L.Names[i], Tag = L.Codes[i],
+                    Content = L.Names[i], Tag = L.Codes[i], Style = entryStyle,
                     Language = XmlLanguage.GetLanguage(L.Codes[i] == "zh" ? "zh-Hans" : L.Codes[i]),   // each name in the glyphs of its own language
                     FlowDirection = L.Codes[i] == "ar" || L.Codes[i] == "ur" || L.Codes[i] == "fa" ? FlowDirection.RightToLeft : FlowDirection.LeftToRight
                 });
