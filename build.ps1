@@ -10,14 +10,23 @@ $dist = Join-Path $here 'dist'
 $ico  = Join-Path $here 'assets\GlassBell.ico'
 New-Item -ItemType Directory -Force $bin, $dist | Out-Null
 
+# The descriptions of the Windows (WinRT) APIs: those of this Windows, or, on a build server that has none (or with
+# GLASSBELL_SDK_WINMD=1), the newest one of the Windows SDK
+$winmd = @("$wm\Windows.Foundation.winmd", "$wm\Windows.UI.winmd", "$wm\Windows.ApplicationModel.winmd", "$wm\Windows.Storage.winmd")
+if (-not (Test-Path "$wm\Windows.UI.winmd") -or $env:GLASSBELL_SDK_WINMD) {
+    $union = Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\UnionMetadata\*\Windows.winmd" -ErrorAction SilentlyContinue |
+        Where-Object { $_.Directory.Name -match '^\d+(\.\d+){3}$' } | Sort-Object { [version]$_.Directory.Name } -Descending | Select-Object -First 1
+    if (-not $union) { throw "no WinRT metadata: neither $wm nor a Windows SDK" }
+    $winmd = @($union.FullName)
+    "WinRT metadata: $($union.FullName)"
+}
+
 $refs = @(
     "$wpf\PresentationFramework.dll", "$wpf\PresentationCore.dll", "$wpf\WindowsBase.dll",
     "$wpf\UIAutomationClient.dll", "$wpf\UIAutomationTypes.dll",
     "$fw\System.Xaml.dll", "$fw\System.Windows.Forms.dll", "$fw\System.Drawing.dll",
-    "$fw\System.Runtime.WindowsRuntime.dll", "$fw\System.Runtime.InteropServices.WindowsRuntime.dll", "$fw\System.Runtime.dll", "$fw\System.Threading.Tasks.dll",
-    "$wm\Windows.Foundation.winmd", "$wm\Windows.UI.winmd",
-    "$wm\Windows.ApplicationModel.winmd", "$wm\Windows.Storage.winmd"
-) | Where-Object { Test-Path $_ } | ForEach-Object { "/r:$_" }
+    "$fw\System.Runtime.WindowsRuntime.dll", "$fw\System.Runtime.InteropServices.WindowsRuntime.dll", "$fw\System.Runtime.dll", "$fw\System.Threading.Tasks.dll"
+) + $winmd | Where-Object { Test-Path $_ } | ForEach-Object { "/r:$_" }
 
 # every translation is embedded in both exes as lang.<code>.txt
 $langs = Get-ChildItem "$here\lang\*.txt" | ForEach-Object { "/resource:$($_.FullName),lang.$($_.BaseName).txt" }
