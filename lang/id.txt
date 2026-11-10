@@ -95,6 +95,8 @@ slider.volume = Volume
 slider.volume.note = Tingkat suara di speaker, bukan di file
 settings.adapt = Sesuaikan dengan volume sistem
 settings.adaptHint = Lebih pelan saat volume sistem tinggi, lebih keras saat volume sistem rendah
+settings.language = Bahasa antarmuka
+settings.languageAuto = Sama dengan Windows
 timing.cpu = beban {0}% dari satu inti
 timing.bake = gambar ulang kaca {0} ms
 

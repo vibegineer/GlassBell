@@ -95,6 +95,8 @@ slider.volume = Âm lượng
 slider.volume.note = Mức âm lượng ở loa, không phải trong tệp
 settings.adapt = Điều chỉnh theo âm lượng hệ thống
 settings.adaptHint = Nhỏ hơn khi âm lượng hệ thống lớn, to hơn khi âm lượng hệ thống nhỏ
+settings.language = Ngôn ngữ giao diện
+settings.languageAuto = Theo Windows
 timing.cpu = tải {0}% của một lõi
 timing.bake = vẽ lại kính {0} ms
 

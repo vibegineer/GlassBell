@@ -95,6 +95,8 @@ slider.volume = 音量
 slider.volume.note = ファイル内ではなく、スピーカーでの音量
 settings.adapt = システムの音量に合わせる
 settings.adaptHint = システムの音量が大きいときは小さく、小さいときは大きく
+settings.language = 表示言語
+settings.languageAuto = Windows と同じ
 timing.cpu = 負荷：1 コアの {0}%
 timing.bake = ガラスの再描画 {0} ms
 

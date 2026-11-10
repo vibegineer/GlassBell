@@ -2338,7 +2338,7 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
         bool busy, again, primed, shownAny;
         volatile bool watching;   // the database watcher is running, so the slow poll is only a safety net
         System.Windows.Forms.NotifyIcon tray;
-        Window workshop;
+        SettingsUi workshop;
         Banner previewBanner;
         Window keeper;
 
@@ -2938,11 +2938,40 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             previewBanner = Show("GlassBell", L.T("preview.title"), L.T("preview.body"), "", 4, null);
         }
 
-        void OpenSettings()
+        // a new interface language: the tray menu and the settings window are built again in it, the window where it was
+        public void ChangeLanguage(string code)
+        {
+            Settings.Language = code;
+            Settings.Save();
+            L.Init(code);
+            Log.Write("language: " + code + " -> " + L.Code);
+            if (tray != null)
+            {
+                var old = tray.ContextMenuStrip;
+                tray.ContextMenuStrip = TrayMenu();
+                old.Dispose();
+            }
+            var was = workshop;
+            if (was == null || !was.IsLoaded) return;
+            workshop = null;
+            OpenSettings(new Point(was.Left, was.Top), was.Tab);
+            was.Close();
+        }
+
+        void OpenSettings() { OpenSettings(null, 0); }
+
+        void OpenSettings(Point? at, int tab)
         {
             if (workshop == null || !workshop.IsLoaded)
             {
                 workshop = new SettingsUi(this);
+                if (at != null)
+                {
+                    workshop.WindowStartupLocation = WindowStartupLocation.Manual;
+                    workshop.Left = at.Value.X;
+                    workshop.Top = at.Value.Y;
+                }
+                workshop.SelectTab(tab);
                 try
                 {
                     using (var s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("GlassBell.ico"))
@@ -3015,6 +3044,18 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
 
         void StartTray()
         {
+            tray = new System.Windows.Forms.NotifyIcon
+            {
+                Icon = TrayIcon(),
+                Text = "GlassBell",
+                ContextMenuStrip = TrayMenu(),
+                Visible = true
+            };
+            tray.DoubleClick += delegate { OpenSettings(); };
+        }
+
+        System.Windows.Forms.ContextMenuStrip TrayMenu()
+        {
             var menu = new System.Windows.Forms.ContextMenuStrip();
             if (L.Rtl) menu.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             menu.Items.Add(L.T("tray.settings"), null, delegate { OpenSettings(); });
@@ -3025,14 +3066,7 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             menu.Opening += delegate { auto.Checked = Startup.Enabled; auto.Enabled = !Startup.Sandboxed; };
             menu.Items.Add(auto);
             menu.Items.Add(L.T("tray.exit"), null, delegate { app.Shutdown(); });
-            tray = new System.Windows.Forms.NotifyIcon
-            {
-                Icon = TrayIcon(),
-                Text = "GlassBell",
-                ContextMenuStrip = menu,
-                Visible = true
-            };
-            tray.DoubleClick += delegate { OpenSettings(); };
+            return menu;
         }
     }
 }

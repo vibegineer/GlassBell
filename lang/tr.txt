@@ -95,6 +95,8 @@ slider.volume = Ses düzeyi
 slider.volume.note = Dosyadaki değil, hoparlörlerdeki düzey
 settings.adapt = Sistem ses düzeyine uyarla
 settings.adaptHint = Sistemin sesi yüksekken daha sessiz, kısıkken daha yüksek
+settings.language = Arayüz dili
+settings.languageAuto = Windows ile aynı
 timing.cpu = tek çekirdekte %{0} yük
 timing.bake = cam yeniden çizimi {0} ms
 

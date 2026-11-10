@@ -95,6 +95,8 @@ slider.volume = میزان صدا
 slider.volume.note = سطح صدا در بلندگوها، نه در فایل
 settings.adapt = تطبیق با میزان صدای سیستم
 settings.adaptHint = وقتی صدای سیستم بلند است آرام‌تر، وقتی آرام است بلندتر
+settings.language = زبان رابط کاربری
+settings.languageAuto = مانند Windows
 timing.cpu = بار {0}% از یک هسته
 timing.bake = ترسیم مجدد شیشه {0} میلی‌ثانیه
 

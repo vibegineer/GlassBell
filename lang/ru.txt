@@ -95,6 +95,8 @@ slider.volume = Громкость
 slider.volume.note = Уровень на динамиках, а не в файле
 settings.adapt = Подстраивать под громкость системы
 settings.adaptHint = Тише при громкой системе, громче при тихой
+settings.language = Язык интерфейса
+settings.languageAuto = Как в Windows
 timing.cpu = нагрузка {0}% ядра
 timing.bake = пересчёт стекла {0} мс
 

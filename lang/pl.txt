@@ -95,6 +95,8 @@ slider.volume = Głośność
 slider.volume.note = Poziom w głośnikach, a nie w pliku
 settings.adapt = Dopasowuj do głośności systemu
 settings.adaptHint = Ciszej, gdy system gra głośno, głośniej, gdy gra cicho
+settings.language = Język interfejsu
+settings.languageAuto = Jak w Windows
 timing.cpu = obciążenie {0}% rdzenia
 timing.bake = przerysowanie szkła {0} ms
 

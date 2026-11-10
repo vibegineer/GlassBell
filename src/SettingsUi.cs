@@ -342,6 +342,59 @@ namespace GlassBell
     </Setter>
   </Style>
 
+  <Style x:Key='Combo' TargetType='{x:Type ComboBox}'>
+    <Setter Property='Foreground' Value='White'/>
+    <Setter Property='FontSize' Value='12'/>
+    <Setter Property='Cursor' Value='Hand'/>
+    <Setter Property='FocusVisualStyle' Value='{x:Null}'/>
+    <Setter Property='Template'>
+      <Setter.Value>
+        <ControlTemplate TargetType='{x:Type ComboBox}'>
+          <Grid>
+            <ToggleButton Focusable='False' ClickMode='Press' IsChecked='{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}'>
+              <ToggleButton.Template>
+                <ControlTemplate TargetType='{x:Type ToggleButton}'>
+                  <Border x:Name='B' CornerRadius='7' Background='#2C2C2E' BorderBrush='#3A3A3C' BorderThickness='1' SnapsToDevicePixels='True'/>
+                  <ControlTemplate.Triggers>
+                    <Trigger Property='IsMouseOver' Value='True'><Setter TargetName='B' Property='Background' Value='#3A3A3C'/></Trigger>
+                    <Trigger Property='IsChecked' Value='True'><Setter TargetName='B' Property='BorderBrush' Value='#0A84FF'/></Trigger>
+                  </ControlTemplate.Triggers>
+                </ControlTemplate>
+              </ToggleButton.Template>
+            </ToggleButton>
+            <ContentPresenter IsHitTestVisible='False' Content='{TemplateBinding SelectionBoxItem}' Margin='9,4,26,4' VerticalAlignment='Center' HorizontalAlignment='Left'/>
+            <Path IsHitTestVisible='False' FlowDirection='LeftToRight' HorizontalAlignment='Right' VerticalAlignment='Center' Margin='0,1,10,0'
+                  Data='M 0 0 L 4 4 L 8 0' Stroke='#AEAEB2' StrokeThickness='1.5' StrokeStartLineCap='Round' StrokeEndLineCap='Round'/>
+            <Popup IsOpen='{TemplateBinding IsDropDownOpen}' Placement='Top' AllowsTransparency='True' Focusable='False' PopupAnimation='Fade'>
+              <Border Background='#2C2C2E' BorderBrush='#48484A' BorderThickness='1' CornerRadius='8' Padding='4' Margin='0,0,0,4'
+                      MinWidth='{TemplateBinding ActualWidth}' MaxHeight='{TemplateBinding MaxDropDownHeight}'>
+                <ScrollViewer VerticalScrollBarVisibility='Auto'><ItemsPresenter KeyboardNavigation.DirectionalNavigation='Contained'/></ScrollViewer>
+              </Border>
+            </Popup>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style TargetType='{x:Type ComboBoxItem}'>
+    <Setter Property='Foreground' Value='White'/>
+    <Setter Property='FontSize' Value='12.5'/>
+    <Setter Property='Template'>
+      <Setter.Value>
+        <ControlTemplate TargetType='{x:Type ComboBoxItem}'>
+          <Border x:Name='B' CornerRadius='5' Padding='9,5' Background='Transparent' SnapsToDevicePixels='True'>
+            <ContentPresenter/>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property='IsHighlighted' Value='True'><Setter TargetName='B' Property='Background' Value='#3A3A3C'/></Trigger>
+            <Trigger Property='IsSelected' Value='True'><Setter TargetName='B' Property='Background' Value='#0A84FF'/></Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
   <Style TargetType='{x:Type ToolTip}'>
     <Setter Property='Template'>
       <Setter.Value>
@@ -401,6 +454,46 @@ namespace GlassBell
 
         FrameworkElement leftColumn, chipsPanel;
         bool sizeLocked;
+        readonly List<RadioButton> tabButtons = new List<RadioButton>();
+
+        public int Tab { get { return tab; } }
+
+        public void SelectTab(int index) { if (index >= 0 && index < tabButtons.Count) tabButtons[index].IsChecked = true; }
+
+        // the interface language: "as in Windows" or one of the languages, each written in itself
+        FrameworkElement BuildLanguagePicker()
+        {
+            var row = new StackPanel { Orientation = Orientation.Horizontal, VerticalAlignment = VerticalAlignment.Center, ToolTip = L.T("settings.language") };
+            row.Children.Add(new TextBlock
+            {
+                Text = "", FontFamily = new FontFamily("Segoe Fluent Icons, Segoe MDL2 Assets"), FontSize = 14,   // a globe
+                Foreground = Hue("#8E8E93"), VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 1, 7, 0)
+            });
+            var box = new ComboBox { Style = (Style)FindResource("Combo"), MinWidth = 120, MaxDropDownHeight = 330 };
+            AutomationProperties.SetName(box, L.T("settings.language"));
+            AutomationProperties.SetAutomationId(box, "language");
+            box.Items.Add(new ComboBoxItem { Content = L.T("settings.languageAuto"), Tag = "auto" });
+            for (int i = 0; i < L.Codes.Length; i++)
+                box.Items.Add(new ComboBoxItem
+                {
+                    Content = L.Names[i], Tag = L.Codes[i],
+                    Language = XmlLanguage.GetLanguage(L.Codes[i] == "zh" ? "zh-Hans" : L.Codes[i]),   // each name in the glyphs of its own language
+                    FlowDirection = L.Codes[i] == "ar" || L.Codes[i] == "ur" || L.Codes[i] == "fa" ? FlowDirection.RightToLeft : FlowDirection.LeftToRight
+                });
+            string current = (Settings.Language ?? "").Trim().ToLowerInvariant();
+            if (Array.IndexOf(L.Codes, current) < 0) current = "auto";
+            foreach (ComboBoxItem it in box.Items) if ((string)it.Tag == current) box.SelectedItem = it;
+            box.SelectionChanged += delegate
+            {
+                var it = box.SelectedItem as ComboBoxItem;
+                if (it == null || (string)it.Tag == current) return;
+                string code = (string)it.Tag;
+                // once the drop-down has closed: the window is built again in the new language
+                Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(delegate { mgr.ChangeLanguage(code); }));
+            };
+            row.Children.Add(box);
+            return row;
+        }
 
         // the title bar follows the dark window instead of staying white; there is no maximize button, as a maximized
         // window could only add empty space around content of fixed size
@@ -552,6 +645,7 @@ namespace GlassBell
                 var rb = new RadioButton { Content = tabNames[i], GroupName = "tab", Style = (Style)FindResource("Tab"), IsChecked = i == 0, Margin = new Thickness(i > 0 ? 2 : 0, 0, 0, 0) };
                 rb.Checked += delegate { ShowTab(idx); };
                 AutomationProperties.SetAutomationId(rb, "tab" + i);
+                tabButtons.Add(rb);
                 tabs.Children.Add(rb);
             }
             tabs.Margin = new Thickness(0);
@@ -567,8 +661,12 @@ namespace GlassBell
             Grid.SetRow(scroll, 2);
             col.Children.Add(scroll);
 
+            // bottom: the two reset links, and the interface language on the other side
             var foot = new StackPanel { Margin = new Thickness(0, 8, 0, 0) };
-            var resets = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(-6, 0, 0, 0) };
+            var footRow = new Grid();
+            footRow.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            footRow.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            var resets = new WrapPanel { Margin = new Thickness(-6, 0, 8, 0), VerticalAlignment = VerticalAlignment.Center };
             var resetTab = new Button { Content = L.T("settings.resetTab"), Style = (Style)FindResource("Link") };
             resetTab.Click += delegate { ResetTab(); };
             var resetAll = new Button { Content = L.T("settings.resetAll"), Style = (Style)FindResource("Link") };
@@ -580,7 +678,11 @@ namespace GlassBell
             timing.Margin = new Thickness(0, 2, 0, 0);
             timing.TextTrimming = TextTrimming.CharacterEllipsis;
             AutomationProperties.SetAutomationId(timing, "timing");
-            foot.Children.Add(resets);
+            footRow.Children.Add(resets);
+            var language = BuildLanguagePicker();
+            Grid.SetColumn(language, 1);
+            footRow.Children.Add(language);
+            foot.Children.Add(footRow);
             foot.Children.Add(timing);
             Grid.SetRow(foot, 3);
             col.Children.Add(foot);
@@ -950,7 +1052,8 @@ namespace GlassBell
         void ShowTab(int index)
         {
             tab = index;
-            for (int i = 0; i < tabPanels.Count; i++) tabPanels[i].Visibility = i == index ? Visibility.Visible : Visibility.Collapsed;
+            // Hidden, not Collapsed: the other tabs keep their room, so the window measures the same on every tab
+            for (int i = 0; i < tabPanels.Count; i++) tabPanels[i].Visibility = i == index ? Visibility.Visible : Visibility.Hidden;
         }
 
         // ---- applying settings ----

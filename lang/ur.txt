@@ -95,6 +95,8 @@ slider.volume = والیوم
 slider.volume.note = اسپیکرز پر آواز کی سطح، فائل میں نہیں
 settings.adapt = سسٹم والیوم کے مطابق ایڈجسٹ کریں
 settings.adaptHint = سسٹم کی آواز اونچی ہو تو دھیمی، دھیمی ہو تو اونچی
+settings.language = انٹرفیس کی زبان
+settings.languageAuto = Windows کے مطابق
 timing.cpu = ایک کور کا {0}% لوڈ
 timing.bake = شیشہ دوبارہ بنانے میں {0} ملی سیکنڈ
 

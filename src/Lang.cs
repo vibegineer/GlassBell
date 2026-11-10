@@ -18,6 +18,13 @@ namespace GlassBell
         public static readonly string[] Codes =
             { "en", "zh", "hi", "es", "ar", "fr", "bn", "pt", "ru", "id", "ur", "de", "ja", "tr", "vi", "ko", "it", "fa", "pl", "uk" };
 
+        // the name of each language in itself, for the language list in the settings
+        public static readonly string[] Names =
+        {
+            "English", "简体中文", "हिन्दी", "Español", "العربية", "Français", "বাংলা", "Português (Brasil)", "Русский", "Bahasa Indonesia",
+            "اردو", "Deutsch", "日本語", "Türkçe", "Tiếng Việt", "한국어", "Italiano", "فارسی", "Polski", "Українська"
+        };
+
         static readonly object gate = new object();
         static Dictionary<string, string> strings, english;
         static string code = "en";

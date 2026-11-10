@@ -95,6 +95,8 @@ slider.volume = ভলিউম
 slider.volume.note = স্পিকারে শব্দের মাত্রা, ফাইলে নয়
 settings.adapt = সিস্টেম ভলিউম অনুযায়ী মানিয়ে নিন
 settings.adaptHint = সিস্টেমের আওয়াজ জোরে থাকলে আস্তে, আস্তে থাকলে জোরে
+settings.language = ইন্টারফেসের ভাষা
+settings.languageAuto = Windows-এর মতো
 timing.cpu = একটি কোরের {0}% লোড
 timing.bake = কাচ আবার আঁকতে {0} মি.সে.
 

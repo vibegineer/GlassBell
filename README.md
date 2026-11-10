@@ -18,7 +18,7 @@ GlassBell runs in the background, picks up every notification Windows receives a
 - **Click to open.** A click on a banner opens what the notification points to, the same as a click on the Windows one.
 - **Sound.** Three chimes synthesized in code (no audio files); the volume can follow the system volume.
 - **Settings with a live preview**, a tray icon, start with Windows.
-- **20 languages.** The interface follows the Windows display language; other languages get English.
+- **20 languages.** The interface follows the Windows display language (other languages get English), or the language picked at the bottom of the settings.
 - **Light.** About 1% of one CPU core while idle and 120–150 MB of memory, also after hundreds of banners (measured on the developer's PC).
 
 ## Install
@@ -56,7 +56,7 @@ GlassBell.exe --title "Build finished" --body "All 214 tests passed" --app "CI"
 | Settings | `%APPDATA%\GlassBell\settings.ini` |
 | Log | `%LOCALAPPDATA%\GlassBell\log.txt` |
 
-`lang=de` (or any other code from `lang/`) in `settings.ini` picks the language by hand; `lang=auto` follows Windows.
+The language picked in the settings is kept in `settings.ini` as `lang=de` (or any other code from `lang/`); `lang=auto` follows Windows.
 A `portable.flag` file next to `GlassBell.exe` keeps the settings and the log in the program's folder instead.
 
 ## Build

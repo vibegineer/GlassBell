@@ -95,6 +95,8 @@ slider.volume = Гучність
 slider.volume.note = Рівень на динаміках, а не у файлі
 settings.adapt = Підлаштовувати під гучність системи
 settings.adaptHint = Тихіше, коли система гучна, і гучніше, коли тиха
+settings.language = Мова інтерфейсу
+settings.languageAuto = Як у Windows
 timing.cpu = навантаження {0}% ядра
 timing.bake = перерахунок скла {0} мс
 

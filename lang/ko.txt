@@ -95,6 +95,8 @@ slider.volume = 볼륨
 slider.volume.note = 파일이 아닌 스피커에서의 음량
 settings.adapt = 시스템 볼륨에 맞추기
 settings.adaptHint = 시스템 소리가 크면 더 작게, 작으면 더 크게
+settings.language = 표시 언어
+settings.languageAuto = Windows와 같게
 timing.cpu = 부하: 코어 1개의 {0}%
 timing.bake = 유리 다시 그리기 {0}ms
 

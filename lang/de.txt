@@ -95,6 +95,8 @@ slider.volume = Lautstärke
 slider.volume.note = Der Pegel an den Lautsprechern, nicht in der Datei
 settings.adapt = An die Systemlautstärke anpassen
 settings.adaptHint = Leiser, wenn das System laut ist, lauter, wenn es leise ist
+settings.language = Sprache der Oberfläche
+settings.languageAuto = Wie in Windows
 timing.cpu = Auslastung {0} % eines Kerns
 timing.bake = Glas-Rendering {0} ms
 

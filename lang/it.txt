@@ -95,6 +95,8 @@ slider.volume = Volume
 slider.volume.note = Il livello negli altoparlanti, non nel file
 settings.adapt = Adatta al volume di sistema
 settings.adaptHint = Più basso se il volume di sistema è alto, più alto se è basso
+settings.language = Lingua dell’interfaccia
+settings.languageAuto = Come Windows
 timing.cpu = carico {0}% di un core
 timing.bake = ridisegno del vetro {0} ms
 

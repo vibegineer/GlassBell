@@ -115,6 +115,9 @@ slider.volume = Volume
 slider.volume.note = The level at the speakers, not in the file
 settings.adapt = Adjust to the system volume
 settings.adaptHint = Quieter when the system is loud, louder when it is quiet
+# the language list at the bottom of the settings: its tooltip, and the first entry, which follows Windows (max 16)
+settings.language = Interface language
+settings.languageAuto = Same as Windows
 # a status line at the bottom of the settings: {0} is a number
 timing.cpu = load {0}% of a core
 timing.bake = glass redraw {0} ms

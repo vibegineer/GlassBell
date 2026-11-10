@@ -95,6 +95,8 @@ slider.volume = वॉल्यूम
 slider.volume.note = स्पीकर पर आवाज़ का स्तर, फ़ाइल में नहीं
 settings.adapt = सिस्टम वॉल्यूम के अनुसार समायोजित करें
 settings.adaptHint = सिस्टम की आवाज़ तेज़ हो तो धीमी, धीमी हो तो तेज़
+settings.language = इंटरफ़ेस की भाषा
+settings.languageAuto = Windows के अनुसार
 timing.cpu = एक कोर का {0}% लोड
 timing.bake = काँच दोबारा बनाने में {0} मि.से.
 

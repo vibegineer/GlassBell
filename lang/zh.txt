@@ -95,6 +95,8 @@ slider.volume = 音量
 slider.volume.note = 扬声器端的音量，而非文件本身的音量
 settings.adapt = 根据系统音量调整
 settings.adaptHint = 系统音量大时更轻，系统音量小时更响
+settings.language = 界面语言
+settings.languageAuto = 跟随 Windows
 timing.cpu = 单核负载 {0}%
 timing.bake = 玻璃重绘 {0} 毫秒
 

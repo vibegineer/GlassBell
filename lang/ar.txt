@@ -95,6 +95,8 @@ slider.volume = مستوى الصوت
 slider.volume.note = المستوى في مكبرات الصوت، وليس في الملف
 settings.adapt = التكيف مع مستوى صوت النظام
 settings.adaptHint = أهدأ عندما يكون صوت النظام مرتفعًا، وأعلى عندما يكون هادئًا
+settings.language = لغة الواجهة
+settings.languageAuto = مثل Windows
 timing.cpu = الحمل {0}% من نواة
 timing.bake = إعادة رسم الزجاج {0} مللي ثانية
 
