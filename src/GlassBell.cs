@@ -300,6 +300,8 @@ namespace GlassBell
         public static bool SoundAdapt = true;       // follow the system volume
         public static int Scene = 0;                // playground backdrop, remembered between runs
         public static bool LiveBackground = false;  // the glass follows what is behind it all the time, also while it moves
+        public static int LiveFps = 30;             // how often a live glass that stands still is captured again: one of LiveRates
+        public static readonly int[] LiveRates = { 10, 20, 30, 60 };
         public static string Language = "auto";     // "auto" (the Windows display language) or one of L.Codes
 
         public static readonly string[] QualityKeys = { "low", "medium", "high", "ultra" };
@@ -350,6 +352,10 @@ namespace GlassBell
                         case "shadowoffset": ShadowOffset = Num(v, ShadowOffset); break;
                         case "scene": Scene = Math.Min(3, Num(v, Scene)); break;
                         case "livebg": LiveBackground = Flag(v); break;
+                        case "livefps":
+                            int fps;
+                            if (int.TryParse(v, out fps)) LiveFps = LiveRates.OrderBy(r => Math.Abs(r - fps)).First();
+                            break;
                         case "lang": Language = v.Length == 0 ? "auto" : v; break;
                         case "quality":
                             int q = Array.IndexOf(QualityKeys, v.ToLowerInvariant());
@@ -373,7 +379,7 @@ namespace GlassBell
                     "\r\nshadowoffset=" + ShadowOffset + "\r\nquality=" + QualityKeys[Quality] +
                     "\r\nsound=" + (Sound ? "1" : "0") + "\r\nsoundstyle=" + SoundStyle + "\r\nsoundvol=" + SoundVolume +
                     "\r\nsoundadapt=" + (SoundAdapt ? "1" : "0") + "\r\nscene=" + Scene +
-                    "\r\nlivebg=" + (LiveBackground ? "1" : "0") + "\r\nlang=" + Language + "\r\n");
+                    "\r\nlivebg=" + (LiveBackground ? "1" : "0") + "\r\nlivefps=" + LiveFps + "\r\nlang=" + Language + "\r\n");
             }
             catch { }
         }
@@ -418,6 +424,7 @@ namespace GlassBell
         public bool TwoShadows { get { return Quality >= 1; } }
         public bool RebakeOnShift { get { return Quality >= 1; } }
         public bool LiveBackdrop;   // its own switch now (Settings.LiveBackground), no longer tied to the ultra level
+        public int LiveFps = 30;    // how often a live glass that stands still is captured again (Settings.LiveFps)
         public int? AnimationFps { get { return Quality == 0 ? 30 : (int?)null; } }   // null: the display's rate
 
         // an animation of a banner, at the frame rate of this level
@@ -459,7 +466,7 @@ namespace GlassBell
             {
                 Glass = Settings.Glass, Tint = tint, K = Settings.Intensity / 100.0, TintK = Settings.TintIntensity / 100.0, BlurK = Settings.Blur / 100.0,
                 ShadowK = Settings.ShadowIntensity / 100.0, SoftK = Settings.ShadowSoftness / 100.0, OffK = Settings.ShadowOffset / 100.0,
-                Quality = Settings.Quality, LiveBackdrop = Settings.LiveBackground,
+                Quality = Settings.Quality, LiveBackdrop = Settings.LiveBackground, LiveFps = Settings.LiveFps,
                 Sound = Settings.Sound, SoundStyle = Settings.SoundStyle, SoundVolume = Settings.SoundVolume, SoundAdapt = Settings.SoundAdapt
             };
         }
@@ -2739,15 +2746,7 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             if (look.Sound)
                 b.ContentRendered += delegate { PlayChime(look); };   // once the banner is on screen, never before
 
-            if (Live(b))
-            {
-                if (liveTimer == null)
-                {
-                    liveTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(200) };
-                    liveTimer.Tick += delegate { LiveTick(); };
-                }
-                if (!liveTimer.IsEnabled) liveTimer.Start();
-            }
+            if (Live(b)) LiveStart();
             return b;
         }
 
@@ -2756,11 +2755,16 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
         // The glass shows what is behind the card where the card is now, also while it moves. A move (slide in, slide
         // out, a shift in the stack) captures one strip of the screen that covers the whole way, and the lens slides
         // across it frame by frame: on the GPU that is an offset, nothing is captured or uploaded per frame. Banners
-        // that stand still are captured again every 200 ms, all of them in one capture, and Bake leaves alone
-        // whatever came out the same. Nothing of this runs while no live banner is on screen. Off: as before.
+        // that stand still are captured again at the rate picked in the settings (Look.LiveFps), all of them in one
+        // capture, and Bake leaves alone whatever came out the same. Those captures follow WPF's frames rather than
+        // a timer, which ticks every 15.6 ms at best and so could not hold 60 per second. Nothing of this runs while
+        // no live banner is on screen. Off: as before.
 
         readonly List<Banner> moving = new List<Banner>();
-        DispatcherTimer liveTimer;
+        readonly Stopwatch liveClock = new Stopwatch(), liveWindow = new Stopwatch();
+        bool liveHooked, liveTrace, liveBusy;
+        int liveCount;
+        double liveMs, liveSnapMs, liveDue;
 
         static bool Live(Banner b) { return b.Look.LiveBackdrop && b.Look.Glass; }
 
@@ -2814,35 +2818,111 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             if (moving.Count == 0) CompositionTarget.Rendering -= OnLiveFrame;
         }
 
-        void LiveTick()
+        void LiveStart()
         {
-            var still = active.Where(b => Live(b) && b.Settled && !moving.Contains(b)).ToList();
-            if (still.Count > 0) LiveRefresh(still);
-            else if (moving.Count == 0 && !active.Any(Live)) liveTimer.Stop();
+            if (liveHooked) return;
+            liveHooked = true;
+            liveTrace = File.Exists(TraceFlag);
+            liveClock.Restart();
+            liveDue = 0;
+            CompositionTarget.Rendering += OnLiveStill;
         }
 
-        // one capture for all of them, cut into card-sized views
-        void LiveRefresh(List<Banner> banners)
+        void OnLiveStill(object sender, EventArgs e)
         {
+            var live = active.Where(Live).ToList();
+            if (live.Count == 0) { CompositionTarget.Rendering -= OnLiveStill; liveHooked = false; return; }
+            if (liveBusy) return;   // the last capture is still on its way
+            // Refreshes can only happen on frames, so each one is due a fixed step after the one before: on average that
+            // gives the picked rate on a 60 Hz screen as well as on a 75 or 144 Hz one (2 ms early still counts).
+            double now = liveClock.Elapsed.TotalMilliseconds;
+            if (now + 2 < liveDue) return;
+            var still = live.Where(b => b.Settled && !moving.Contains(b)).ToList();
+            if (still.Count == 0) return;
+            liveDue = Math.Max(liveDue + 1000.0 / live.Max(b => b.Look.LiveFps), now);   // a late frame does not start a burst
             double scale = Scale();
-            Rect all = Rect.Empty;
-            Look widest = banners[0].Look;   // the biggest blur needs the widest margin
+            Rect all;
+            Look widest;
+            LiveArea(still, out all, out widest);
+            var at = still.Select(CardAt).ToList();
+            if (Banner.Capturable) { LiveApply(still, at, all, scale, Snap(all, scale, widest)); return; }   // a test setting
+            // A screen capture waits about 11 ms for the compositor, and the bake after it takes well under 1 ms. So the
+            // capture runs on a pool thread and only the bake comes back here: the frames go on meanwhile, which is what
+            // lets 60 per second happen at all.
+            liveBusy = true;
+            var took = liveTrace ? Stopwatch.StartNew() : null;
+            ThreadPool.QueueUserWorkItem(delegate
+            {
+                Cap shot = null;
+                try { shot = Glass.FromScreen(all, scale, widest); } catch { }
+                double snapMs = took != null ? took.Elapsed.TotalMilliseconds : 0;
+                ui.BeginInvoke(new Action(delegate
+                {
+                    liveBusy = false;
+                    if (shot == null) return;
+                    // a banner that has started to move or has closed meanwhile is the business of its move or its fade
+                    var keep = new List<Banner>();
+                    var keepAt = new List<Point>();
+                    for (int i = 0; i < still.Count; i++)
+                        if (active.Contains(still[i]) && !moving.Contains(still[i]) && CardAt(still[i]) == at[i]) { keep.Add(still[i]); keepAt.Add(at[i]); }
+                    LiveApply(keep, keepAt, all, scale, shot);
+                    if (took != null) LiveTrace(took.Elapsed.TotalMilliseconds, snapMs, keep.Count);
+                }));
+            });
+        }
+
+        // with trace.flag: once a second, how many refreshes there were and what one cost
+        void LiveTrace(double ms, double snapMs, int banners)
+        {
+            liveCount++;
+            liveMs += ms;
+            liveSnapMs += snapMs;
+            if (!liveWindow.IsRunning) liveWindow.Restart();
+            if (liveWindow.ElapsedMilliseconds < 1000) return;
+            Log.Write("live: " + liveCount + " refreshes in " + liveWindow.ElapsedMilliseconds + " ms, " +
+                (liveMs / liveCount).ToString("0.0", CultureInfo.InvariantCulture) + " ms each (capture " +
+                (liveSnapMs / liveCount).ToString("0.0", CultureInfo.InvariantCulture) + "), " + banners + " banner(s)");
+            liveCount = 0;
+            liveMs = 0;
+            liveSnapMs = 0;
+            liveWindow.Restart();
+        }
+
+        // the screen area that covers the cards, and the look with the biggest blur (it needs the widest margin)
+        static void LiveArea(List<Banner> banners, out Rect all, out Look widest)
+        {
+            all = Rect.Empty;
+            widest = banners[0].Look;
             foreach (var b in banners)
             {
                 all.Union(CardRect(b, CardAt(b)));
                 if (Glass.Sigma(b.Look, 1) > Glass.Sigma(widest, 1)) widest = b.Look;
             }
-            Cap shot = Snap(all, scale, widest);
+        }
+
+        // one capture for all of them, cut into card-sized views (at: where each card was when it was captured)
+        void LiveApply(List<Banner> banners, List<Point> at, Rect all, double scale, Cap shot)
+        {
             if (shot == null) return;
-            foreach (var b in banners)
+            for (int i = 0; i < banners.Count; i++)
             {
-                Point at = CardAt(b);
-                b.Card.Bake(shot.View((int)Math.Round((at.X - all.X) * scale), (int)Math.Round((at.Y - all.Y) * scale),
+                var b = banners[i];
+                b.Card.Bake(shot.View((int)Math.Round((at[i].X - all.X) * scale), (int)Math.Round((at[i].Y - all.Y) * scale),
                     Math.Max(1, (int)Math.Round(Banner.CardW * scale)), Math.Max(1, (int)Math.Round(b.CardHeight * scale))), scale);
-                b.StripRect = CardRect(b, at);
-                b.LiveOrigin = at;
-                b.BakedSlotY = at.Y;
+                b.StripRect = CardRect(b, at[i]);
+                b.LiveOrigin = at[i];
+                b.BakedSlotY = at[i].Y;
             }
+        }
+
+        // right now, on this thread: for banners that have just arrived
+        void LiveRefresh(List<Banner> banners)
+        {
+            double scale = Scale();
+            Rect all;
+            Look widest;
+            LiveArea(banners, out all, out widest);
+            LiveApply(banners, banners.Select(CardAt).ToList(), all, scale, Snap(all, scale, widest));
         }
 
         // on a pool thread: reading the system volume and building the wav take a few ms the UI thread does not wait for

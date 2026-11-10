@@ -66,9 +66,12 @@ quality.3 = Ultra
 quality.0.note = Lightest: no refraction, one shadow, background at half resolution.
 quality.1.note = The edges refract the background, but without the colored fringe.
 quality.2.note = A lens with a colored fringe at full resolution.
-quality.3.note = Most accurate and heaviest: smoothed edges, live background.
+quality.3.note = Most accurate and heaviest: smoothed edges and a finer colored fringe.
 settings.live = Live background
 settings.liveHint = The glass keeps adjusting to what is behind it, even while the banner moves. Uses more power.
+# under the live background switch: a label (max 22) next to the four rates 10, 20, 30, 60, and a note under them
+settings.liveFps = Frames per second
+settings.liveFpsHint = Higher is smoother but uses more processor time.
 settings.color = Color
 # tooltip of the first color swatch, and the color heading while it is picked
 color.auto = Auto (follows the Windows theme)

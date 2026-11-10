@@ -431,6 +431,8 @@ namespace GlassBell
         readonly CheckBox master = new CheckBox { Style = null };
         readonly CheckBox soundOn = new CheckBox(), soundAdapt = new CheckBox(), liveSwitch = new CheckBox();
         readonly Grid liveRow = new Grid();
+        readonly StackPanel liveFpsRow = new StackPanel();
+        readonly List<RadioButton> fpsButtons = new List<RadioButton>();
         readonly TextBlock qualityNote = new TextBlock(), timing = new TextBlock();
         TextBlock colorName;   // created by Section(), which hands it out
         readonly TextBox hex = new TextBox();
@@ -890,6 +892,36 @@ namespace GlassBell
             liveRow.Children.Add(liveSwitch);
             p.Children.Add(liveRow);
 
+            // how often the live glass of a banner that stands still is captured again
+            liveFpsRow.Margin = new Thickness(0, 10, 0, 0);
+            var fpsLine = new Grid();
+            fpsLine.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            fpsLine.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            fpsLine.Children.Add(new TextBlock { Text = L.T("settings.liveFps"), FontSize = 12.5, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 12, 0), TextWrapping = TextWrapping.Wrap });
+            var fpsSeg = new UniformGrid { Rows = 1 };
+            var fpsHost = new Border { Background = Hue("#1C1C1E"), CornerRadius = new CornerRadius(9), Padding = new Thickness(3), Child = fpsSeg, Width = 184 };
+            for (int i = 0; i < Settings.LiveRates.Length; i++)
+            {
+                int rate = Settings.LiveRates[i];
+                var rb = new RadioButton
+                {
+                    Content = rate.ToString(), GroupName = "livefps", Style = (Style)FindResource("Seg"), IsChecked = rate == Settings.LiveFps,
+                    Margin = new Thickness(i > 0 ? 2 : 0, 0, 0, 0)
+                };
+                rb.Checked += delegate { if (!loading) { Settings.LiveFps = rate; Changed(); } };
+                AutomationProperties.SetName(rb, L.T("settings.liveFps") + " " + rate);
+                AutomationProperties.SetAutomationId(rb, "livefps" + rate);
+                fpsButtons.Add(rb);
+                fpsSeg.Children.Add(rb);
+            }
+            Grid.SetColumn(fpsHost, 1);
+            fpsLine.Children.Add(fpsHost);
+            liveFpsRow.Children.Add(fpsLine);
+            var fpsHint = Gray(L.T("settings.liveFpsHint"), 11.5);
+            fpsHint.Margin = new Thickness(0, 5, 0, 0);
+            liveFpsRow.Children.Add(fpsHint);
+            p.Children.Add(liveFpsRow);
+
             p.Children.Add(Section(L.T("settings.color"), out colorName, 18));
             var wrap = new WrapPanel();
             foreach (var sw in Swatches)
@@ -1104,6 +1136,7 @@ namespace GlassBell
         {
             qualityNote.Text = QualityNotes[Math.Max(0, Math.Min(3, Settings.Quality))];
             liveRow.IsEnabled = Settings.Glass;
+            liveFpsRow.IsEnabled = Settings.Glass && Settings.LiveBackground;
             foreach (var r in rows)
             {
                 bool off = r.GlassOnly && !Settings.Glass;
@@ -1130,6 +1163,7 @@ namespace GlassBell
             for (int i = 0; i < qualityButtons.Count; i++) qualityButtons[i].IsChecked = i == Settings.Quality;
             hex.Text = Settings.ColorSpec == "auto" ? "" : Settings.ColorSpec;
             liveSwitch.IsChecked = Settings.LiveBackground;
+            foreach (var rb in fpsButtons) rb.IsChecked = (string)rb.Content == Settings.LiveFps.ToString();
             foreach (var r in rows) { r.Slider.Value = r.Get(); r.Value.Text = (int)r.Slider.Value + "%"; }
             soundOn.IsChecked = Settings.Sound;
             soundAdapt.IsChecked = Settings.SoundAdapt;
@@ -1143,7 +1177,7 @@ namespace GlassBell
 
         void ResetTab()
         {
-            if (tab == 0) { Settings.Quality = 2; Settings.LiveBackground = false; Settings.ColorSpec = "auto"; Settings.TintIntensity = 60; Settings.Intensity = 60; Settings.Blur = 35; }
+            if (tab == 0) { Settings.Quality = 2; Settings.LiveBackground = false; Settings.LiveFps = 30; Settings.ColorSpec = "auto"; Settings.TintIntensity = 60; Settings.Intensity = 60; Settings.Blur = 35; }
             else if (tab == 1) { Settings.ShadowIntensity = 40; Settings.ShadowSoftness = 60; Settings.ShadowOffset = 40; }
             else { Settings.Sound = true; Settings.SoundStyle = 1; Settings.SoundVolume = 65; Settings.SoundAdapt = true; }
             Sync();
@@ -1152,7 +1186,7 @@ namespace GlassBell
         void ResetAll()
         {
             Settings.Glass = true;
-            Settings.Quality = 2; Settings.LiveBackground = false; Settings.ColorSpec = "auto"; Settings.TintIntensity = 60; Settings.Intensity = 60; Settings.Blur = 35;
+            Settings.Quality = 2; Settings.LiveBackground = false; Settings.LiveFps = 30; Settings.ColorSpec = "auto"; Settings.TintIntensity = 60; Settings.Intensity = 60; Settings.Blur = 35;
             Settings.ShadowIntensity = 40; Settings.ShadowSoftness = 60; Settings.ShadowOffset = 40;
             Settings.Sound = true; Settings.SoundStyle = 1; Settings.SoundVolume = 65; Settings.SoundAdapt = true;
             Sync();
