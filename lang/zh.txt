@@ -1,0 +1,123 @@
+# GlassBell: 简体中文
+
+# ---- banners ----
+banner.app = 通知
+banner.now = 刚刚
+preview.title = 预览
+preview.body = 按你的设置，横幅会显示成这样。
+test.title1 = 一切正常
+test.body1 = 现在所有应用的通知都是这个样子，而且会立即出现。
+test.title2 = 俊杰
+test.body2 = 在吗？有空的话帮我看看我刚才发给你的东西呗——这条消息我特意写得很长很长，两行字肯定放不下，后面的部分应该会被省略掉。
+
+# ---- tray icon menu ----
+tray.settings = 设置…
+tray.test = 测试通知
+tray.autostart = 随 Windows 启动
+tray.exit = 退出
+
+# ---- message boxes ----
+msg.sandboxed = 此副本是从打包应用（MSIX）内部启动的：从这里写入的启动项不会被 Windows 识别。\n\n请在文件资源管理器中双击此程序来启动它。
+msg.autostartFailed = 无法将启动项写入注册表。
+msg.installed = GlassBell 正在运行，并将随 Windows 启动。\n\n“随 Windows 启动”开关和各项设置都在时钟旁边 GlassBell 图标的菜单中。
+msg.uninstalled = 已关闭“随 Windows 启动”，GlassBell 也已退出。
+
+# ---- settings window ----
+settings.title = GlassBell 设置
+settings.backdrop = 背景：
+scene.0 = 日落
+scene.1 = 条纹和文字
+scene.2 = 浅色
+scene.3 = 夜晚
+settings.showBanner = 显示通知
+settings.glass = 玻璃效果
+settings.glassHint = 统一应用于所有通知
+settings.glassTip = 横幅的玻璃外观：边缘透镜、高光和模糊背景。关闭后为扁平卡片。
+settings.needsGlass = 需要开启玻璃效果
+tab.glass = 玻璃
+tab.shadow = 阴影
+tab.sound = 声音
+settings.resetTab = 重置此选项卡
+settings.resetAll = 全部重置
+card.1 = 边缘的透镜、沿轮廓的高光和柔和的阴影。用鼠标拖动我试试。
+card.2.title = 玻璃
+card.2 = 玻璃会折射下方的内容：背景在边缘处微微弯曲，高光沿着轮廓流动。
+card.3.title = 胶囊
+settings.quality = 图形质量
+quality.0 = 低
+quality.1 = 中
+quality.2 = 高
+quality.3 = 超高
+quality.0.note = 最轻量：无折射、单层阴影、背景使用一半分辨率。
+quality.1.note = 边缘会折射背景，但没有色散彩边。
+quality.2.note = 带色散彩边的透镜，以全分辨率渲染。
+quality.3.note = 最精确，也最耗资源：边缘平滑，背景实时更新。
+settings.live = 实时背景
+settings.liveHint = 即使在横幅移动时，玻璃也会根据其后方的内容持续调整。会消耗更多电量。
+settings.color = 颜色
+color.auto = 自动（跟随 Windows 主题）
+color.autoName = 自动——跟随 Windows 主题
+color.1 = 石墨色
+color.2 = 黑色
+color.3 = 白色
+color.4 = 蓝色
+color.5 = 靛蓝色
+color.6 = 绿色
+color.7 = 橙色
+color.8 = 红色
+color.9 = 粉色
+settings.customColor = 自定义颜色
+settings.hexTip = 颜色，格式为 #RRGGBB
+slider.tint = 颜色强度
+slider.tint.note = 0% 时为无色的透明玻璃
+slider.glass = 玻璃强度
+slider.glass.note = 透镜、色散彩边和高光的强度
+slider.blur = 背景模糊
+slider.blur.note = 0% 时不模糊，只保留透镜效果
+slider.shadow = 强度
+slider.shadow.note = 阴影的深浅
+slider.softness = 柔和度
+slider.softness.note = 阴影扩散的范围
+slider.offset = 向下偏移
+slider.offset.note = 阴影相对卡片向下偏移的距离
+settings.shadowHint = 在浅色背景上，阴影会自动变淡。
+settings.sound = 通知声音
+settings.melody = 铃声
+chime.0 = 水晶
+chime.0.note = 两个玻璃般清脆的音
+chime.1 = 丝绸
+chime.1.note = 由三个音组成的柔和上行颤音
+chime.2 = 水滴
+chime.2.note = 一个音，随后一声轻柔的回应
+settings.listen = 试听
+settings.listenTo = 试听“{0}”
+slider.volume = 音量
+slider.volume.note = 扬声器端的音量，而非文件本身的音量
+settings.adapt = 根据系统音量调整
+settings.adaptHint = 系统音量大时更轻，系统音量小时更响
+timing.cpu = 单核负载 {0}%
+timing.bake = 玻璃重绘 {0} 毫秒
+
+# ---- installer ----
+setup.title = GlassBell {0} 安装程序
+setup.tagline = 以玻璃横幅显示 Windows 通知
+setup.folder = 安装位置：
+setup.autostart = 随 Windows 启动
+setup.desktop = 创建桌面快捷方式
+setup.install = 安装
+setup.update = 更新
+setup.cancel = 取消
+setup.working = 正在安装…
+setup.done = GlassBell 已安装
+setup.doneHint = 它的图标在时钟旁边。若不想同时显示 Windows 自带的横幅，请打开“请勿打扰”：设置 → 系统 → 通知。
+setup.open = 打开设置
+setup.close = 关闭
+setup.failed = 无法安装 GlassBell：\n{0}
+setup.sandboxed = 安装程序是从打包应用（MSIX）内部启动的，因此 Windows 将无法识别安装的程序。\n\n请在文件资源管理器中双击 GlassBell-Setup.exe 来启动它。
+setup.needWin11 = GlassBell 仅支持 Windows 11。
+setup.uninstallTitle = 卸载 GlassBell
+setup.uninstallAsk = 要从这台电脑上移除 GlassBell 吗？
+setup.removeSettings = 同时删除我的设置
+setup.uninstall = 卸载
+setup.uninstalled = GlassBell 已移除。
+setup.uninstallFailed = 无法完全移除 GlassBell：\n{0}

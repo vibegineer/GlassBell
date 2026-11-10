@@ -1,0 +1,123 @@
+# GlassBell: українська
+
+# ---- banners ----
+banner.app = Сповіщення
+banner.now = зараз
+preview.title = Попередній перегляд
+preview.body = Так виглядає банер із вашими настройками.
+test.title1 = Усе працює
+test.body1 = Тепер так виглядають сповіщення всіх програм, і з’являються вони миттєво.
+test.title2 = Андрій
+test.body2 = Ти тут? Глянь, будь ласка, що я скинув — там довге повідомлення, яке не має влазити в два рядки тексту.
+
+# ---- tray icon menu ----
+tray.settings = Настройки…
+tray.test = Тестове сповіщення
+tray.autostart = Запускати разом із Windows
+tray.exit = Вихід
+
+# ---- message boxes ----
+msg.sandboxed = Цю копію запущено зсередини упакованої програми (MSIX): запис автозавантаження, зроблений звідси, Windows не побачить.\n\nЗапустіть програму, двічі клацнувши її в Провіднику файлів.
+msg.autostartFailed = Не вдалося записати автозавантаження в реєстр.
+msg.installed = GlassBell працює й запускатиметься разом із Windows.\n\nПеремикач автозавантаження й настройки — у меню його значка біля годинника.
+msg.uninstalled = Автозавантаження вимкнено, GlassBell закрито.
+
+# ---- settings window ----
+settings.title = GlassBell — настройки
+settings.backdrop = Фон:
+scene.0 = Захід сонця
+scene.1 = Смуги й текст
+scene.2 = Світлий
+scene.3 = Ніч
+settings.showBanner = Показати сповіщення
+settings.glass = Ефект скла
+settings.glassHint = Застосовується відразу до всіх сповіщень
+settings.glassTip = Скляний вигляд банерів: лінза по краях, відблиски й розмитий фон. Вимкнено — пласка картка.
+settings.needsGlass = Потрібен ефект скла
+tab.glass = Скло
+tab.shadow = Тінь
+tab.sound = Звук
+settings.resetTab = Скинути вкладку
+settings.resetAll = Скинути все
+card.1 = Лінза по краях, відблиски й м’яка тінь. Перетягуйте мене мишею.
+card.2.title = Скло
+card.2 = Скло заломлює те, що під ним: біля країв фон злегка вигинається, а відблиски біжать уздовж контуру.
+card.3.title = Капсула
+settings.quality = Якість графіки
+quality.0 = Низька
+quality.1 = Середня
+quality.2 = Висока
+quality.3 = Ультра
+quality.0.note = Найлегша: без заломлення, одна тінь, фон із половинною роздільною здатністю.
+quality.1.note = Краї заломлюють фон, але без кольорової облямівки.
+quality.2.note = Лінза з кольоровою облямівкою в повній роздільній здатності.
+quality.3.note = Найточніша й найважча: згладжені краї, живий фон.
+settings.live = Живий фон
+settings.liveHint = Скло постійно підлаштовується під те, що за ним, навіть поки банер рухається. Споживає більше енергії.
+settings.color = Колір
+color.auto = Авто (за темою Windows)
+color.autoName = Авто — за темою Windows
+color.1 = Графіт
+color.2 = Чорний
+color.3 = Білий
+color.4 = Синій
+color.5 = Індиго
+color.6 = Зелений
+color.7 = Помаранчевий
+color.8 = Червоний
+color.9 = Рожевий
+settings.customColor = Свій колір
+settings.hexTip = Колір у форматі #RRGGBB
+slider.tint = Інтенсивність кольору
+slider.tint.note = 0% — чисте скло без кольору
+slider.glass = Інтенсивність скла
+slider.glass.note = Сила лінзи, кольорової облямівки та відблисків
+slider.blur = Розмиття фону
+slider.blur.note = 0% — без розмиття, залишається тільки лінза
+slider.shadow = Сила
+slider.shadow.note = Наскільки темна тінь
+slider.softness = М’якість
+slider.softness.note = Наскільки далеко розходиться тінь
+slider.offset = Зсув униз
+slider.offset.note = Наскільки тінь зсунута вниз від картки
+settings.shadowHint = Над світлим фоном тінь автоматично стає слабшою.
+settings.sound = Звук сповіщення
+settings.melody = Мелодія
+chime.0 = Кришталь
+chime.0.note = Дві скляні ноти
+chime.1 = Шовк
+chime.1.note = М’яка висхідна трель із трьох нот
+chime.2 = Крапля
+chime.2.note = Одна нота й тиха відповідь
+settings.listen = Прослухати
+settings.listenTo = Прослухати: {0}
+slider.volume = Гучність
+slider.volume.note = Рівень на динаміках, а не у файлі
+settings.adapt = Підлаштовувати під гучність системи
+settings.adaptHint = Тихіше, коли система гучна, і гучніше, коли тиха
+timing.cpu = навантаження {0}% ядра
+timing.bake = перерахунок скла {0} мс
+
+# ---- installer ----
+setup.title = Інсталяція GlassBell {0}
+setup.tagline = Сповіщення Windows у вигляді скляних банерів
+setup.folder = Папка інсталяції:
+setup.autostart = Запускати разом із Windows
+setup.desktop = Ярлик на робочому столі
+setup.install = Інсталювати
+setup.update = Оновити
+setup.cancel = Скасувати
+setup.working = Інсталяція…
+setup.done = GlassBell інстальовано
+setup.doneHint = Його значок — біля годинника. Щоб стандартні банери Windows теж не з’являлися, увімкніть режим «Не турбувати»: Настройки → Система → Сповіщення.
+setup.open = Відкрити настройки
+setup.close = Закрити
+setup.failed = Не вдалося інсталювати GlassBell:\n{0}
+setup.sandboxed = Інсталятор запущено зсередини упакованої програми (MSIX), тому Windows не побачила б інстальовану програму.\n\nЗапустіть GlassBell-Setup.exe, двічі клацнувши його в Провіднику файлів.
+setup.needWin11 = GlassBell працює лише у Windows 11.
+setup.uninstallTitle = Видалення GlassBell
+setup.uninstallAsk = Видалити GlassBell із цього комп’ютера?
+setup.removeSettings = Також видалити мої настройки
+setup.uninstall = Видалити
+setup.uninstalled = GlassBell видалено.
+setup.uninstallFailed = Не вдалося повністю видалити GlassBell:\n{0}

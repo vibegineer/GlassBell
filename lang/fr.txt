@@ -1,0 +1,123 @@
+# GlassBell: Français
+
+# ---- banners ----
+banner.app = Notification
+banner.now = maintenant
+preview.title = Aperçu
+preview.body = Voici à quoi ressemble une bannière avec vos paramètres.
+test.title1 = Tout fonctionne
+test.body1 = Les notifications de toutes les applications ont désormais cet aspect et s'affichent aussitôt.
+test.title2 = Julien
+test.body2 = Tu es là ? Jette un œil à ce que je t'ai envoyé, s'il te plaît — c'est un long message qui ne devrait pas tenir sur deux lignes de texte.
+
+# ---- tray icon menu ----
+tray.settings = Paramètres…
+tray.test = Notification de test
+tray.autostart = Lancer au démarrage de Windows
+tray.exit = Quitter
+
+# ---- message boxes ----
+msg.sandboxed = Cette copie a été lancée depuis une application empaquetée (MSIX) : une entrée de démarrage créée d'ici resterait invisible pour Windows.\n\nLancez le programme en double-cliquant dessus dans l'Explorateur de fichiers.
+msg.autostartFailed = Impossible d'écrire l'entrée de démarrage dans le Registre.
+msg.installed = GlassBell est lancé et démarrera avec Windows.\n\nL'option de lancement au démarrage et les paramètres se trouvent dans le menu de son icône, à côté de l'horloge.
+msg.uninstalled = Le lancement au démarrage de Windows est désactivé et GlassBell est fermé.
+
+# ---- settings window ----
+settings.title = GlassBell — Paramètres
+settings.backdrop = Fond :
+scene.0 = Crépuscule
+scene.1 = Rayures et texte
+scene.2 = Clair
+scene.3 = Nuit
+settings.showBanner = Afficher une bannière
+settings.glass = Effet de verre
+settings.glassHint = S'applique à toutes les notifications à la fois
+settings.glassTip = Aspect verre pour les bannières : lentille sur les bords, reflets et arrière-plan flou. Désactivé : une carte plate.
+settings.needsGlass = Nécessite l'effet de verre
+tab.glass = Verre
+tab.shadow = Ombre
+tab.sound = Son
+settings.resetTab = Rétablir l'onglet
+settings.resetAll = Tout rétablir
+card.1 = Lentille aux bords, reflets et ombre douce. Faites-moi glisser à la souris.
+card.2.title = Verre
+card.2 = Le verre réfracte ce qui se trouve dessous : l'arrière-plan se courbe légèrement sur les bords et des reflets parcourent le contour.
+card.3.title = Capsule
+settings.quality = Qualité graphique
+quality.0 = Basse
+quality.1 = Moyenne
+quality.2 = Haute
+quality.3 = Ultra
+quality.0.note = La plus légère : pas de réfraction, une seule ombre, arrière-plan en demi-résolution.
+quality.1.note = Les bords réfractent l'arrière-plan, mais sans la frange colorée.
+quality.2.note = Une lentille avec frange colorée, en pleine résolution.
+quality.3.note = La plus fidèle et la plus gourmande : bords lissés, arrière-plan en temps réel.
+settings.live = Arrière-plan en temps réel
+settings.liveHint = Le verre s'adapte en permanence à ce qui se trouve derrière lui, même pendant que la bannière se déplace. Consomme plus d'énergie.
+settings.color = Couleur
+color.auto = Automatique (selon le thème de Windows)
+color.autoName = Automatique — selon le thème de Windows
+color.1 = Graphite
+color.2 = Noir
+color.3 = Blanc
+color.4 = Bleu
+color.5 = Indigo
+color.6 = Vert
+color.7 = Orange
+color.8 = Rouge
+color.9 = Rose
+settings.customColor = Personnalisée
+settings.hexTip = Couleur au format #RRGGBB
+slider.tint = Intensité de la couleur
+slider.tint.note = 0 % — verre transparent, sans couleur
+slider.glass = Intensité du verre
+slider.glass.note = Force de la lentille, de la frange colorée et des reflets
+slider.blur = Flou d'arrière-plan
+slider.blur.note = 0 % — aucun flou, il ne reste que la lentille
+slider.shadow = Intensité
+slider.shadow.note = À quel point l'ombre est foncée
+slider.softness = Douceur
+slider.softness.note = Jusqu'où l'ombre s'étend
+slider.offset = Décalage
+slider.offset.note = De combien l'ombre descend sous la carte
+settings.shadowHint = Sur un arrière-plan clair, l'ombre s'éclaircit automatiquement.
+settings.sound = Son de notification
+settings.melody = Mélodie
+chime.0 = Cristal
+chime.0.note = Deux notes cristallines
+chime.1 = Soie
+chime.1.note = Un doux trille ascendant de trois notes
+chime.2 = Goutte
+chime.2.note = Une note et une réponse discrète
+settings.listen = Écouter
+settings.listenTo = Écouter {0}
+slider.volume = Volume
+slider.volume.note = Le niveau dans les haut-parleurs, pas dans le fichier
+settings.adapt = S'adapter au volume du système
+settings.adaptHint = Plus bas quand le volume du système est élevé, plus haut quand il est faible
+timing.cpu = charge {0} % d'un cœur
+timing.bake = rendu du verre {0} ms
+
+# ---- installer ----
+setup.title = Installation de GlassBell {0}
+setup.tagline = Les notifications de Windows en bannières de verre
+setup.folder = Dossier d'installation :
+setup.autostart = Lancer au démarrage de Windows
+setup.desktop = Raccourci sur le Bureau
+setup.install = Installer
+setup.update = Mettre à jour
+setup.cancel = Annuler
+setup.working = Installation en cours…
+setup.done = GlassBell est installé
+setup.doneHint = Son icône se trouve à côté de l'horloge. Pour que les bannières de Windows ne s'affichent pas en plus, activez « Ne pas déranger » : Paramètres → Système → Notifications.
+setup.open = Ouvrir les paramètres
+setup.close = Fermer
+setup.failed = Impossible d'installer GlassBell :\n{0}
+setup.sandboxed = Le programme d'installation a été lancé depuis une application empaquetée (MSIX) : Windows ne verrait donc pas le programme installé.\n\nLancez GlassBell-Setup.exe en double-cliquant dessus dans l'Explorateur de fichiers.
+setup.needWin11 = GlassBell fonctionne uniquement sous Windows 11.
+setup.uninstallTitle = Désinstaller GlassBell
+setup.uninstallAsk = Supprimer GlassBell de cet ordinateur ?
+setup.removeSettings = Supprimer aussi mes paramètres
+setup.uninstall = Désinstaller
+setup.uninstalled = GlassBell a été désinstallé.
+setup.uninstallFailed = Impossible de supprimer complètement GlassBell :\n{0}

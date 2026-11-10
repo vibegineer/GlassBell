@@ -1,0 +1,123 @@
+# GlassBell: हिंदी
+
+# ---- banners ----
+banner.app = सूचना
+banner.now = अभी
+preview.title = पूर्वावलोकन
+preview.body = आपकी सेटिंग्स के साथ बैनर ऐसा दिखता है।
+test.title1 = यह काम कर रहा है
+test.body1 = अब हर ऐप की सूचनाएँ ऐसी दिखती हैं, और वे तुरंत सामने आती हैं।
+test.title2 = राहुल
+test.body2 = अरे, हो क्या? प्लीज़ ज़रा देखना कि मैंने क्या भेजा है — ये एक लंबा मैसेज है, जो टेक्स्ट की दो लाइनों में फ़िट नहीं होना चाहिए।
+
+# ---- tray icon menu ----
+tray.settings = सेटिंग्स…
+tray.test = परीक्षण सूचना
+tray.autostart = Windows के साथ प्रारंभ करें
+tray.exit = बाहर निकलें
+
+# ---- message boxes ----
+msg.sandboxed = यह कॉपी पैकेज किए गए (MSIX) ऐप के अंदर से प्रारंभ की गई है: यहाँ से लिखी गई स्टार्टअप प्रविष्टि Windows को नहीं दिखेगी।\n\nप्रोग्राम को फ़ाइल एक्सप्लोरर में डबल-क्लिक करके प्रारंभ करें।
+msg.autostartFailed = रजिस्ट्री में स्टार्टअप प्रविष्टि नहीं लिखी जा सकी।
+msg.installed = GlassBell चल रहा है और Windows के साथ प्रारंभ होगा।\n\nस्टार्टअप स्विच और सेटिंग्स घड़ी के पास इसके आइकन के मेनू में हैं।
+msg.uninstalled = Windows के साथ प्रारंभ होना बंद कर दिया गया है, और GlassBell बंद हो गया है।
+
+# ---- settings window ----
+settings.title = GlassBell — सेटिंग्स
+settings.backdrop = पृष्ठभूमि:
+scene.0 = सूर्यास्त
+scene.1 = धारियाँ और टेक्स्ट
+scene.2 = हल्का
+scene.3 = रात
+settings.showBanner = सूचना दिखाएँ
+settings.glass = काँच प्रभाव
+settings.glassHint = सभी सूचनाओं पर एक साथ लागू होता है
+settings.glassTip = बैनरों के लिए काँच जैसा रूप: किनारों पर लेंस, चमक और धुंधली पृष्ठभूमि। बंद होने पर: सपाट कार्ड।
+settings.needsGlass = काँच प्रभाव आवश्यक है
+tab.glass = काँच
+tab.shadow = छाया
+tab.sound = ध्वनि
+settings.resetTab = टैब रीसेट करें
+settings.resetAll = सभी रीसेट करें
+card.1 = किनारों पर लेंस, रूपरेखा के साथ-साथ चमक और कोमल छाया। मुझे माउस से खींचें।
+card.2.title = काँच
+card.2 = काँच अपने नीचे की चीज़ों को अपवर्तित करता है: किनारों पर पृष्ठभूमि थोड़ी मुड़ जाती है, और चमक रूपरेखा पर दौड़ती है।
+card.3.title = कैप्सूल
+settings.quality = ग्राफ़िक्स गुणवत्ता
+quality.0 = निम्न
+quality.1 = मध्यम
+quality.2 = उच्च
+quality.3 = अल्ट्रा
+quality.0.note = सबसे हल्का: अपवर्तन नहीं, एक छाया, आधे रिज़ॉल्यूशन पर पृष्ठभूमि।
+quality.1.note = किनारे पृष्ठभूमि को अपवर्तित करते हैं, लेकिन रंगीन किनारी के बिना।
+quality.2.note = पूर्ण रिज़ॉल्यूशन पर रंगीन किनारी वाला लेंस।
+quality.3.note = सबसे सटीक और सबसे भारी: चिकने किनारे, लाइव पृष्ठभूमि।
+settings.live = लाइव पृष्ठभूमि
+settings.liveHint = बैनर के चलते समय भी काँच अपने पीछे की चीज़ों के अनुसार लगातार ढलता रहता है। अधिक पावर का उपयोग करता है।
+settings.color = रंग
+color.auto = स्वचालित (Windows थीम के अनुसार)
+color.autoName = स्वचालित — Windows थीम के अनुसार
+color.1 = ग्रेफ़ाइट
+color.2 = काला
+color.3 = सफ़ेद
+color.4 = नीला
+color.5 = जामुनी
+color.6 = हरा
+color.7 = नारंगी
+color.8 = लाल
+color.9 = गुलाबी
+settings.customColor = कस्टम रंग
+settings.hexTip = #RRGGBB के रूप में रंग
+slider.tint = रंग की तीव्रता
+slider.tint.note = 0% — बिना रंग का साफ़ काँच
+slider.glass = काँच की तीव्रता
+slider.glass.note = लेंस, रंगीन किनारी और चमक की तीव्रता
+slider.blur = पृष्ठभूमि का धुंधलापन
+slider.blur.note = 0% — कोई धुंधलापन नहीं, केवल लेंस रहता है
+slider.shadow = तीव्रता
+slider.shadow.note = छाया कितनी गहरी है
+slider.softness = कोमलता
+slider.softness.note = छाया कितनी दूर तक फैलती है
+slider.offset = दूरी
+slider.offset.note = छाया कार्ड से कितनी नीचे पड़ती है
+settings.shadowHint = हल्की पृष्ठभूमि पर छाया अपने आप फीकी हो जाती है।
+settings.sound = सूचना ध्वनि
+settings.melody = धुन
+chime.0 = क्रिस्टल
+chime.0.note = काँच के दो सुर
+chime.1 = रेशम
+chime.1.note = तीन सुरों की कोमल, ऊपर चढ़ती तान
+chime.2 = बूँद
+chime.2.note = एक सुर और एक धीमा जवाब
+settings.listen = सुनें
+settings.listenTo = {0} सुनें
+slider.volume = वॉल्यूम
+slider.volume.note = स्पीकर पर आवाज़ का स्तर, फ़ाइल में नहीं
+settings.adapt = सिस्टम वॉल्यूम के अनुसार समायोजित करें
+settings.adaptHint = सिस्टम की आवाज़ तेज़ हो तो धीमी, धीमी हो तो तेज़
+timing.cpu = एक कोर का {0}% लोड
+timing.bake = काँच दोबारा बनाने में {0} मि.से.
+
+# ---- installer ----
+setup.title = GlassBell {0} सेटअप
+setup.tagline = काँच के बैनरों के रूप में Windows सूचनाएँ
+setup.folder = यहाँ इंस्टॉल होगा:
+setup.autostart = Windows के साथ प्रारंभ करें
+setup.desktop = डेस्कटॉप पर शॉर्टकट
+setup.install = इंस्टॉल करें
+setup.update = अपडेट करें
+setup.cancel = रद्द करें
+setup.working = इंस्टॉल हो रहा है…
+setup.done = GlassBell इंस्टॉल हो गया है
+setup.doneHint = इसका आइकन घड़ी के पास है। Windows के अपने बैनर भी न दिखें, इसके लिए "परेशान न करें" चालू करें: सेटिंग्स → सिस्टम → सूचनाएँ।
+setup.open = सेटिंग्स खोलें
+setup.close = बंद करें
+setup.failed = GlassBell इंस्टॉल नहीं किया जा सका:\n{0}
+setup.sandboxed = इंस्टॉलर पैकेज किए गए (MSIX) ऐप के अंदर से प्रारंभ किया गया है, इसलिए Windows इंस्टॉल किए गए प्रोग्राम को नहीं देख पाता।\n\nGlassBell-Setup.exe को फ़ाइल एक्सप्लोरर में डबल-क्लिक करके प्रारंभ करें।
+setup.needWin11 = GlassBell केवल Windows 11 पर काम करता है।
+setup.uninstallTitle = GlassBell अनइंस्टॉल करें
+setup.uninstallAsk = इस कंप्यूटर से GlassBell निकालें?
+setup.removeSettings = मेरी सेटिंग्स भी हटाएँ
+setup.uninstall = अनइंस्टॉल करें
+setup.uninstalled = GlassBell निकाल दिया गया है।
+setup.uninstallFailed = GlassBell को पूरी तरह नहीं निकाला जा सका:\n{0}

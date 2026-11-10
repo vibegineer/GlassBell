@@ -1,0 +1,123 @@
+# GlassBell: Polski
+
+# ---- banners ----
+banner.app = Powiadomienie
+banner.now = teraz
+preview.title = Podgląd
+preview.body = Tak wygląda baner przy obecnych ustawieniach.
+test.title1 = Wszystko działa
+test.body1 = Tak teraz wyglądają powiadomienia wszystkich aplikacji – i pojawiają się natychmiast.
+test.title2 = Tomek
+test.body2 = Jesteś tam? Zerknij, proszę, na to, co ci wysłałem – to długa wiadomość, która nie powinna się zmieścić w dwóch linijkach tekstu.
+
+# ---- tray icon menu ----
+tray.settings = Ustawienia…
+tray.test = Powiadomienie testowe
+tray.autostart = Uruchamiaj z systemem Windows
+tray.exit = Zakończ
+
+# ---- message boxes ----
+msg.sandboxed = Ta kopia została uruchomiona z wnętrza spakowanej aplikacji (MSIX): wpis autostartu zapisany stąd będzie niewidoczny dla systemu Windows.\n\nUruchom program, klikając go dwukrotnie w Eksploratorze plików.
+msg.autostartFailed = Nie udało się zapisać wpisu autostartu w rejestrze.
+msg.installed = GlassBell działa i będzie uruchamiany razem z systemem Windows.\n\nPrzełącznik autostartu i ustawienia znajdują się w menu ikony programu obok zegara.
+msg.uninstalled = Autostart z systemem Windows jest wyłączony, a program GlassBell został zamknięty.
+
+# ---- settings window ----
+settings.title = GlassBell – Ustawienia
+settings.backdrop = Tło:
+scene.0 = Zachód słońca
+scene.1 = Paski i tekst
+scene.2 = Jasne
+scene.3 = Noc
+settings.showBanner = Pokaż powiadomienie
+settings.glass = Efekt szkła
+settings.glassHint = Dotyczy wszystkich powiadomień naraz
+settings.glassTip = Szklany wygląd banerów: soczewka na krawędziach, refleksy i rozmyte tło. Wyłączone: płaska karta.
+settings.needsGlass = Wymaga efektu szkła
+tab.glass = Szkło
+tab.shadow = Cień
+tab.sound = Dźwięk
+settings.resetTab = Resetuj kartę
+settings.resetAll = Resetuj wszystko
+card.1 = Soczewka na krawędziach, refleksy i miękki cień. Przeciągnij mnie myszą.
+card.2.title = Szkło
+card.2 = Szkło załamuje to, co jest pod nim: przy krawędziach tło lekko się wygina, a refleksy biegną wzdłuż konturu.
+card.3.title = Kapsuła
+settings.quality = Jakość grafiki
+quality.0 = Niska
+quality.1 = Średnia
+quality.2 = Wysoka
+quality.3 = Ultra
+quality.0.note = Najlżejsza: bez załamania światła, jeden cień, tło w połowie rozdzielczości.
+quality.1.note = Krawędzie załamują tło, ale bez kolorowej obwódki.
+quality.2.note = Soczewka z kolorową obwódką w pełnej rozdzielczości.
+quality.3.note = Najdokładniejsza i najbardziej wymagająca: wygładzone krawędzie, tło na żywo.
+settings.live = Tło na żywo
+settings.liveHint = Szkło stale dopasowuje się do tego, co jest za nim, nawet gdy baner się przesuwa. Zużywa więcej energii.
+settings.color = Kolor
+color.auto = Automatyczny (według motywu systemu Windows)
+color.autoName = Automatyczny – według motywu systemu Windows
+color.1 = Grafitowy
+color.2 = Czarny
+color.3 = Biały
+color.4 = Niebieski
+color.5 = Indygo
+color.6 = Zielony
+color.7 = Pomarańczowy
+color.8 = Czerwony
+color.9 = Różowy
+settings.customColor = Własny kolor
+settings.hexTip = Kolor w formacie #RRGGBB
+slider.tint = Intensywność koloru
+slider.tint.note = 0% – przezroczyste szkło bez koloru
+slider.glass = Intensywność szkła
+slider.glass.note = Siła soczewki, kolorowej obwódki i refleksów
+slider.blur = Rozmycie tła
+slider.blur.note = 0% – bez rozmycia, zostaje tylko soczewka
+slider.shadow = Intensywność
+slider.shadow.note = Jak ciemny jest cień
+slider.softness = Miękkość
+slider.softness.note = Jak daleko rozchodzi się cień
+slider.offset = Przesunięcie
+slider.offset.note = Jak nisko pod kartą pada cień
+settings.shadowHint = Na jasnym tle cień automatycznie staje się jaśniejszy.
+settings.sound = Dźwięk powiadomienia
+settings.melody = Melodia
+chime.0 = Kryształ
+chime.0.note = Dwie szklane nuty
+chime.1 = Jedwab
+chime.1.note = Łagodny, wznoszący się tryl z trzech nut
+chime.2 = Kropla
+chime.2.note = Jedna nuta i cicha odpowiedź
+settings.listen = Odsłuchaj
+settings.listenTo = Odsłuchaj: {0}
+slider.volume = Głośność
+slider.volume.note = Poziom w głośnikach, a nie w pliku
+settings.adapt = Dopasowuj do głośności systemu
+settings.adaptHint = Ciszej, gdy system gra głośno, głośniej, gdy gra cicho
+timing.cpu = obciążenie {0}% rdzenia
+timing.bake = przerysowanie szkła {0} ms
+
+# ---- installer ----
+setup.title = Instalacja programu GlassBell {0}
+setup.tagline = Powiadomienia systemu Windows jako szklane banery
+setup.folder = Folder instalacji:
+setup.autostart = Uruchamiaj z systemem Windows
+setup.desktop = Skrót na pulpicie
+setup.install = Zainstaluj
+setup.update = Aktualizuj
+setup.cancel = Anuluj
+setup.working = Instalowanie…
+setup.done = Program GlassBell został zainstalowany
+setup.doneHint = Ikona programu znajduje się obok zegara. Aby banery systemu Windows nie pojawiały się dodatkowo, włącz tryb „Nie przeszkadzać”: Ustawienia → System → Powiadomienia.
+setup.open = Otwórz ustawienia
+setup.close = Zamknij
+setup.failed = Nie udało się zainstalować programu GlassBell:\n{0}
+setup.sandboxed = Instalator został uruchomiony z wnętrza spakowanej aplikacji (MSIX), więc system Windows nie widziałby zainstalowanego programu.\n\nUruchom plik GlassBell-Setup.exe, klikając go dwukrotnie w Eksploratorze plików.
+setup.needWin11 = GlassBell działa tylko w systemie Windows 11.
+setup.uninstallTitle = Odinstaluj program GlassBell
+setup.uninstallAsk = Usunąć program GlassBell z tego komputera?
+setup.removeSettings = Usuń także moje ustawienia
+setup.uninstall = Odinstaluj
+setup.uninstalled = Program GlassBell został usunięty.
+setup.uninstallFailed = Nie udało się całkowicie usunąć programu GlassBell:\n{0}

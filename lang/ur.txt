@@ -1,0 +1,123 @@
+# GlassBell: اردو
+
+# ---- banners ----
+banner.app = اطلاع
+banner.now = ابھی
+preview.title = پیش منظر
+preview.body = آپ کی ترتیبات کے ساتھ بینر ایسا نظر آتا ہے۔
+test.title1 = سب کچھ کام کر رہا ہے
+test.body1 = اب ہر ایپ کی اطلاعات ایسی نظر آتی ہیں، اور وہ فوراً ظاہر ہوتی ہیں۔
+test.title2 = علی
+test.body2 = سنو، ہو؟ پلیز ذرا دیکھو کہ میں نے تمہیں کیا بھیجا ہے — یہ کافی لمبا میسج ہے جو ٹیکسٹ کی دو لائنوں میں نہیں سمانا چاہیے۔
+
+# ---- tray icon menu ----
+tray.settings = ترتیبات…
+tray.test = آزمائشی اطلاع
+tray.autostart = Windows کے ساتھ شروع کریں
+tray.exit = خارج ہوں
+
+# ---- message boxes ----
+msg.sandboxed = یہ کاپی ایک پیکیج شدہ (MSIX) ایپ کے اندر سے شروع کی گئی ہے: یہاں سے لکھا گیا اسٹارٹ اپ اندراج Windows کو نظر نہیں آئے گا۔\n\nپروگرام کو فائل ایکسپلورر میں ڈبل کلک کر کے شروع کریں۔
+msg.autostartFailed = رجسٹری میں اسٹارٹ اپ اندراج نہیں لکھا جا سکا۔
+msg.installed = GlassBell چل رہا ہے اور Windows کے ساتھ شروع ہوگا۔\n\nاسٹارٹ اپ سوئچ اور ترتیبات گھڑی کے پاس اس کے آئیکن کے مینو میں ہیں۔
+msg.uninstalled = Windows کے ساتھ شروع ہونا بند کر دیا گیا ہے، اور GlassBell بند ہو گیا ہے۔
+
+# ---- settings window ----
+settings.title = GlassBell — ترتیبات
+settings.backdrop = پس منظر:
+scene.0 = غروب آفتاب
+scene.1 = دھاریاں اور متن
+scene.2 = روشن
+scene.3 = رات
+settings.showBanner = اطلاع دکھائیں
+settings.glass = شیشے کا اثر
+settings.glassHint = ایک ساتھ تمام اطلاعات پر لاگو ہوتا ہے
+settings.glassTip = بینرز کے لیے شیشے جیسی شکل: کناروں پر لینز، چمک اور دھندلا پس منظر۔ بند ہونے پر: سپاٹ کارڈ۔
+settings.needsGlass = شیشے کا اثر درکار ہے
+tab.glass = شیشہ
+tab.shadow = سایہ
+tab.sound = آواز
+settings.resetTab = ٹیب ری سیٹ کریں
+settings.resetAll = سب ری سیٹ کریں
+card.1 = کناروں پر لینز، چمک اور نرم سایہ۔ مجھے ماؤس سے گھسیٹیں۔
+card.2.title = شیشہ
+card.2 = شیشہ اپنے نیچے کی چیزوں کو منعطف کرتا ہے: کناروں پر پس منظر ہلکا سا مڑ جاتا ہے، اور چمک بیرونی لکیر کے ساتھ ساتھ دوڑتی ہے۔
+card.3.title = کیپسول
+settings.quality = گرافکس کا معیار
+quality.0 = کم
+quality.1 = درمیانہ
+quality.2 = اعلیٰ
+quality.3 = الٹرا
+quality.0.note = سب سے ہلکا: انعطاف نہیں، ایک سایہ، آدھی ریزولیوشن پر پس منظر۔
+quality.1.note = کنارے پس منظر کو منعطف کرتے ہیں، لیکن رنگین حاشیے کے بغیر۔
+quality.2.note = پوری ریزولیوشن پر رنگین حاشیے والا لینز۔
+quality.3.note = سب سے درست اور سب سے بھاری: ہموار کنارے، لائیو پس منظر۔
+settings.live = لائیو پس منظر
+settings.liveHint = بینر کے حرکت کرتے وقت بھی شیشہ اپنے پیچھے کی چیزوں کے مطابق مسلسل ڈھلتا رہتا ہے۔ زیادہ پاور استعمال کرتا ہے۔
+settings.color = رنگ
+color.auto = خودکار (Windows تھیم کے مطابق)
+color.autoName = خودکار — Windows تھیم کے مطابق
+color.1 = گریفائٹ
+color.2 = سیاہ
+color.3 = سفید
+color.4 = نیلا
+color.5 = جامنی
+color.6 = سبز
+color.7 = نارنجی
+color.8 = سرخ
+color.9 = گلابی
+settings.customColor = اپنا رنگ
+settings.hexTip = #RRGGBB کی شکل میں رنگ
+slider.tint = رنگ کی شدت
+slider.tint.note = 0% — بغیر رنگ کا صاف شیشہ
+slider.glass = شیشے کی شدت
+slider.glass.note = لینز، رنگین حاشیے اور چمک کی طاقت
+slider.blur = پس منظر کا دھندلا پن
+slider.blur.note = 0% — کوئی دھندلا پن نہیں، صرف لینز باقی رہتا ہے
+slider.shadow = شدت
+slider.shadow.note = سایہ کتنا گہرا ہے
+slider.softness = نرمی
+slider.softness.note = سایہ کتنی دور تک پھیلتا ہے
+slider.offset = فاصلہ
+slider.offset.note = سایہ کارڈ سے کتنا نیچے پڑتا ہے
+settings.shadowHint = ہلکے پس منظر پر سایہ خود بخود مدھم ہو جاتا ہے۔
+settings.sound = اطلاع کی آواز
+settings.melody = دھن
+chime.0 = کرسٹل
+chime.0.note = شیشے کے دو سُر
+chime.1 = ریشم
+chime.1.note = تین سُروں کی نرم، بلند ہوتی تان
+chime.2 = قطرہ
+chime.2.note = ایک سُر اور ایک دھیما جواب
+settings.listen = سنیں
+settings.listenTo = {0} سنیں
+slider.volume = والیوم
+slider.volume.note = اسپیکرز پر آواز کی سطح، فائل میں نہیں
+settings.adapt = سسٹم والیوم کے مطابق ایڈجسٹ کریں
+settings.adaptHint = سسٹم کی آواز اونچی ہو تو دھیمی، دھیمی ہو تو اونچی
+timing.cpu = ایک کور کا {0}% لوڈ
+timing.bake = شیشہ دوبارہ بنانے میں {0} ملی سیکنڈ
+
+# ---- installer ----
+setup.title = GlassBell {0} سیٹ اپ
+setup.tagline = شیشے کے بینرز کی صورت میں Windows اطلاعات
+setup.folder = یہاں انسٹال ہوگا:
+setup.autostart = Windows کے ساتھ شروع کریں
+setup.desktop = ڈیسک ٹاپ پر شارٹ کٹ
+setup.install = انسٹال کریں
+setup.update = اپ ڈیٹ کریں
+setup.cancel = منسوخ کریں
+setup.working = انسٹال ہو رہا ہے…
+setup.done = GlassBell انسٹال ہو گیا ہے
+setup.doneHint = اس کا آئیکن گھڑی کے پاس ہے۔ Windows کے اپنے بینرز کو بھی ظاہر ہونے سے روکنے کے لیے "ڈسٹرب نہ کریں" آن کریں: ترتیبات ← سسٹم ← اطلاعات۔
+setup.open = ترتیبات کھولیں
+setup.close = بند کریں
+setup.failed = GlassBell انسٹال نہیں ہو سکا:\n{0}
+setup.sandboxed = انسٹالر ایک پیکیج شدہ (MSIX) ایپ کے اندر سے شروع کیا گیا ہے، اس لیے Windows انسٹال شدہ پروگرام کو نہیں دیکھ پاتا۔\n\nGlassBell-Setup.exe کو فائل ایکسپلورر میں ڈبل کلک کر کے شروع کریں۔
+setup.needWin11 = GlassBell صرف Windows 11 پر کام کرتا ہے۔
+setup.uninstallTitle = GlassBell ان انسٹال کریں
+setup.uninstallAsk = اس کمپیوٹر سے GlassBell ہٹائیں؟
+setup.removeSettings = میری ترتیبات بھی حذف کریں
+setup.uninstall = ان انسٹال کریں
+setup.uninstalled = GlassBell ہٹا دیا گیا ہے۔
+setup.uninstallFailed = GlassBell کو مکمل طور پر نہیں ہٹایا جا سکا:\n{0}

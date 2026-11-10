@@ -1,0 +1,123 @@
+# GlassBell: Deutsch
+
+# ---- banners ----
+banner.app = Benachrichtigung
+banner.now = jetzt
+preview.title = Vorschau
+preview.body = So sieht ein Banner mit Ihren Einstellungen aus.
+test.title1 = Es funktioniert
+test.body1 = So sehen jetzt die Benachrichtigungen aller Apps aus – und sie erscheinen sofort.
+test.title2 = Jonas
+test.body2 = Bist du da? Schau dir bitte mal an, was ich dir geschickt habe – das ist eine lange Nachricht, die nicht in zwei Textzeilen passen sollte.
+
+# ---- tray icon menu ----
+tray.settings = Einstellungen…
+tray.test = Testbenachrichtigung
+tray.autostart = Mit Windows starten
+tray.exit = Beenden
+
+# ---- message boxes ----
+msg.sandboxed = Diese Kopie wurde aus einer gepackten App (MSIX) heraus gestartet: Einen von hier aus angelegten Autostart-Eintrag sieht Windows nicht.\n\nStarten Sie das Programm per Doppelklick im Datei-Explorer.
+msg.autostartFailed = Der Autostart-Eintrag konnte nicht in die Registrierung geschrieben werden.
+msg.installed = GlassBell läuft und wird ab jetzt mit Windows gestartet.\n\nDen Autostart-Schalter und die Einstellungen finden Sie im Menü des Symbols neben der Uhr.
+msg.uninstalled = Der Autostart mit Windows ist deaktiviert und GlassBell wurde beendet.
+
+# ---- settings window ----
+settings.title = GlassBell – Einstellungen
+settings.backdrop = Hintergrund:
+scene.0 = Abendrot
+scene.1 = Streifen & Text
+scene.2 = Hell
+scene.3 = Nacht
+settings.showBanner = Banner anzeigen
+settings.glass = Glaseffekt
+settings.glassHint = Gilt für alle Benachrichtigungen gleichzeitig
+settings.glassTip = Glasoptik für Banner: Linse an den Rändern, Lichtreflexe und unscharfer Hintergrund. Aus: eine flache Karte.
+settings.needsGlass = Erfordert den Glaseffekt
+tab.glass = Glas
+tab.shadow = Schatten
+tab.sound = Sound
+settings.resetTab = Tab zurücksetzen
+settings.resetAll = Alles zurücksetzen
+card.1 = Linse am Rand, Reflexe, weicher Schatten. Mit der Maus verschieben.
+card.2.title = Glas
+card.2 = Das Glas bricht das Licht: Der Hintergrund darunter krümmt sich am Rand leicht, und Lichtreflexe laufen die Kontur entlang.
+card.3.title = Kapsel
+settings.quality = Grafikqualität
+quality.0 = Niedrig
+quality.1 = Mittel
+quality.2 = Hoch
+quality.3 = Ultra
+quality.0.note = Am sparsamsten: keine Lichtbrechung, ein Schatten, Hintergrund in halber Auflösung.
+quality.1.note = Lichtbrechung an den Rändern, aber ohne Farbsaum.
+quality.2.note = Eine Linse mit Farbsaum in voller Auflösung.
+quality.3.note = Am genauesten und aufwendigsten: geglättete Kanten, Live-Hintergrund.
+settings.live = Live-Hintergrund
+settings.liveHint = Das Glas passt sich laufend an das an, was dahinter liegt – auch während sich das Banner bewegt. Verbraucht mehr Energie.
+settings.color = Farbe
+color.auto = Automatisch (folgt dem Windows-Design)
+color.autoName = Automatisch – folgt dem Windows-Design
+color.1 = Graphit
+color.2 = Schwarz
+color.3 = Weiß
+color.4 = Blau
+color.5 = Indigo
+color.6 = Grün
+color.7 = Orange
+color.8 = Rot
+color.9 = Pink
+settings.customColor = Eigene Farbe
+settings.hexTip = Farbe als #RRGGBB
+slider.tint = Farbintensität
+slider.tint.note = 0 % – klares Glas ohne Farbe
+slider.glass = Glasintensität
+slider.glass.note = Stärke von Linse, Farbsaum und Lichtreflexen
+slider.blur = Hintergrundunschärfe
+slider.blur.note = 0 % – keine Unschärfe, nur die Linse bleibt
+slider.shadow = Stärke
+slider.shadow.note = Wie dunkel der Schatten ist
+slider.softness = Weichheit
+slider.softness.note = Wie weit der Schatten ausläuft
+slider.offset = Versatz
+slider.offset.note = Wie weit der Schatten nach unten fällt
+settings.shadowHint = Auf hellem Hintergrund wird der Schatten automatisch heller.
+settings.sound = Benachrichtigungston
+settings.melody = Melodie
+chime.0 = Kristall
+chime.0.note = Zwei gläserne Töne
+chime.1 = Seide
+chime.1.note = Ein sanft aufsteigender Triller aus drei Tönen
+chime.2 = Tropfen
+chime.2.note = Ein Ton und eine leise Antwort
+settings.listen = Anhören
+settings.listenTo = {0} anhören
+slider.volume = Lautstärke
+slider.volume.note = Der Pegel an den Lautsprechern, nicht in der Datei
+settings.adapt = An die Systemlautstärke anpassen
+settings.adaptHint = Leiser, wenn das System laut ist, lauter, wenn es leise ist
+timing.cpu = Auslastung {0} % eines Kerns
+timing.bake = Glas-Rendering {0} ms
+
+# ---- installer ----
+setup.title = Installation von GlassBell {0}
+setup.tagline = Windows-Benachrichtigungen als Glasbanner
+setup.folder = Installationsordner:
+setup.autostart = Mit Windows starten
+setup.desktop = Verknüpfung auf dem Desktop
+setup.install = Installieren
+setup.update = Aktualisieren
+setup.cancel = Abbrechen
+setup.working = Wird installiert…
+setup.done = GlassBell wurde installiert
+setup.doneHint = Das GlassBell-Symbol finden Sie neben der Uhr. Damit die Windows-Banner nicht zusätzlich erscheinen, aktivieren Sie „Nicht stören“: Einstellungen → System → Benachrichtigungen.
+setup.open = Einstellungen öffnen
+setup.close = Schließen
+setup.failed = GlassBell konnte nicht installiert werden:\n{0}
+setup.sandboxed = Das Installationsprogramm wurde aus einer gepackten App (MSIX) heraus gestartet, daher würde Windows das installierte Programm nicht sehen.\n\nStarten Sie GlassBell-Setup.exe per Doppelklick im Datei-Explorer.
+setup.needWin11 = GlassBell läuft nur unter Windows 11.
+setup.uninstallTitle = GlassBell deinstallieren
+setup.uninstallAsk = GlassBell von diesem Computer entfernen?
+setup.removeSettings = Auch meine Einstellungen löschen
+setup.uninstall = Deinstallieren
+setup.uninstalled = GlassBell wurde entfernt.
+setup.uninstallFailed = GlassBell konnte nicht vollständig entfernt werden:\n{0}

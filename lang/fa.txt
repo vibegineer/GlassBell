@@ -1,0 +1,123 @@
+# GlassBell: فارسی
+
+# ---- banners ----
+banner.app = اعلان
+banner.now = اکنون
+preview.title = پیش‌نمایش
+preview.body = بنر با تنظیمات شما این‌گونه به نظر می‌رسد.
+test.title1 = همه‌چیز کار می‌کند
+test.body1 = اکنون اعلان‌های همه برنامه‌ها این‌گونه به نظر می‌رسند و بی‌درنگ ظاهر می‌شوند.
+test.title2 = آرش
+test.body2 = سلام، هستی؟ لطفاً یه نگاه به چیزی که برات فرستادم بنداز — یه پیام خیلی طولانیه که قرار نیست توی دو خط متن جا بشه.
+
+# ---- tray icon menu ----
+tray.settings = تنظیمات…
+tray.test = اعلان آزمایشی
+tray.autostart = اجرا همراه با Windows
+tray.exit = خروج
+
+# ---- message boxes ----
+msg.sandboxed = این نسخه از داخل یک برنامه بسته‌بندی‌شده (MSIX) اجرا شده است: Windows ورودی راه‌اندازی نوشته‌شده از اینجا را نمی‌بیند.\n\nبرنامه را با دوبار کلیک روی آن در کاوشگر فایل اجرا کنید.
+msg.autostartFailed = نوشتن ورودی راه‌اندازی در رجیستری ممکن نشد.
+msg.installed = GlassBell در حال اجراست و از این پس همراه با Windows راه‌اندازی می‌شود.\n\nکلید راه‌اندازی خودکار و تنظیمات در منوی نماد آن در کنار ساعت هستند.
+msg.uninstalled = اجرا همراه با Windows خاموش شد و GlassBell بسته شد.
+
+# ---- settings window ----
+settings.title = GlassBell — تنظیمات
+settings.backdrop = پس‌زمینه:
+scene.0 = غروب
+scene.1 = راه‌راه و متن
+scene.2 = روشن
+scene.3 = شب
+settings.showBanner = نمایش اعلان
+settings.glass = جلوه شیشه‌ای
+settings.glassHint = یکجا روی همه اعلان‌ها اعمال می‌شود
+settings.glassTip = ظاهر شیشه‌ای برای بنرها: عدسی در لبه‌ها، درخشش‌ها و پس‌زمینه تار. خاموش: کارت تخت.
+settings.needsGlass = جلوه شیشه‌ای لازم است
+tab.glass = شیشه
+tab.shadow = سایه
+tab.sound = صدا
+settings.resetTab = بازنشانی زبانه
+settings.resetAll = بازنشانی همه
+card.1 = عدسی در لبه‌ها، درخشش روی خط دور و سایه‌ای نرم. مرا با ماوس بکشید.
+card.2.title = شیشه
+card.2 = شیشه نور چیزی را که زیرش است می‌شکند: پس‌زمینه در لبه‌ها کمی خم می‌شود و درخشش‌ها روی خط دور می‌دوند.
+card.3.title = کپسول
+settings.quality = کیفیت گرافیک
+quality.0 = پایین
+quality.1 = متوسط
+quality.2 = بالا
+quality.3 = اولترا
+quality.0.note = سبک‌ترین: بدون شکست نور، یک سایه، پس‌زمینه با نصف وضوح.
+quality.1.note = لبه‌ها نور پس‌زمینه را می‌شکنند، اما بدون حاشیه رنگی.
+quality.2.note = عدسی با حاشیه رنگی در وضوح کامل.
+quality.3.note = دقیق‌ترین و سنگین‌ترین: لبه‌های هموار، پس‌زمینه زنده.
+settings.live = پس‌زمینه زنده
+settings.liveHint = شیشه پیوسته خود را با آنچه پشتش است تطبیق می‌دهد، حتی وقتی بنر در حال حرکت است. انرژی بیشتری مصرف می‌کند.
+settings.color = رنگ
+color.auto = خودکار (مطابق طرح زمینه Windows)
+color.autoName = خودکار — مطابق طرح زمینه Windows
+color.1 = گرافیتی
+color.2 = سیاه
+color.3 = سفید
+color.4 = آبی
+color.5 = نیلی
+color.6 = سبز
+color.7 = نارنجی
+color.8 = قرمز
+color.9 = صورتی
+settings.customColor = رنگ سفارشی
+settings.hexTip = رنگ به‌صورت #RRGGBB
+slider.tint = شدت رنگ
+slider.tint.note = 0% — شیشه شفاف بدون رنگ
+slider.glass = شدت شیشه
+slider.glass.note = قدرت عدسی، حاشیه رنگی و درخشش‌ها
+slider.blur = تاری پس‌زمینه
+slider.blur.note = 0% — بدون تاری، فقط عدسی می‌ماند
+slider.shadow = شدت
+slider.shadow.note = سایه چقدر تیره است
+slider.softness = نرمی
+slider.softness.note = سایه تا چه حد پخش می‌شود
+slider.offset = فاصله
+slider.offset.note = سایه چقدر پایین‌تر از کارت می‌افتد
+settings.shadowHint = روی پس‌زمینه روشن، سایه به‌طور خودکار کم‌رنگ‌تر می‌شود.
+settings.sound = صدای اعلان
+settings.melody = آهنگ
+chime.0 = بلور
+chime.0.note = دو نت شیشه‌ای
+chime.1 = ابریشم
+chime.1.note = چهچهه‌ای نرم و رو به اوج از سه نت
+chime.2 = قطره
+chime.2.note = یک نت و پاسخی آرام
+settings.listen = گوش دادن
+settings.listenTo = گوش دادن به {0}
+slider.volume = میزان صدا
+slider.volume.note = سطح صدا در بلندگوها، نه در فایل
+settings.adapt = تطبیق با میزان صدای سیستم
+settings.adaptHint = وقتی صدای سیستم بلند است آرام‌تر، وقتی آرام است بلندتر
+timing.cpu = بار {0}% از یک هسته
+timing.bake = ترسیم مجدد شیشه {0} میلی‌ثانیه
+
+# ---- installer ----
+setup.title = نصب GlassBell {0}
+setup.tagline = اعلان‌های Windows به شکل بنرهای شیشه‌ای
+setup.folder = محل نصب:
+setup.autostart = اجرا همراه با Windows
+setup.desktop = میان‌بر روی میز کار
+setup.install = نصب
+setup.update = به‌روزرسانی
+setup.cancel = لغو
+setup.working = در حال نصب…
+setup.done = GlassBell نصب شد
+setup.doneHint = نماد آن کنار ساعت است. برای اینکه بنرهای خود Windows هم نمایش داده نشوند، «مزاحم نشوید» را روشن کنید: تنظیمات ← سیستم ← اعلان‌ها.
+setup.open = باز کردن تنظیمات
+setup.close = بستن
+setup.failed = نصب GlassBell ممکن نشد:\n{0}
+setup.sandboxed = نصب‌کننده از داخل یک برنامه بسته‌بندی‌شده (MSIX) اجرا شده است، بنابراین Windows برنامه نصب‌شده را نمی‌دید.\n\nGlassBell-Setup.exe را با دوبار کلیک روی آن در کاوشگر فایل اجرا کنید.
+setup.needWin11 = GlassBell فقط روی Windows 11 کار می‌کند.
+setup.uninstallTitle = حذف نصب GlassBell
+setup.uninstallAsk = GlassBell از این رایانه حذف شود؟
+setup.removeSettings = تنظیمات من هم حذف شود
+setup.uninstall = حذف نصب
+setup.uninstalled = GlassBell حذف شد.
+setup.uninstallFailed = حذف کامل GlassBell ممکن نشد:\n{0}

@@ -1,0 +1,9 @@
+# build output (the installer goes to GitHub Releases, not into the repository)
+bin/
+dist/
+*.new.exe
+
+# what a portable copy writes next to itself
+settings.ini
+log.txt
+*.flag

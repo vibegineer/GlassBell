@@ -1,0 +1,123 @@
+# GlassBell: 한국어
+
+# ---- banners ----
+banner.app = 알림
+banner.now = 방금
+preview.title = 미리 보기
+preview.body = 현재 설정에서는 배너가 이렇게 표시됩니다.
+test.title1 = 잘 작동합니다
+test.body1 = 이제 모든 앱의 알림이 이렇게 표시되고, 즉시 나타납니다.
+test.title2 = 민준
+test.body2 = 혹시 지금 있어? 시간 되면 내가 아까 보낸 거 좀 봐 줄래? 이건 진짜 긴 메시지라서 두 줄 안에는 절대 다 안 들어갈 거야.
+
+# ---- tray icon menu ----
+tray.settings = 설정…
+tray.test = 테스트 알림
+tray.autostart = Windows 시작 시 실행
+tray.exit = 끝내기
+
+# ---- message boxes ----
+msg.sandboxed = 이 복사본은 패키지 앱(MSIX) 내부에서 실행되었습니다. 여기서 기록한 시작 프로그램 항목은 Windows에서 인식되지 않습니다.\n\n파일 탐색기에서 프로그램을 두 번 클릭하여 실행하세요.
+msg.autostartFailed = 레지스트리에 시작 프로그램 항목을 기록하지 못했습니다.
+msg.installed = GlassBell이 실행 중이며 앞으로 Windows 시작 시 자동으로 실행됩니다.\n\n‘Windows 시작 시 실행’ 옵션과 설정은 시계 옆에 있는 아이콘의 메뉴에 있습니다.
+msg.uninstalled = ‘Windows 시작 시 실행’을 끄고 GlassBell을 종료했습니다.
+
+# ---- settings window ----
+settings.title = GlassBell 설정
+settings.backdrop = 배경:
+scene.0 = 노을
+scene.1 = 줄무늬와 글자
+scene.2 = 밝은 색
+scene.3 = 밤
+settings.showBanner = 알림 표시
+settings.glass = 유리 효과
+settings.glassHint = 모든 알림에 한꺼번에 적용됩니다
+settings.glassTip = 배너의 유리 모양: 가장자리의 렌즈, 하이라이트, 흐린 배경. 끄면 평평한 카드로 표시됩니다.
+settings.needsGlass = 유리 효과를 켜야 합니다
+tab.glass = 유리
+tab.shadow = 그림자
+tab.sound = 소리
+settings.resetTab = 이 탭 초기화
+settings.resetAll = 모두 초기화
+card.1 = 가장자리의 렌즈, 하이라이트, 부드러운 그림자. 마우스로 끌어 보세요.
+card.2.title = 유리
+card.2 = 유리는 아래에 있는 것을 굴절시킵니다. 가장자리에서는 배경이 살짝 휘어지고, 하이라이트가 윤곽을 따라 흐릅니다.
+card.3.title = 캡슐
+settings.quality = 그래픽 품질
+quality.0 = 낮음
+quality.1 = 보통
+quality.2 = 높음
+quality.3 = 최고
+quality.0.note = 가장 가벼움: 굴절 없음, 그림자 하나, 배경은 절반 해상도.
+quality.1.note = 가장자리에서 배경이 굴절되지만, 무지갯빛 테두리는 없습니다.
+quality.2.note = 무지갯빛 테두리가 있는 렌즈를 전체 해상도로 표시합니다.
+quality.3.note = 가장 정확하고 가장 무거움: 매끄러운 가장자리, 실시간 배경.
+settings.live = 실시간 배경
+settings.liveHint = 배너가 움직이는 동안에도 유리가 뒤에 있는 내용에 맞춰 계속 조정됩니다. 전력을 더 많이 사용합니다.
+settings.color = 색
+color.auto = 자동(Windows 테마에 따름)
+color.autoName = 자동 — Windows 테마에 따름
+color.1 = 그래파이트
+color.2 = 검은색
+color.3 = 흰색
+color.4 = 파란색
+color.5 = 인디고
+color.6 = 녹색
+color.7 = 주황색
+color.8 = 빨간색
+color.9 = 분홍색
+settings.customColor = 사용자 지정 색
+settings.hexTip = #RRGGBB 형식의 색
+slider.tint = 색 강도
+slider.tint.note = 0% — 색이 없는 투명한 유리
+slider.glass = 유리 강도
+slider.glass.note = 렌즈, 무지갯빛 테두리, 하이라이트의 강도
+slider.blur = 배경 흐림
+slider.blur.note = 0% — 흐림 없음, 렌즈만 남음
+slider.shadow = 강도
+slider.shadow.note = 그림자가 얼마나 진한지
+slider.softness = 부드러움
+slider.softness.note = 그림자가 얼마나 넓게 퍼지는지
+slider.offset = 아래로 이동
+slider.offset.note = 그림자가 카드 아래로 얼마나 떨어지는지
+settings.shadowHint = 밝은 배경 위에서는 그림자가 자동으로 연해집니다.
+settings.sound = 알림 소리
+settings.melody = 멜로디
+chime.0 = 크리스털
+chime.0.note = 유리 같은 두 음
+chime.1 = 실크
+chime.1.note = 세 음으로 부드럽게 올라가는 트릴
+chime.2 = 물방울
+chime.2.note = 한 음과 조용한 대답
+settings.listen = 미리 듣기
+settings.listenTo = {0} 미리 듣기
+slider.volume = 볼륨
+slider.volume.note = 파일이 아닌 스피커에서의 음량
+settings.adapt = 시스템 볼륨에 맞추기
+settings.adaptHint = 시스템 소리가 크면 더 작게, 작으면 더 크게
+timing.cpu = 부하: 코어 1개의 {0}%
+timing.bake = 유리 다시 그리기 {0}ms
+
+# ---- installer ----
+setup.title = GlassBell {0} 설치 프로그램
+setup.tagline = 유리 배너로 표시되는 Windows 알림
+setup.folder = 설치 위치:
+setup.autostart = Windows 시작 시 실행
+setup.desktop = 바탕 화면에 바로 가기 만들기
+setup.install = 설치
+setup.update = 업데이트
+setup.cancel = 취소
+setup.working = 설치하는 중…
+setup.done = GlassBell이 설치되었습니다
+setup.doneHint = 아이콘은 시계 옆에 있습니다. Windows 기본 배너가 함께 표시되지 않게 하려면 ‘방해 금지’를 켜세요(설정 → 시스템 → 알림).
+setup.open = 설정 열기
+setup.close = 닫기
+setup.failed = GlassBell을 설치하지 못했습니다:\n{0}
+setup.sandboxed = 설치 프로그램이 패키지 앱(MSIX) 내부에서 실행되었으므로 Windows에서 설치된 프로그램을 인식하지 못합니다.\n\n파일 탐색기에서 GlassBell-Setup.exe를 두 번 클릭하여 실행하세요.
+setup.needWin11 = GlassBell은 Windows 11에서만 작동합니다.
+setup.uninstallTitle = GlassBell 제거
+setup.uninstallAsk = 이 컴퓨터에서 GlassBell을 제거하시겠습니까?
+setup.removeSettings = 내 설정도 삭제
+setup.uninstall = 제거
+setup.uninstalled = GlassBell이 제거되었습니다.
+setup.uninstallFailed = GlassBell을 완전히 제거하지 못했습니다:\n{0}

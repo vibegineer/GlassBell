@@ -1,0 +1,145 @@
+# GlassBell interface strings: English, the reference for every other language.
+# Format: key = value. "\n" is a line break, {0} is filled in by the program.
+# Keep "GlassBell", "Windows", "MSIX", "GlassBell-Setup.exe" and "#RRGGBB" as they are.
+# Lines starting with # are comments; "(max N)" is the room the text has, in characters of Latin text.
+
+# ---- banners ----
+# the app name shown when the app that sent a notification has no name
+banner.app = Notification
+# the time label at the top right of every banner (max 10)
+banner.now = now
+preview.title = Preview
+preview.body = This is how a banner looks with your settings.
+# two sample banners for "GlassBell.exe --test"; the second is a chat message that must be too long for two lines
+test.title1 = It works
+test.body1 = This is how notifications from every app look now, and they appear instantly.
+test.title2 = Alex
+test.body2 = Are you there? Please take a look at what I sent — it's a long message that shouldn't fit into two lines of text.
+
+# ---- tray icon menu ----
+tray.settings = Settings…
+tray.test = Test notification
+tray.autostart = Start with Windows
+tray.exit = Exit
+
+# ---- message boxes ----
+msg.sandboxed = This copy was started from inside a packaged (MSIX) app: Windows won't see a startup entry written from here.\n\nStart the program by double-clicking it in File Explorer.
+msg.autostartFailed = Couldn't write the startup entry to the registry.
+msg.installed = GlassBell is running and will start with Windows.\n\nThe startup switch and the settings are in the menu of its icon next to the clock.
+msg.uninstalled = Start with Windows is turned off, and GlassBell is closed.
+
+# ---- settings window ----
+settings.title = GlassBell — Settings
+# label before the four backdrop buttons under the preview (max 12)
+settings.backdrop = Background:
+# the four backdrops of the preview (max 16 each, the four together and the button below must fit in one row)
+scene.0 = Sunset
+scene.1 = Stripes and text
+scene.2 = Light
+scene.3 = Night
+# button under the preview (max 22)
+settings.showBanner = Show notification
+# heading of the settings panel, next to its on/off switch (max 22)
+settings.glass = Glass effect
+settings.glassHint = Applies to all notifications at once
+settings.glassTip = Glass look for banners: a lens at the edges, highlights and a blurred background. Off: a flat card.
+# shown under a slider while the glass effect is off
+settings.needsGlass = Needs the glass effect
+# the three tabs (max 12 each)
+tab.glass = Glass
+tab.shadow = Shadow
+tab.sound = Sound
+# two link buttons at the bottom of the panel (max 18 each)
+settings.resetTab = Reset tab
+settings.resetAll = Reset all
+# texts on the three sample cards in the preview; card.1 is cut after two lines (max 75)
+card.1 = A lens at the edges, highlights and a soft shadow. Drag me with the mouse.
+card.2.title = Glass
+card.2 = The glass refracts what is beneath it: the background bends slightly at the edges, and highlights run along the outline.
+card.3.title = Capsule
+settings.quality = Graphics quality
+# four segments in one row (max 9 each)
+quality.0 = Low
+quality.1 = Medium
+quality.2 = High
+quality.3 = Ultra
+quality.0.note = Lightest: no refraction, one shadow, background at half resolution.
+quality.1.note = The edges refract the background, but without the colored fringe.
+quality.2.note = A lens with a colored fringe at full resolution.
+quality.3.note = Most accurate and heaviest: smoothed edges, live background.
+settings.live = Live background
+settings.liveHint = The glass keeps adjusting to what is behind it, even while the banner moves. Uses more power.
+settings.color = Color
+# tooltip of the first color swatch, and the color heading while it is picked
+color.auto = Auto (follows the Windows theme)
+color.autoName = Auto — follows the Windows theme
+color.1 = Graphite
+color.2 = Black
+color.3 = White
+color.4 = Blue
+color.5 = Indigo
+color.6 = Green
+color.7 = Orange
+color.8 = Red
+color.9 = Pink
+# label before the hex color box (max 14)
+settings.customColor = Custom color
+settings.hexTip = Color as #RRGGBB
+# sliders: a label (max 24) and a note under it
+slider.tint = Color intensity
+slider.tint.note = 0% — clear glass with no color
+slider.glass = Glass intensity
+slider.glass.note = Strength of the lens, the colored fringe and the highlights
+slider.blur = Background blur
+slider.blur.note = 0% — no blur, only the lens remains
+slider.shadow = Strength
+slider.shadow.note = How dark the shadow is
+slider.softness = Softness
+slider.softness.note = How far the shadow spreads
+slider.offset = Drop
+slider.offset.note = How far below the card the shadow falls
+settings.shadowHint = Over a light background the shadow automatically becomes lighter.
+settings.sound = Notification sound
+settings.melody = Melody
+# the three chimes: a name (max 14) and what it sounds like
+chime.0 = Crystal
+chime.0.note = Two glass notes
+chime.1 = Silk
+chime.1.note = A soft rising trill of three notes
+chime.2 = Drop
+chime.2.note = One note and a quiet answer
+settings.listen = Listen
+# {0} is the name of a chime
+settings.listenTo = Listen to {0}
+slider.volume = Volume
+slider.volume.note = The level at the speakers, not in the file
+settings.adapt = Adjust to the system volume
+settings.adaptHint = Quieter when the system is loud, louder when it is quiet
+# a status line at the bottom of the settings: {0} is a number
+timing.cpu = load {0}% of a core
+timing.bake = glass redraw {0} ms
+
+# ---- installer ----
+# {0} is the version, e.g. 1.0.0
+setup.title = GlassBell {0} Setup
+setup.tagline = Windows notifications as glass banners
+setup.folder = Installs to:
+setup.autostart = Start with Windows
+setup.desktop = Shortcut on the desktop
+setup.install = Install
+setup.update = Update
+setup.cancel = Cancel
+setup.working = Installing…
+setup.done = GlassBell is installed
+setup.doneHint = Its icon is next to the clock. To keep the Windows banners from showing as well, turn on Do not disturb: Settings → System → Notifications.
+setup.open = Open settings
+setup.close = Close
+setup.failed = GlassBell couldn't be installed:\n{0}
+setup.sandboxed = The installer was started from inside a packaged (MSIX) app, so Windows wouldn't see the installed program.\n\nStart GlassBell-Setup.exe by double-clicking it in File Explorer.
+setup.needWin11 = GlassBell works on Windows 11 only.
+setup.uninstallTitle = Uninstall GlassBell
+setup.uninstallAsk = Remove GlassBell from this computer?
+setup.removeSettings = Also delete my settings
+setup.uninstall = Uninstall
+setup.uninstalled = GlassBell has been removed.
+setup.uninstallFailed = GlassBell couldn't be removed completely:\n{0}

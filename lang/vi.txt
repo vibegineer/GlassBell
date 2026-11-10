@@ -1,0 +1,123 @@
+# GlassBell: Tiếng Việt
+
+# ---- banners ----
+banner.app = Thông báo
+banner.now = vừa xong
+preview.title = Xem trước
+preview.body = Với cài đặt của bạn, biểu ngữ sẽ trông như thế này.
+test.title1 = Đã hoạt động
+test.body1 = Giờ đây thông báo từ mọi ứng dụng đều trông như thế này và xuất hiện ngay lập tức.
+test.title2 = Minh
+test.body2 = Có đó không? Xem giúp mình cái mình vừa gửi nhé — tin nhắn này dài lắm, chắc chắn không nhét vừa trong hai dòng chữ đâu.
+
+# ---- tray icon menu ----
+tray.settings = Cài đặt…
+tray.test = Thông báo thử nghiệm
+tray.autostart = Khởi động cùng Windows
+tray.exit = Thoát
+
+# ---- message boxes ----
+msg.sandboxed = Bản sao này được khởi chạy từ bên trong một ứng dụng đóng gói (MSIX): Windows sẽ không nhận ra mục khởi động được ghi từ đây.\n\nHãy bấm đúp vào chương trình trong File Explorer để khởi chạy.
+msg.autostartFailed = Không thể ghi mục khởi động vào sổ đăng ký.
+msg.installed = GlassBell đang chạy và sẽ khởi động cùng Windows.\n\nCông tắc khởi động cùng Windows và phần cài đặt nằm trong menu của biểu tượng ứng dụng, cạnh đồng hồ.
+msg.uninstalled = Đã tắt khởi động cùng Windows và đóng GlassBell.
+
+# ---- settings window ----
+settings.title = Cài đặt GlassBell
+settings.backdrop = Nền:
+scene.0 = Hoàng hôn
+scene.1 = Sọc và chữ
+scene.2 = Sáng
+scene.3 = Đêm
+settings.showBanner = Hiển thị thông báo
+settings.glass = Hiệu ứng kính
+settings.glassHint = Áp dụng cho tất cả thông báo cùng lúc
+settings.glassTip = Giao diện kính cho biểu ngữ: thấu kính ở các cạnh, vệt sáng và nền được làm mờ. Khi tắt: thẻ phẳng.
+settings.needsGlass = Cần bật hiệu ứng kính
+tab.glass = Kính
+tab.shadow = Bóng đổ
+tab.sound = Âm thanh
+settings.resetTab = Đặt lại tab này
+settings.resetAll = Đặt lại tất cả
+card.1 = Thấu kính ở cạnh, vệt sáng và bóng đổ mềm. Hãy dùng chuột kéo tôi.
+card.2.title = Kính
+card.2 = Kính khúc xạ những gì nằm bên dưới: nền hơi uốn cong ở các cạnh, còn vệt sáng chạy dọc theo đường viền.
+card.3.title = Viên nang
+settings.quality = Chất lượng đồ họa
+quality.0 = Thấp
+quality.1 = Vừa
+quality.2 = Cao
+quality.3 = Siêu cao
+quality.0.note = Nhẹ nhất: không khúc xạ, một lớp bóng, nền ở một nửa độ phân giải.
+quality.1.note = Các cạnh khúc xạ nền, nhưng không có viền màu.
+quality.2.note = Thấu kính có viền màu, ở độ phân giải đầy đủ.
+quality.3.note = Chính xác nhất và nặng nhất: cạnh được làm mịn, nền động.
+settings.live = Nền động
+settings.liveHint = Kính liên tục điều chỉnh theo những gì phía sau, ngay cả khi biểu ngữ đang di chuyển. Tiêu thụ nhiều điện năng hơn.
+settings.color = Màu
+color.auto = Tự động (theo chủ đề Windows)
+color.autoName = Tự động — theo chủ đề Windows
+color.1 = Than chì
+color.2 = Đen
+color.3 = Trắng
+color.4 = Xanh dương
+color.5 = Chàm
+color.6 = Xanh lục
+color.7 = Cam
+color.8 = Đỏ
+color.9 = Hồng
+settings.customColor = Màu tùy chỉnh
+settings.hexTip = Màu dạng #RRGGBB
+slider.tint = Cường độ màu
+slider.tint.note = 0% — kính trong suốt, không màu
+slider.glass = Cường độ kính
+slider.glass.note = Độ mạnh của thấu kính, viền màu và vệt sáng
+slider.blur = Làm mờ nền
+slider.blur.note = 0% — không làm mờ, chỉ còn lại thấu kính
+slider.shadow = Độ đậm
+slider.shadow.note = Bóng đổ tối đến mức nào
+slider.softness = Độ mềm
+slider.softness.note = Bóng đổ lan rộng đến đâu
+slider.offset = Độ lệch xuống
+slider.offset.note = Bóng đổ rơi xuống dưới thẻ bao xa
+settings.shadowHint = Trên nền sáng, bóng đổ tự động nhạt hơn.
+settings.sound = Âm thanh thông báo
+settings.melody = Giai điệu
+chime.0 = Pha lê
+chime.0.note = Hai nốt trong như thủy tinh
+chime.1 = Lụa
+chime.1.note = Chuỗi láy nhẹ nhàng đi lên gồm ba nốt
+chime.2 = Giọt nước
+chime.2.note = Một nốt và một tiếng đáp khẽ
+settings.listen = Nghe thử
+settings.listenTo = Nghe thử {0}
+slider.volume = Âm lượng
+slider.volume.note = Mức âm lượng ở loa, không phải trong tệp
+settings.adapt = Điều chỉnh theo âm lượng hệ thống
+settings.adaptHint = Nhỏ hơn khi âm lượng hệ thống lớn, to hơn khi âm lượng hệ thống nhỏ
+timing.cpu = tải {0}% của một lõi
+timing.bake = vẽ lại kính {0} ms
+
+# ---- installer ----
+setup.title = Trình cài đặt GlassBell {0}
+setup.tagline = Thông báo Windows dưới dạng biểu ngữ kính
+setup.folder = Cài đặt vào:
+setup.autostart = Khởi động cùng Windows
+setup.desktop = Tạo lối tắt trên màn hình nền
+setup.install = Cài đặt
+setup.update = Cập nhật
+setup.cancel = Hủy
+setup.working = Đang cài đặt…
+setup.done = Đã cài đặt GlassBell
+setup.doneHint = Biểu tượng của ứng dụng nằm cạnh đồng hồ. Để biểu ngữ của chính Windows không hiện thêm, hãy bật Không làm phiền: Cài đặt → Hệ thống → Thông báo.
+setup.open = Mở cài đặt
+setup.close = Đóng
+setup.failed = Không thể cài đặt GlassBell:\n{0}
+setup.sandboxed = Trình cài đặt được khởi chạy từ bên trong một ứng dụng đóng gói (MSIX), nên Windows sẽ không nhận ra chương trình đã cài đặt.\n\nHãy bấm đúp vào GlassBell-Setup.exe trong File Explorer để khởi chạy.
+setup.needWin11 = GlassBell chỉ hoạt động trên Windows 11.
+setup.uninstallTitle = Gỡ cài đặt GlassBell
+setup.uninstallAsk = Bạn có muốn gỡ GlassBell khỏi máy tính này không?
+setup.removeSettings = Xóa cả cài đặt của tôi
+setup.uninstall = Gỡ cài đặt
+setup.uninstalled = Đã gỡ GlassBell.
+setup.uninstallFailed = Không thể gỡ hoàn toàn GlassBell:\n{0}

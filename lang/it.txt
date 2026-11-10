@@ -1,0 +1,123 @@
+# GlassBell: Italiano
+
+# ---- banners ----
+banner.app = Notifica
+banner.now = ora
+preview.title = Anteprima
+preview.body = Ecco come appare un banner con le tue impostazioni.
+test.title1 = Tutto funziona
+test.body1 = Ecco come appaiono ora le notifiche di tutte le app, e arrivano all'istante.
+test.title2 = Luca
+test.body2 = Ci sei? Dai un'occhiata a quello che ti ho mandato, per favore – è un messaggio lungo che non dovrebbe stare in due righe di testo.
+
+# ---- tray icon menu ----
+tray.settings = Impostazioni…
+tray.test = Notifica di prova
+tray.autostart = Avvia con Windows
+tray.exit = Esci
+
+# ---- message boxes ----
+msg.sandboxed = Questa copia è stata avviata dall'interno di un'app in pacchetto (MSIX): Windows non vedrà una voce di avvio automatico creata da qui.\n\nAvvia il programma con un doppio clic in Esplora file.
+msg.autostartFailed = Impossibile scrivere la voce di avvio automatico nel Registro di sistema.
+msg.installed = GlassBell è in esecuzione e si avvierà con Windows.\n\nL'opzione di avvio automatico e le impostazioni si trovano nel menu della sua icona, accanto all'orologio.
+msg.uninstalled = L'avvio con Windows è disattivato e GlassBell è stato chiuso.
+
+# ---- settings window ----
+settings.title = GlassBell – Impostazioni
+settings.backdrop = Sfondo:
+scene.0 = Tramonto
+scene.1 = Strisce e testo
+scene.2 = Chiaro
+scene.3 = Notte
+settings.showBanner = Mostra notifica
+settings.glass = Effetto vetro
+settings.glassHint = Si applica a tutte le notifiche insieme
+settings.glassTip = Aspetto in vetro per i banner: lente sui bordi, riflessi e sfondo sfocato. Disattivato: un riquadro piatto.
+settings.needsGlass = Richiede l'effetto vetro
+tab.glass = Vetro
+tab.shadow = Ombra
+tab.sound = Suono
+settings.resetTab = Reimposta scheda
+settings.resetAll = Reimposta tutto
+card.1 = Una lente sui bordi, riflessi e un'ombra morbida. Trascinami con il mouse.
+card.2.title = Vetro
+card.2 = Il vetro rifrange ciò che c'è sotto: ai bordi lo sfondo si piega leggermente e i riflessi scorrono lungo il contorno.
+card.3.title = Capsula
+settings.quality = Qualità grafica
+quality.0 = Bassa
+quality.1 = Media
+quality.2 = Alta
+quality.3 = Ultra
+quality.0.note = La più leggera: niente rifrazione, una sola ombra, sfondo a risoluzione dimezzata.
+quality.1.note = I bordi rifrangono lo sfondo, ma senza la frangia colorata.
+quality.2.note = Una lente con frangia colorata a piena risoluzione.
+quality.3.note = La più precisa e la più pesante: bordi smussati, sfondo in tempo reale.
+settings.live = Sfondo in tempo reale
+settings.liveHint = Il vetro si adatta di continuo a ciò che ha dietro, anche mentre il banner si muove. Consuma più energia.
+settings.color = Colore
+color.auto = Automatico (segue il tema di Windows)
+color.autoName = Automatico – segue il tema di Windows
+color.1 = Grafite
+color.2 = Nero
+color.3 = Bianco
+color.4 = Blu
+color.5 = Indaco
+color.6 = Verde
+color.7 = Arancione
+color.8 = Rosso
+color.9 = Rosa
+settings.customColor = Personalizzato
+settings.hexTip = Colore nel formato #RRGGBB
+slider.tint = Intensità del colore
+slider.tint.note = 0% – vetro trasparente, senza colore
+slider.glass = Intensità del vetro
+slider.glass.note = Forza della lente, della frangia colorata e dei riflessi
+slider.blur = Sfocatura dello sfondo
+slider.blur.note = 0% – nessuna sfocatura, resta solo la lente
+slider.shadow = Intensità
+slider.shadow.note = Quanto è scura l'ombra
+slider.softness = Morbidezza
+slider.softness.note = Quanto si allarga l'ombra
+slider.offset = Spostamento
+slider.offset.note = Quanto scende l'ombra sotto il riquadro
+settings.shadowHint = Su uno sfondo chiaro l'ombra diventa automaticamente più chiara.
+settings.sound = Suono di notifica
+settings.melody = Melodia
+chime.0 = Cristallo
+chime.0.note = Due note di vetro
+chime.1 = Seta
+chime.1.note = Un morbido trillo ascendente di tre note
+chime.2 = Goccia
+chime.2.note = Una nota e una risposta sommessa
+settings.listen = Ascolta
+settings.listenTo = Ascolta {0}
+slider.volume = Volume
+slider.volume.note = Il livello negli altoparlanti, non nel file
+settings.adapt = Adatta al volume di sistema
+settings.adaptHint = Più basso se il volume di sistema è alto, più alto se è basso
+timing.cpu = carico {0}% di un core
+timing.bake = ridisegno del vetro {0} ms
+
+# ---- installer ----
+setup.title = Installazione di GlassBell {0}
+setup.tagline = Le notifiche di Windows come banner di vetro
+setup.folder = Cartella di installazione:
+setup.autostart = Avvia con Windows
+setup.desktop = Collegamento sul desktop
+setup.install = Installa
+setup.update = Aggiorna
+setup.cancel = Annulla
+setup.working = Installazione in corso…
+setup.done = GlassBell è stato installato
+setup.doneHint = La sua icona è accanto all'orologio. Per evitare che compaiano anche i banner di Windows, attiva “Non disturbare”: Impostazioni → Sistema → Notifiche.
+setup.open = Apri le impostazioni
+setup.close = Chiudi
+setup.failed = Impossibile installare GlassBell:\n{0}
+setup.sandboxed = Il programma di installazione è stato avviato dall'interno di un'app in pacchetto (MSIX), quindi Windows non vedrebbe il programma installato.\n\nAvvia GlassBell-Setup.exe con un doppio clic in Esplora file.
+setup.needWin11 = GlassBell funziona solo su Windows 11.
+setup.uninstallTitle = Disinstalla GlassBell
+setup.uninstallAsk = Rimuovere GlassBell da questo computer?
+setup.removeSettings = Elimina anche le mie impostazioni
+setup.uninstall = Disinstalla
+setup.uninstalled = GlassBell è stato rimosso.
+setup.uninstallFailed = Impossibile rimuovere completamente GlassBell:\n{0}

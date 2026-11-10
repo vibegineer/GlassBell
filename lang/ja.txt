@@ -1,0 +1,123 @@
+# GlassBell: 日本語
+
+# ---- banners ----
+banner.app = 通知
+banner.now = たった今
+preview.title = プレビュー
+preview.body = 現在の設定では、バナーはこのように表示されます。
+test.title1 = 正常に動作しています
+test.body1 = これで、すべてのアプリの通知がこの見た目になり、しかも瞬時に表示されます。
+test.title2 = 健太
+test.body2 = 今いる？さっき送ったやつ、ちょっと見てもらえる？けっこう長いメッセージだから、たぶん2行には収まりきらないと思うんだけど。
+
+# ---- tray icon menu ----
+tray.settings = 設定…
+tray.test = テスト通知
+tray.autostart = Windows の起動時に開始
+tray.exit = 終了
+
+# ---- message boxes ----
+msg.sandboxed = このコピーはパッケージ アプリ（MSIX）の内部から起動されています。ここから書き込んだスタートアップの登録は、Windows に認識されません。\n\nエクスプローラーでプログラムをダブルクリックして起動してください。
+msg.autostartFailed = スタートアップの登録をレジストリに書き込めませんでした。
+msg.installed = GlassBell は実行中で、今後は Windows の起動時に自動的に開始されます。\n\n「Windows の起動時に開始」の切り替えと設定は、時計の横にあるアイコンのメニューにあります。
+msg.uninstalled = 「Windows の起動時に開始」をオフにし、GlassBell を終了しました。
+
+# ---- settings window ----
+settings.title = GlassBell の設定
+settings.backdrop = 背景：
+scene.0 = 夕焼け
+scene.1 = 縞模様と文字
+scene.2 = ライト
+scene.3 = 夜
+settings.showBanner = 通知を表示
+settings.glass = ガラス効果
+settings.glassHint = すべての通知に一括で適用されます
+settings.glassTip = ガラス風のバナー：縁のレンズ効果、ハイライト、背景のぼかし。オフにすると、フラットなカードになります。
+settings.needsGlass = ガラス効果が必要です
+tab.glass = ガラス
+tab.shadow = 影
+tab.sound = サウンド
+settings.resetTab = タブをリセット
+settings.resetAll = すべてリセット
+card.1 = 縁のレンズ効果、輪郭に沿ったハイライト、柔らかな影。マウスでドラッグしてみてください。
+card.2.title = ガラス
+card.2 = ガラスは下にあるものを屈折させます。縁では背景がわずかに曲がり、ハイライトが輪郭に沿って流れます。
+card.3.title = カプセル
+settings.quality = グラフィックの品質
+quality.0 = 低
+quality.1 = 中
+quality.2 = 高
+quality.3 = 最高
+quality.0.note = 最も軽量：屈折なし、影は 1 つ、背景は半分の解像度。
+quality.1.note = 縁で背景が屈折しますが、虹色のにじみはありません。
+quality.2.note = 虹色のにじみがあるレンズを、フル解像度で表示します。
+quality.3.note = 最も正確で最も重い設定：縁を滑らかにし、背景をライブで反映します。
+settings.live = ライブ背景
+settings.liveHint = バナーの移動中も、ガラスが背後の内容に合わせて常に調整されます。消費電力が増えます。
+settings.color = 色
+color.auto = 自動（Windows のテーマに従う）
+color.autoName = 自動 — Windows のテーマに従う
+color.1 = グラファイト
+color.2 = ブラック
+color.3 = ホワイト
+color.4 = ブルー
+color.5 = インディゴ
+color.6 = グリーン
+color.7 = オレンジ
+color.8 = レッド
+color.9 = ピンク
+settings.customColor = カスタム色
+settings.hexTip = #RRGGBB 形式の色
+slider.tint = 色の濃さ
+slider.tint.note = 0% で無色透明なガラス
+slider.glass = ガラスの強さ
+slider.glass.note = レンズ、虹色のにじみ、ハイライトの強さ
+slider.blur = 背景のぼかし
+slider.blur.note = 0% でぼかしなし、レンズ効果だけが残ります
+slider.shadow = 強さ
+slider.shadow.note = 影の濃さ
+slider.softness = 柔らかさ
+slider.softness.note = 影が広がる範囲
+slider.offset = 下方向のずれ
+slider.offset.note = 影がカードからどれだけ下にずれるか
+settings.shadowHint = 明るい背景の上では、影は自動的に薄くなります。
+settings.sound = 通知音
+settings.melody = メロディー
+chime.0 = クリスタル
+chime.0.note = ガラスのような 2 つの音
+chime.1 = シルク
+chime.1.note = 3 つの音で柔らかく上がっていくトリル
+chime.2 = しずく
+chime.2.note = 1 つの音と、静かな返事
+settings.listen = 試聴
+settings.listenTo = 「{0}」を試聴
+slider.volume = 音量
+slider.volume.note = ファイル内ではなく、スピーカーでの音量
+settings.adapt = システムの音量に合わせる
+settings.adaptHint = システムの音量が大きいときは小さく、小さいときは大きく
+timing.cpu = 負荷：1 コアの {0}%
+timing.bake = ガラスの再描画 {0} ms
+
+# ---- installer ----
+setup.title = GlassBell {0} セットアップ
+setup.tagline = Windows の通知をガラスのバナーで表示
+setup.folder = インストール先：
+setup.autostart = Windows の起動時に開始
+setup.desktop = デスクトップにショートカットを作成
+setup.install = インストール
+setup.update = 更新
+setup.cancel = キャンセル
+setup.working = インストールしています…
+setup.done = GlassBell がインストールされました
+setup.doneHint = アイコンは時計の横にあります。Windows 標準のバナーが同時に表示されないようにするには、「応答不可」をオンにしてください（設定 → システム → 通知）。
+setup.open = 設定を開く
+setup.close = 閉じる
+setup.failed = GlassBell をインストールできませんでした：\n{0}
+setup.sandboxed = インストーラーがパッケージ アプリ（MSIX）の内部から起動されたため、インストールしたプログラムが Windows に認識されません。\n\nエクスプローラーで GlassBell-Setup.exe をダブルクリックして起動してください。
+setup.needWin11 = GlassBell は Windows 11 でのみ動作します。
+setup.uninstallTitle = GlassBell のアンインストール
+setup.uninstallAsk = この PC から GlassBell を削除しますか？
+setup.removeSettings = 設定も削除する
+setup.uninstall = アンインストール
+setup.uninstalled = GlassBell を削除しました。
+setup.uninstallFailed = GlassBell を完全には削除できませんでした：\n{0}

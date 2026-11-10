@@ -1,0 +1,123 @@
+# GlassBell: বাংলা
+
+# ---- banners ----
+banner.app = বিজ্ঞপ্তি
+banner.now = এখন
+preview.title = পূর্বরূপ
+preview.body = আপনার সেটিংসে ব্যানারটি এমন দেখায়।
+test.title1 = সবকিছু কাজ করছে
+test.body1 = এখন প্রতিটি অ্যাপের বিজ্ঞপ্তি এমন দেখায়, আর সেগুলো মুহূর্তেই দেখা যায়।
+test.title2 = সুমন
+test.body2 = আছো? প্লিজ, তোমাকে যা পাঠালাম সেটা একটু দেখো তো — এটা বেশ লম্বা একটা মেসেজ, যেটা টেক্সটের দুই লাইনে আঁটার কথা না।
+
+# ---- tray icon menu ----
+tray.settings = সেটিংস…
+tray.test = পরীক্ষামূলক বিজ্ঞপ্তি
+tray.autostart = Windows-এর সাথে শুরু করুন
+tray.exit = প্রস্থান
+
+# ---- message boxes ----
+msg.sandboxed = এই কপিটি একটি প্যাকেজ করা (MSIX) অ্যাপের ভিতর থেকে চালু করা হয়েছে: এখান থেকে লেখা স্টার্টআপ এন্ট্রি Windows দেখতে পাবে না।\n\nফাইল এক্সপ্লোরারে প্রোগ্রামটিতে ডাবল-ক্লিক করে সেটি চালু করুন।
+msg.autostartFailed = রেজিস্ট্রিতে স্টার্টআপ এন্ট্রি লেখা যায়নি।
+msg.installed = GlassBell চলছে এবং Windows-এর সাথে শুরু হবে।\n\nস্টার্টআপ সুইচ ও সেটিংস ঘড়ির পাশে এর আইকনের মেনুতে আছে।
+msg.uninstalled = Windows-এর সাথে শুরু হওয়া বন্ধ করা হয়েছে, এবং GlassBell বন্ধ হয়েছে।
+
+# ---- settings window ----
+settings.title = GlassBell — সেটিংস
+settings.backdrop = পটভূমি:
+scene.0 = সূর্যাস্ত
+scene.1 = ডোরা ও লেখা
+scene.2 = হালকা
+scene.3 = রাত
+settings.showBanner = বিজ্ঞপ্তি দেখান
+settings.glass = কাচের প্রভাব
+settings.glassHint = একসাথে সব বিজ্ঞপ্তিতে প্রযোজ্য
+settings.glassTip = ব্যানারের কাচের মতো চেহারা: কিনারায় লেন্স, ঝলক ও ঝাপসা পটভূমি। বন্ধ থাকলে: সমতল কার্ড।
+settings.needsGlass = কাচের প্রভাব প্রয়োজন
+tab.glass = কাচ
+tab.shadow = ছায়া
+tab.sound = শব্দ
+settings.resetTab = ট্যাব রিসেট করুন
+settings.resetAll = সব রিসেট করুন
+card.1 = কিনারায় লেন্স, ঝলক আর নরম ছায়া। মাউস দিয়ে আমাকে টেনে সরান।
+card.2.title = কাচ
+card.2 = কাচ তার নিচে যা আছে তা প্রতিসরিত করে: কিনারায় পটভূমি সামান্য বেঁকে যায়, আর রূপরেখা বরাবর ঝলক বয়ে যায়।
+card.3.title = ক্যাপসুল
+settings.quality = গ্রাফিক্সের মান
+quality.0 = নিম্ন
+quality.1 = মাঝারি
+quality.2 = উচ্চ
+quality.3 = আল্ট্রা
+quality.0.note = সবচেয়ে হালকা: প্রতিসরণ নেই, একটি ছায়া, অর্ধেক রেজোলিউশনে পটভূমি।
+quality.1.note = কিনারাগুলো পটভূমিকে প্রতিসরিত করে, তবে রঙিন পাড় ছাড়া।
+quality.2.note = পূর্ণ রেজোলিউশনে রঙিন পাড়সহ লেন্স।
+quality.3.note = সবচেয়ে নিখুঁত এবং সবচেয়ে ভারী: মসৃণ কিনারা, লাইভ পটভূমি।
+settings.live = লাইভ পটভূমি
+settings.liveHint = ব্যানার নড়ার সময়ও কাচ তার পেছনের জিনিসের সঙ্গে ক্রমাগত নিজেকে মানিয়ে নেয়। বেশি শক্তি খরচ করে।
+settings.color = রং
+color.auto = স্বয়ংক্রিয় (Windows থিম অনুসরণ করে)
+color.autoName = স্বয়ংক্রিয় — Windows থিম অনুসরণ করে
+color.1 = গ্রাফাইট
+color.2 = কালো
+color.3 = সাদা
+color.4 = নীল
+color.5 = ইন্ডিগো
+color.6 = সবুজ
+color.7 = কমলা
+color.8 = লাল
+color.9 = গোলাপি
+settings.customColor = কাস্টম রং
+settings.hexTip = #RRGGBB ফরম্যাটে রং
+slider.tint = রঙের তীব্রতা
+slider.tint.note = 0% — রং ছাড়া স্বচ্ছ কাচ
+slider.glass = কাচের তীব্রতা
+slider.glass.note = লেন্স, রঙিন পাড় ও ঝলকের জোর
+slider.blur = পটভূমি ঝাপসা করা
+slider.blur.note = 0% — কোনো ঝাপসা নেই, শুধু লেন্স থাকে
+slider.shadow = তীব্রতা
+slider.shadow.note = ছায়া কতটা গাঢ়
+slider.softness = কোমলতা
+slider.softness.note = ছায়া কতদূর ছড়ায়
+slider.offset = দূরত্ব
+slider.offset.note = কার্ড থেকে ছায়া কতটা নিচে পড়ে
+settings.shadowHint = হালকা পটভূমির উপর ছায়া স্বয়ংক্রিয়ভাবে ফিকে হয়ে যায়।
+settings.sound = বিজ্ঞপ্তির শব্দ
+settings.melody = সুর
+chime.0 = স্ফটিক
+chime.0.note = কাচের দুটি সুর
+chime.1 = রেশম
+chime.1.note = তিনটি সুরের নরম, ওপরে ওঠা তান
+chime.2 = ফোঁটা
+chime.2.note = একটি সুর আর একটি মৃদু উত্তর
+settings.listen = শুনুন
+settings.listenTo = {0} শুনুন
+slider.volume = ভলিউম
+slider.volume.note = স্পিকারে শব্দের মাত্রা, ফাইলে নয়
+settings.adapt = সিস্টেম ভলিউম অনুযায়ী মানিয়ে নিন
+settings.adaptHint = সিস্টেমের আওয়াজ জোরে থাকলে আস্তে, আস্তে থাকলে জোরে
+timing.cpu = একটি কোরের {0}% লোড
+timing.bake = কাচ আবার আঁকতে {0} মি.সে.
+
+# ---- installer ----
+setup.title = GlassBell {0} সেটআপ
+setup.tagline = কাচের ব্যানার রূপে Windows বিজ্ঞপ্তি
+setup.folder = এখানে ইনস্টল হবে:
+setup.autostart = Windows-এর সাথে শুরু করুন
+setup.desktop = ডেস্কটপে শর্টকাট
+setup.install = ইনস্টল করুন
+setup.update = আপডেট করুন
+setup.cancel = বাতিল করুন
+setup.working = ইনস্টল হচ্ছে…
+setup.done = GlassBell ইনস্টল হয়েছে
+setup.doneHint = এর আইকন ঘড়ির পাশে আছে। Windows-এর নিজস্ব ব্যানারও যাতে না দেখায়, সেজন্য "বিরক্ত করবেন না" চালু করুন: সেটিংস → সিস্টেম → বিজ্ঞপ্তি।
+setup.open = সেটিংস খুলুন
+setup.close = বন্ধ করুন
+setup.failed = GlassBell ইনস্টল করা যায়নি:\n{0}
+setup.sandboxed = ইনস্টলারটি একটি প্যাকেজ করা (MSIX) অ্যাপের ভিতর থেকে চালু করা হয়েছে, তাই Windows ইনস্টল করা প্রোগ্রামটি দেখতে পেত না।\n\nফাইল এক্সপ্লোরারে GlassBell-Setup.exe ফাইলটিতে ডাবল-ক্লিক করে সেটি চালু করুন।
+setup.needWin11 = GlassBell শুধু Windows 11-এ কাজ করে।
+setup.uninstallTitle = GlassBell আনইনস্টল করুন
+setup.uninstallAsk = এই কম্পিউটার থেকে GlassBell সরাবেন?
+setup.removeSettings = আমার সেটিংসও মুছে ফেলুন
+setup.uninstall = আনইনস্টল করুন
+setup.uninstalled = GlassBell সরানো হয়েছে।
+setup.uninstallFailed = GlassBell সম্পূর্ণভাবে সরানো যায়নি:\n{0}

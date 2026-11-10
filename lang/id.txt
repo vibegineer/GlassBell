@@ -1,0 +1,123 @@
+# GlassBell: Bahasa Indonesia
+
+# ---- banners ----
+banner.app = Pemberitahuan
+banner.now = baru saja
+preview.title = Pratinjau
+preview.body = Beginilah tampilan banner dengan pengaturan Anda.
+test.title1 = Sudah berfungsi
+test.body1 = Sekarang pemberitahuan dari semua aplikasi terlihat seperti ini, dan muncul seketika.
+test.title2 = Budi
+test.body2 = Kamu lagi di situ? Tolong lihat yang barusan aku kirim, ya — pesannya panjang banget, jadi pasti nggak muat dalam dua baris teks.
+
+# ---- tray icon menu ----
+tray.settings = Pengaturan…
+tray.test = Pemberitahuan uji
+tray.autostart = Mulai bersama Windows
+tray.exit = Keluar
+
+# ---- message boxes ----
+msg.sandboxed = Salinan ini dijalankan dari dalam aplikasi yang dikemas (MSIX): Windows tidak akan melihat entri mulai otomatis yang ditulis dari sini.\n\nJalankan program dengan mengklik ganda program tersebut di File Explorer.
+msg.autostartFailed = Tidak dapat menulis entri mulai otomatis ke registri.
+msg.installed = GlassBell sedang berjalan dan akan dimulai bersama Windows.\n\nSakelar mulai otomatis dan pengaturan ada di menu ikonnya, di samping jam.
+msg.uninstalled = “Mulai bersama Windows” telah dinonaktifkan, dan GlassBell telah ditutup.
+
+# ---- settings window ----
+settings.title = Pengaturan GlassBell
+settings.backdrop = Latar:
+scene.0 = Senja
+scene.1 = Garis dan teks
+scene.2 = Terang
+scene.3 = Malam
+settings.showBanner = Tampilkan banner
+settings.glass = Efek kaca
+settings.glassHint = Berlaku untuk semua pemberitahuan sekaligus
+settings.glassTip = Tampilan kaca untuk banner: lensa di tepi, kilau cahaya, dan latar belakang buram. Nonaktif: kartu datar.
+settings.needsGlass = Memerlukan efek kaca
+tab.glass = Kaca
+tab.shadow = Bayangan
+tab.sound = Suara
+settings.resetTab = Atur ulang tab
+settings.resetAll = Atur ulang semua
+card.1 = Lensa di tepi, kilau, dan bayangan lembut. Seret saya dengan mouse.
+card.2.title = Kaca
+card.2 = Kaca membiaskan apa yang ada di bawahnya: latar belakang sedikit melengkung di tepi, dan kilau mengalir di sepanjang garis luar.
+card.3.title = Kapsul
+settings.quality = Kualitas grafis
+quality.0 = Rendah
+quality.1 = Sedang
+quality.2 = Tinggi
+quality.3 = Ultra
+quality.0.note = Paling ringan: tanpa pembiasan, satu bayangan, latar belakang setengah resolusi.
+quality.1.note = Tepinya membiaskan latar belakang, tetapi tanpa pinggiran berwarna.
+quality.2.note = Lensa dengan pinggiran berwarna dalam resolusi penuh.
+quality.3.note = Paling akurat dan paling berat: tepi dihaluskan, latar belakang dinamis.
+settings.live = Latar belakang dinamis
+settings.liveHint = Kaca terus menyesuaikan diri dengan apa yang ada di belakangnya, bahkan saat banner bergerak. Menggunakan lebih banyak daya.
+settings.color = Warna
+color.auto = Otomatis (mengikuti tema Windows)
+color.autoName = Otomatis — mengikuti tema Windows
+color.1 = Grafit
+color.2 = Hitam
+color.3 = Putih
+color.4 = Biru
+color.5 = Nila
+color.6 = Hijau
+color.7 = Oranye
+color.8 = Merah
+color.9 = Merah muda
+settings.customColor = Warna kustom
+settings.hexTip = Warna dalam format #RRGGBB
+slider.tint = Intensitas warna
+slider.tint.note = 0% — kaca bening tanpa warna
+slider.glass = Intensitas kaca
+slider.glass.note = Kekuatan lensa, pinggiran berwarna, dan kilau
+slider.blur = Keburaman latar
+slider.blur.note = 0% — tanpa buram, hanya lensa yang tersisa
+slider.shadow = Kekuatan
+slider.shadow.note = Seberapa gelap bayangannya
+slider.softness = Kelembutan
+slider.softness.note = Seberapa jauh bayangan menyebar
+slider.offset = Geser ke bawah
+slider.offset.note = Seberapa jauh bayangan jatuh di bawah kartu
+settings.shadowHint = Di atas latar belakang terang, bayangan otomatis menjadi lebih tipis.
+settings.sound = Suara pemberitahuan
+settings.melody = Melodi
+chime.0 = Kristal
+chime.0.note = Dua nada sebening kaca
+chime.1 = Sutra
+chime.1.note = Tril lembut tiga nada yang menanjak
+chime.2 = Tetesan
+chime.2.note = Satu nada dan jawaban yang lirih
+settings.listen = Dengarkan
+settings.listenTo = Dengarkan {0}
+slider.volume = Volume
+slider.volume.note = Tingkat suara di speaker, bukan di file
+settings.adapt = Sesuaikan dengan volume sistem
+settings.adaptHint = Lebih pelan saat volume sistem tinggi, lebih keras saat volume sistem rendah
+timing.cpu = beban {0}% dari satu inti
+timing.bake = gambar ulang kaca {0} ms
+
+# ---- installer ----
+setup.title = Penyiapan GlassBell {0}
+setup.tagline = Pemberitahuan Windows sebagai banner kaca
+setup.folder = Instal ke:
+setup.autostart = Mulai bersama Windows
+setup.desktop = Buat pintasan di desktop
+setup.install = Instal
+setup.update = Perbarui
+setup.cancel = Batal
+setup.working = Menginstal…
+setup.done = GlassBell telah diinstal
+setup.doneHint = Ikonnya ada di samping jam. Agar banner bawaan Windows tidak ikut muncul, aktifkan Jangan ganggu: Pengaturan → Sistem → Pemberitahuan.
+setup.open = Buka pengaturan
+setup.close = Tutup
+setup.failed = GlassBell tidak dapat diinstal:\n{0}
+setup.sandboxed = Penginstal dijalankan dari dalam aplikasi yang dikemas (MSIX), sehingga Windows tidak akan melihat program yang diinstal.\n\nJalankan GlassBell-Setup.exe dengan mengklik ganda file tersebut di File Explorer.
+setup.needWin11 = GlassBell hanya berfungsi di Windows 11.
+setup.uninstallTitle = Hapus instalan GlassBell
+setup.uninstallAsk = Apakah Anda ingin menghapus GlassBell dari komputer ini?
+setup.removeSettings = Hapus juga pengaturan saya
+setup.uninstall = Hapus instalan
+setup.uninstalled = GlassBell telah dihapus.
+setup.uninstallFailed = GlassBell tidak dapat dihapus sepenuhnya:\n{0}

@@ -1,0 +1,123 @@
+# GlassBell: Português (Brasil)
+
+# ---- banners ----
+banner.app = Notificação
+banner.now = agora
+preview.title = Pré-visualização
+preview.body = É assim que fica uma faixa com as suas configurações.
+test.title1 = Tudo funcionando
+test.body1 = Agora as notificações de todos os aplicativos ficam assim, e elas aparecem na hora.
+test.title2 = João
+test.body2 = Tá aí? Dá uma olhada no que eu te mandei, por favor — é uma mensagem longa que não deveria caber em duas linhas de texto.
+
+# ---- tray icon menu ----
+tray.settings = Configurações…
+tray.test = Notificação de teste
+tray.autostart = Iniciar com o Windows
+tray.exit = Sair
+
+# ---- message boxes ----
+msg.sandboxed = Esta cópia foi iniciada de dentro de um aplicativo empacotado (MSIX): o Windows não verá uma entrada de inicialização gravada daqui.\n\nInicie o programa clicando duas vezes nele no Explorador de Arquivos.
+msg.autostartFailed = Não foi possível gravar a entrada de inicialização no Registro.
+msg.installed = O GlassBell está em execução e será iniciado com o Windows.\n\nA opção de inicialização automática e as configurações ficam no menu do ícone dele, ao lado do relógio.
+msg.uninstalled = A inicialização com o Windows foi desativada e o GlassBell foi fechado.
+
+# ---- settings window ----
+settings.title = GlassBell — Configurações
+settings.backdrop = Fundo:
+scene.0 = Pôr do sol
+scene.1 = Listras e texto
+scene.2 = Claro
+scene.3 = Noite
+settings.showBanner = Mostrar notificação
+settings.glass = Efeito de vidro
+settings.glassHint = Vale para todas as notificações de uma vez
+settings.glassTip = Visual de vidro para as faixas: lente nas bordas, reflexos e fundo desfocado. Desativado: um cartão plano.
+settings.needsGlass = Requer o efeito de vidro
+tab.glass = Vidro
+tab.shadow = Sombra
+tab.sound = Som
+settings.resetTab = Redefinir guia
+settings.resetAll = Redefinir tudo
+card.1 = Lente nas bordas, reflexos e sombra suave. Arraste-me com o mouse.
+card.2.title = Vidro
+card.2 = O vidro refrata o que está embaixo dele: o fundo se curva levemente nas bordas, e os reflexos correm pelo contorno.
+card.3.title = Cápsula
+settings.quality = Qualidade gráfica
+quality.0 = Baixa
+quality.1 = Média
+quality.2 = Alta
+quality.3 = Ultra
+quality.0.note = A mais leve: sem refração, uma só sombra, fundo em meia resolução.
+quality.1.note = As bordas refratam o fundo, mas sem a franja colorida.
+quality.2.note = Uma lente com franja colorida em resolução total.
+quality.3.note = A mais precisa e a mais pesada: bordas suavizadas, fundo em tempo real.
+settings.live = Fundo em tempo real
+settings.liveHint = O vidro se ajusta continuamente ao que está atrás dele, mesmo enquanto a faixa se move. Consome mais energia.
+settings.color = Cor
+color.auto = Automática (segue o tema do Windows)
+color.autoName = Automática — segue o tema do Windows
+color.1 = Grafite
+color.2 = Preto
+color.3 = Branco
+color.4 = Azul
+color.5 = Índigo
+color.6 = Verde
+color.7 = Laranja
+color.8 = Vermelho
+color.9 = Rosa
+settings.customColor = Personalizada
+settings.hexTip = Cor no formato #RRGGBB
+slider.tint = Intensidade da cor
+slider.tint.note = 0% — vidro transparente, sem cor
+slider.glass = Intensidade do vidro
+slider.glass.note = Força da lente, da franja colorida e dos reflexos
+slider.blur = Desfoque do fundo
+slider.blur.note = 0% — sem desfoque, só resta a lente
+slider.shadow = Intensidade
+slider.shadow.note = Quão escura é a sombra
+slider.softness = Suavidade
+slider.softness.note = Quanto a sombra se espalha
+slider.offset = Deslocamento
+slider.offset.note = Quanto a sombra cai abaixo do cartão
+settings.shadowHint = Sobre um fundo claro, a sombra fica mais clara automaticamente.
+settings.sound = Som de notificação
+settings.melody = Melodia
+chime.0 = Cristal
+chime.0.note = Duas notas de vidro
+chime.1 = Seda
+chime.1.note = Um trinado suave e ascendente de três notas
+chime.2 = Gota
+chime.2.note = Uma nota e uma resposta discreta
+settings.listen = Ouvir
+settings.listenTo = Ouvir {0}
+slider.volume = Volume
+slider.volume.note = O nível nos alto-falantes, não no arquivo
+settings.adapt = Ajustar ao volume do sistema
+settings.adaptHint = Mais baixo quando o sistema está alto, mais alto quando está baixo
+timing.cpu = carga de {0}% de um núcleo
+timing.bake = redesenho do vidro {0} ms
+
+# ---- installer ----
+setup.title = Instalação do GlassBell {0}
+setup.tagline = Notificações do Windows em faixas de vidro
+setup.folder = Pasta de instalação:
+setup.autostart = Iniciar com o Windows
+setup.desktop = Atalho na área de trabalho
+setup.install = Instalar
+setup.update = Atualizar
+setup.cancel = Cancelar
+setup.working = Instalando…
+setup.done = O GlassBell foi instalado
+setup.doneHint = O ícone dele fica ao lado do relógio. Para que as faixas do Windows não apareçam também, ative “Não incomodar”: Configurações → Sistema → Notificações.
+setup.open = Abrir configurações
+setup.close = Fechar
+setup.failed = Não foi possível instalar o GlassBell:\n{0}
+setup.sandboxed = O instalador foi iniciado de dentro de um aplicativo empacotado (MSIX), então o Windows não veria o programa instalado.\n\nInicie o GlassBell-Setup.exe clicando duas vezes nele no Explorador de Arquivos.
+setup.needWin11 = O GlassBell só funciona no Windows 11.
+setup.uninstallTitle = Desinstalar o GlassBell
+setup.uninstallAsk = Remover o GlassBell deste computador?
+setup.removeSettings = Excluir também minhas configurações
+setup.uninstall = Desinstalar
+setup.uninstalled = O GlassBell foi removido.
+setup.uninstallFailed = Não foi possível remover o GlassBell completamente:\n{0}

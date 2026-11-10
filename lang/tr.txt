@@ -1,0 +1,123 @@
+# GlassBell: Türkçe
+
+# ---- banners ----
+banner.app = Bildirim
+banner.now = şimdi
+preview.title = Önizleme
+preview.body = Ayarlarınızla bir bildirim böyle görünür.
+test.title1 = Çalışıyor
+test.body1 = Artık tüm uygulamaların bildirimleri böyle görünüyor ve anında beliriyor.
+test.title2 = Emre
+test.body2 = Orada mısın? Az önce sana attığım şeye bir bakar mısın lütfen — epey uzun bir mesaj, iki satıra kesinlikle sığmaması lazım.
+
+# ---- tray icon menu ----
+tray.settings = Ayarlar…
+tray.test = Test bildirimi
+tray.autostart = Windows ile başlat
+tray.exit = Çıkış
+
+# ---- message boxes ----
+msg.sandboxed = Bu kopya, paketlenmiş bir uygulamanın (MSIX) içinden başlatıldı: buradan yazılan başlangıç girdisini Windows görmez.\n\nProgramı Dosya Gezgini'nde çift tıklayarak başlatın.
+msg.autostartFailed = Başlangıç girdisi kayıt defterine yazılamadı.
+msg.installed = GlassBell çalışıyor ve Windows ile birlikte başlayacak.\n\nBaşlangıç seçeneği ve ayarlar, saatin yanındaki simgenin menüsünde bulunur.
+msg.uninstalled = Windows ile başlatma devre dışı bırakıldı ve GlassBell kapatıldı.
+
+# ---- settings window ----
+settings.title = GlassBell Ayarları
+settings.backdrop = Arka plan:
+scene.0 = Gün batımı
+scene.1 = Çizgi ve metin
+scene.2 = Açık
+scene.3 = Gece
+settings.showBanner = Bildirim göster
+settings.glass = Cam efekti
+settings.glassHint = Tüm bildirimlere aynı anda uygulanır
+settings.glassTip = Bildirimler için cam görünümü: kenarlarda mercek, parlamalar ve bulanık arka plan. Kapalıyken: düz bir kart.
+settings.needsGlass = Cam efekti gerektirir
+tab.glass = Cam
+tab.shadow = Gölge
+tab.sound = Ses
+settings.resetTab = Sekmeyi sıfırla
+settings.resetAll = Tümünü sıfırla
+card.1 = Kenarlarda mercek, parlamalar ve yumuşak gölge. Beni fareyle sürükleyin.
+card.2.title = Cam
+card.2 = Cam, altındakini kırarak gösterir: arka plan kenarlarda hafifçe bükülür, parlamalar da dış hat boyunca akar.
+card.3.title = Kapsül
+settings.quality = Grafik kalitesi
+quality.0 = Düşük
+quality.1 = Orta
+quality.2 = Yüksek
+quality.3 = Ultra
+quality.0.note = En hafifi: kırılma yok, tek gölge, arka plan yarı çözünürlükte.
+quality.1.note = Kenarlar arka planı kırar ama renkli saçak oluşmaz.
+quality.2.note = Tam çözünürlükte, renkli saçaklı mercek.
+quality.3.note = En doğru ve en ağır: yumuşatılmış kenarlar, canlı arka plan.
+settings.live = Canlı arka plan
+settings.liveHint = Bildirim hareket ederken bile cam, arkasındakine sürekli uyum sağlar. Daha fazla güç kullanır.
+settings.color = Renk
+color.auto = Otomatik (Windows temasını izler)
+color.autoName = Otomatik — Windows temasını izler
+color.1 = Grafit
+color.2 = Siyah
+color.3 = Beyaz
+color.4 = Mavi
+color.5 = Çivit mavisi
+color.6 = Yeşil
+color.7 = Turuncu
+color.8 = Kırmızı
+color.9 = Pembe
+settings.customColor = Özel renk
+settings.hexTip = #RRGGBB biçiminde renk
+slider.tint = Renk yoğunluğu
+slider.tint.note = %0 — renksiz, saydam cam
+slider.glass = Cam yoğunluğu
+slider.glass.note = Merceğin, renkli saçağın ve parlamaların gücü
+slider.blur = Arka plan bulanıklığı
+slider.blur.note = %0 — bulanıklık yok, yalnızca mercek kalır
+slider.shadow = Yoğunluk
+slider.shadow.note = Gölgenin ne kadar koyu olduğu
+slider.softness = Yumuşaklık
+slider.softness.note = Gölgenin ne kadar yayıldığı
+slider.offset = Aşağı kayma
+slider.offset.note = Gölgenin kartın ne kadar altına düştüğü
+settings.shadowHint = Açık renkli bir arka planın üzerinde gölge otomatik olarak hafifler.
+settings.sound = Bildirim sesi
+settings.melody = Melodi
+chime.0 = Kristal
+chime.0.note = Cam gibi iki nota
+chime.1 = İpek
+chime.1.note = Üç notalı, yumuşak, yükselen bir tril
+chime.2 = Damla
+chime.2.note = Bir nota ve sessiz bir yanıt
+settings.listen = Dinle
+settings.listenTo = {0} melodisini dinle
+slider.volume = Ses düzeyi
+slider.volume.note = Dosyadaki değil, hoparlörlerdeki düzey
+settings.adapt = Sistem ses düzeyine uyarla
+settings.adaptHint = Sistemin sesi yüksekken daha sessiz, kısıkken daha yüksek
+timing.cpu = tek çekirdekte %{0} yük
+timing.bake = cam yeniden çizimi {0} ms
+
+# ---- installer ----
+setup.title = GlassBell {0} Kurulumu
+setup.tagline = Cam görünümlü Windows bildirimleri
+setup.folder = Yükleme konumu:
+setup.autostart = Windows ile başlat
+setup.desktop = Masaüstü kısayolu oluştur
+setup.install = Yükle
+setup.update = Güncelleştir
+setup.cancel = İptal
+setup.working = Yükleniyor…
+setup.done = GlassBell yüklendi
+setup.doneHint = Simgesi saatin yanında. Windows'un kendi bildirim başlıklarının da görünmemesi için Rahatsız etmeyin özelliğini açın: Ayarlar → Sistem → Bildirimler.
+setup.open = Ayarları aç
+setup.close = Kapat
+setup.failed = GlassBell yüklenemedi:\n{0}
+setup.sandboxed = Yükleyici, paketlenmiş bir uygulamanın (MSIX) içinden başlatıldı; bu nedenle Windows yüklenen programı göremezdi.\n\nGlassBell-Setup.exe dosyasını Dosya Gezgini'nde çift tıklayarak başlatın.
+setup.needWin11 = GlassBell yalnızca Windows 11'de çalışır.
+setup.uninstallTitle = GlassBell'i kaldır
+setup.uninstallAsk = GlassBell bu bilgisayardan kaldırılsın mı?
+setup.removeSettings = Ayarlarımı da sil
+setup.uninstall = Kaldır
+setup.uninstalled = GlassBell kaldırıldı.
+setup.uninstallFailed = GlassBell tamamen kaldırılamadı:\n{0}

@@ -1,0 +1,123 @@
+# GlassBell: العربية
+
+# ---- banners ----
+banner.app = إعلام
+banner.now = الآن
+preview.title = معاينة
+preview.body = هكذا يبدو الشعار مع إعداداتك.
+test.title1 = كل شيء يعمل
+test.body1 = هكذا تبدو الآن إعلامات كل التطبيقات، وهي تظهر على الفور.
+test.title2 = أحمد
+test.body2 = هل أنت هنا؟ ألقِ نظرة لو سمحت على ما أرسلته لك قبل قليل — إنها رسالة طويلة جدًا، ولا يُفترض أن تتسع في سطرين من النص.
+
+# ---- tray icon menu ----
+tray.settings = الإعدادات…
+tray.test = إعلام تجريبي
+tray.autostart = بدء التشغيل مع Windows
+tray.exit = إنهاء
+
+# ---- message boxes ----
+msg.sandboxed = تم تشغيل هذه النسخة من داخل تطبيق محزم (MSIX): لن يرى Windows إدخال بدء التشغيل المكتوب من هنا.\n\nقم بتشغيل البرنامج بالنقر المزدوج عليه في مستكشف الملفات.
+msg.autostartFailed = تعذرت كتابة إدخال بدء التشغيل في السجل.
+msg.installed = يعمل GlassBell الآن وسيبدأ تشغيله مع Windows.\n\nستجد مفتاح بدء التشغيل والإعدادات في قائمة رمزه بجوار الساعة.
+msg.uninstalled = تم تعطيل بدء التشغيل مع Windows، وتم إغلاق GlassBell.
+
+# ---- settings window ----
+settings.title = GlassBell — الإعدادات
+settings.backdrop = الخلفية:
+scene.0 = الغروب
+scene.1 = خطوط ونص
+scene.2 = فاتح
+scene.3 = الليل
+settings.showBanner = إظهار إعلام
+settings.glass = تأثير الزجاج
+settings.glassHint = ينطبق على كل الإعلامات دفعة واحدة
+settings.glassTip = مظهر زجاجي للشعارات: عدسة عند الحواف، ولمعان، وخلفية مموهة. عند الإيقاف: بطاقة مسطحة.
+settings.needsGlass = يتطلب تأثير الزجاج
+tab.glass = الزجاج
+tab.shadow = الظل
+tab.sound = الصوت
+settings.resetTab = إعادة ضبط التبويب
+settings.resetAll = إعادة ضبط الكل
+card.1 = عدسة عند الحواف، ولمعان على طول الإطار، وظل ناعم. اسحبني بالماوس.
+card.2.title = زجاج
+card.2 = يُظهر الزجاج ما تحته منكسرًا: تنحني الخلفية قليلًا عند الحواف، ويسري اللمعان على طول الإطار.
+card.3.title = كبسولة
+settings.quality = جودة الرسومات
+quality.0 = منخفضة
+quality.1 = متوسطة
+quality.2 = عالية
+quality.3 = فائقة
+quality.0.note = الأخف: بلا انكسار، ظل واحد، والخلفية بنصف الدقة.
+quality.1.note = تنكسر الخلفية عند الحواف، لكن دون الهالة الملونة.
+quality.2.note = عدسة بهالة ملونة بالدقة الكاملة.
+quality.3.note = الأدق والأثقل: حواف ناعمة، وخلفية حية.
+settings.live = خلفية حية
+settings.liveHint = يتكيف الزجاج باستمرار مع ما خلفه، حتى أثناء حركة الشعار. يستهلك طاقة أكبر.
+settings.color = اللون
+color.auto = تلقائي (يتبع نسق Windows)
+color.autoName = تلقائي — يتبع نسق Windows
+color.1 = جرافيت
+color.2 = أسود
+color.3 = أبيض
+color.4 = أزرق
+color.5 = نيلي
+color.6 = أخضر
+color.7 = برتقالي
+color.8 = أحمر
+color.9 = وردي
+settings.customColor = لون مخصص
+settings.hexTip = اللون بتنسيق #RRGGBB
+slider.tint = شدة اللون
+slider.tint.note = 0% — زجاج شفاف بلا لون
+slider.glass = شدة الزجاج
+slider.glass.note = قوة العدسة والهالة الملونة واللمعان
+slider.blur = تمويه الخلفية
+slider.blur.note = 0% — بلا تمويه، تبقى العدسة وحدها
+slider.shadow = القوة
+slider.shadow.note = مدى قتامة الظل
+slider.softness = النعومة
+slider.softness.note = مدى انتشار الظل
+slider.offset = الإزاحة لأسفل
+slider.offset.note = إلى أي مدى يقع الظل أسفل البطاقة
+settings.shadowHint = يصبح الظل أفتح تلقائيًا فوق الخلفية الفاتحة.
+settings.sound = صوت الإعلام
+settings.melody = اللحن
+chime.0 = بلور
+chime.0.note = نغمتان زجاجيتان
+chime.1 = حرير
+chime.1.note = رنة ناعمة صاعدة من ثلاث نغمات
+chime.2 = قطرة
+chime.2.note = نغمة واحدة ورد خافت
+settings.listen = استماع
+settings.listenTo = الاستماع إلى {0}
+slider.volume = مستوى الصوت
+slider.volume.note = المستوى في مكبرات الصوت، وليس في الملف
+settings.adapt = التكيف مع مستوى صوت النظام
+settings.adaptHint = أهدأ عندما يكون صوت النظام مرتفعًا، وأعلى عندما يكون هادئًا
+timing.cpu = الحمل {0}% من نواة
+timing.bake = إعادة رسم الزجاج {0} مللي ثانية
+
+# ---- installer ----
+setup.title = إعداد GlassBell {0}
+setup.tagline = إعلامات Windows على هيئة شعارات زجاجية
+setup.folder = مكان التثبيت:
+setup.autostart = بدء التشغيل مع Windows
+setup.desktop = اختصار على سطح المكتب
+setup.install = تثبيت
+setup.update = تحديث
+setup.cancel = إلغاء الأمر
+setup.working = جارٍ التثبيت…
+setup.done = تم تثبيت GlassBell
+setup.doneHint = يوجد رمزه بجوار الساعة. لمنع ظهور شعارات Windows الأصلية أيضًا، قم بتشغيل "عدم الإزعاج": الإعدادات ← النظام ← الإعلامات.
+setup.open = فتح الإعدادات
+setup.close = إغلاق
+setup.failed = تعذر تثبيت GlassBell:\n{0}
+setup.sandboxed = تم تشغيل المثبت من داخل تطبيق محزم (MSIX)، لذا لن يتمكن Windows من رؤية البرنامج المثبت.\n\nقم بتشغيل GlassBell-Setup.exe بالنقر المزدوج عليه في مستكشف الملفات.
+setup.needWin11 = يعمل GlassBell على Windows 11 فقط.
+setup.uninstallTitle = إلغاء تثبيت GlassBell
+setup.uninstallAsk = هل تريد إزالة GlassBell من هذا الكمبيوتر؟
+setup.removeSettings = حذف إعداداتي أيضًا
+setup.uninstall = إلغاء التثبيت
+setup.uninstalled = تمت إزالة GlassBell.
+setup.uninstallFailed = تعذرت إزالة GlassBell بالكامل:\n{0}
