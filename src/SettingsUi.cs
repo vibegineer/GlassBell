@@ -173,11 +173,11 @@ namespace GlassBell
 
   <Style x:Key='Chip' TargetType='{x:Type RadioButton}' BasedOn='{StaticResource Seg}'>
     <Setter Property='FontSize' Value='12'/>
-    <Setter Property='Margin' Value='0,2,6,2'/>
+    <Setter Property='Margin' Value='0,2,5,2'/>
     <Setter Property='Template'>
       <Setter.Value>
         <ControlTemplate TargetType='{x:Type RadioButton}'>
-          <Border x:Name='B' CornerRadius='13' Padding='11,4' Background='#2C2C2E' BorderThickness='1.5' BorderBrush='Transparent' SnapsToDevicePixels='True'>
+          <Border x:Name='B' CornerRadius='13' Padding='9,4' Background='#2C2C2E' BorderThickness='1.5' BorderBrush='Transparent' SnapsToDevicePixels='True'>
             <ContentPresenter HorizontalAlignment='Center' VerticalAlignment='Center' TextElement.Foreground='{TemplateBinding Foreground}'/>
           </Border>
           <ControlTemplate.Triggers>
@@ -396,7 +396,14 @@ namespace GlassBell
         [System.Runtime.InteropServices.DllImport("dwmapi.dll")]
         static extern int DwmSetWindowAttribute(IntPtr hwnd, int attribute, ref int value, int size);
 
-        // the title bar follows the dark window instead of staying white
+        [System.Runtime.InteropServices.DllImport("user32.dll")] static extern int GetWindowLong(IntPtr hwnd, int index);
+        [System.Runtime.InteropServices.DllImport("user32.dll")] static extern int SetWindowLong(IntPtr hwnd, int index, int value);
+
+        FrameworkElement leftColumn, chipsPanel;
+        bool sizeLocked;
+
+        // the title bar follows the dark window instead of staying white; there is no maximize button, as a maximized
+        // window could only add empty space around content of fixed size
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
@@ -405,8 +412,25 @@ namespace GlassBell
                 int on = 1;
                 var h = new System.Windows.Interop.WindowInteropHelper(this).Handle;
                 DwmSetWindowAttribute(h, 20, ref on, 4);   // DWMWA_USE_IMMERSIVE_DARK_MODE
+                SetWindowLong(h, -16, GetWindowLong(h, -16) & ~0x10000);   // GWL_STYLE without WS_MAXIMIZEBOX
             }
             catch { }
+        }
+
+        // once laid out: the width stays that of the content, the height may only shrink, down to the preview
+        void LockSize()
+        {
+            if (sizeLocked) return;
+            sizeLocked = true;
+            var root = (FrameworkElement)Content;
+            double w = ActualWidth, h = ActualHeight;
+            double chrome = h - root.ActualHeight - root.Margin.Top - root.Margin.Bottom;   // title bar and frame
+            SizeToContent = SizeToContent.Manual;
+            Width = w;
+            Height = h;
+            MinWidth = MaxWidth = w;
+            MaxHeight = h;
+            MinHeight = Math.Min(h, leftColumn.ActualHeight + root.Margin.Top + root.Margin.Bottom + chrome);
         }
 
         static Brush Hue(string hex)
@@ -422,10 +446,11 @@ namespace GlassBell
             Settings.Load();
             scale = Manager.Scale();
             Title = L.T("settings.title");
-            Width = 1010;
-            Height = 790;
-            MinWidth = 960;
-            MinHeight = 680;
+            // The preview is a picture of fixed size and the panel a column of fixed width, so nothing in the window can
+            // use more width: the window takes the width of its content and keeps it. The height starts at what all the
+            // settings need (at most the screen) and can only shrink, while the settings scroll, down to the height of the
+            // preview. Both limits come from the laid-out content (see LockSize), so every language gets its own.
+            SizeToContent = SizeToContent.WidthAndHeight;
             MaxHeight = SystemParameters.WorkArea.Height;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             FontFamily = new FontFamily("Segoe UI Variable Text, Segoe UI");
@@ -438,12 +463,13 @@ namespace GlassBell
             master.Style = (Style)FindResource("Switch");
 
             var root = new Grid { Margin = new Thickness(20) };
-            root.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            root.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             root.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(400) });
 
-            // ---- left: the preview ----
-            var left = new Grid { Margin = new Thickness(0, 0, 20, 0), HorizontalAlignment = HorizontalAlignment.Left };
-            left.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            // ---- left: the preview, with its backdrop chips right under it ----
+            var left = new Grid { Margin = new Thickness(0, 0, 20, 0), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top };
+            leftColumn = left;
+            left.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             left.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             var sceneHost = new Border
             {
@@ -461,7 +487,8 @@ namespace GlassBell
             below.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             // the backdrop chips wrap onto a second row when a language needs more room than one row has
             var chips = new WrapPanel { VerticalAlignment = VerticalAlignment.Center };
-            chips.Children.Add(new TextBlock { Text = L.T("settings.backdrop"), Foreground = Hue("#8E8E93"), FontSize = 12, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 8, 0) });
+            chipsPanel = chips;
+            chips.Children.Add(new TextBlock { Text = L.T("settings.backdrop"), Foreground = Hue("#8E8E93"), FontSize = 12, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 6, 0) });
             for (int i = 0; i < Scenes.Length; i++)
             {
                 int idx = i;
@@ -576,6 +603,7 @@ namespace GlassBell
             Refresh();
             load.Tick += delegate { ShowTiming(); };
             Loaded += delegate { RebakeAll(); load.Start(); };
+            ContentRendered += delegate { LockSize(); };
             Closed += delegate { load.Stop(); foreach (var c in cards) c.ReleaseEffects(); };
             if (SnapshotPath != null)
             {
@@ -597,10 +625,16 @@ namespace GlassBell
         {
             try
             {
+                UpdateLayout();
+                LockSize();
+                Log.Write("snapshot " + L.Code + ": " + Math.Round(ActualWidth) + " x " + Math.Round(ActualHeight) + ", height down to " + Math.Round(MinHeight) +
+                    ", screen " + Math.Round(SystemParameters.WorkArea.Height) + (chipsPanel.ActualHeight > 40 ? ", backdrop chips wrap" : ""));
                 var root = (FrameworkElement)Content;
-                for (int t = 0; t < tabPanels.Count; t++)
+                // tabs 0..2 at the full height, then tab 0 at the smallest height the window allows (file-3.png)
+                for (int t = 0; t <= tabPanels.Count; t++)
                 {
-                    ShowTab(t);
+                    ShowTab(t % tabPanels.Count);
+                    if (t == tabPanels.Count) Height = MinHeight;
                     UpdateLayout();
                     double w = root.ActualWidth + 40, h = root.ActualHeight + 40;
                     var dv = new DrawingVisual();
