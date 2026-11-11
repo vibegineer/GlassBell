@@ -4,7 +4,7 @@
 
 <p align="center">Notifications of every app as fast glass banners, in the style of macOS. For Windows 11.</p>
 
-<p align="center"><b>English</b> · <a href="README.ru.md">Русский</a></p>
+<p align="center"><b>English</b> · <a href="README.zh.md">中文</a> · <a href="README.hi.md">हिन्दी</a> · <a href="README.es.md">Español</a> · <a href="README.ar.md">العربية</a> · <a href="README.ru.md">Русский</a></p>
 
 ---
 
@@ -80,7 +80,7 @@ This builds `bin\GlassBell.exe` and `dist\GlassBell-Setup.exe` with the C# compi
 
 ## Translations
 
-The translations were made with AI and checked only for completeness and fit, not by native speakers. Corrections are welcome: each language is one plain text file in [`lang/`](lang), and [`lang/en.txt`](lang/en.txt) explains every line.
+The translations, the other languages of this page included, were made with AI and checked only for completeness and fit, not by native speakers. Corrections are welcome: each language is one plain text file in [`lang/`](lang), and [`lang/en.txt`](lang/en.txt) explains every line.
 
 ## Support
 
