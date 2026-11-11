@@ -34,14 +34,10 @@ jobs:
           if ($start -lt 0) { throw "CHANGELOG.md has no section for $version" }
           $end = [array]::FindIndex($lines, $start + 1, [Predicate[string]]{ param($l) $l -like '## *' })
           if ($end -lt 0) { $end = $lines.Length }
-          $notes = @($lines[($start + 1)..($end - 1)]) + @(
-            '',
-            '### Install',
-            '',
-            '1. Download **GlassBell-Setup.exe** below and run it. No administrator rights are needed. The installer is not code-signed, so SmartScreen may warn: **More info → Run anyway**.',
-            '2. Turn on **Do not disturb** (Settings → System → Notifications), so that the Windows banners do not show next to the GlassBell ones.',
-            '',
-            'Windows 11, 64-bit. Русское описание — в [README.ru.md](https://github.com/vibegineer/GlassBell/blob/main/README.ru.md).')
+          # what is said under every release is in a UTF-8 file of its own: Windows PowerShell reads this script as
+          # ANSI, so anything but ASCII here breaks it
+          $install = Get-Content .github\release-install.md -Encoding UTF8
+          $notes = @($lines[($start + 1)..($end - 1)]) + @('') + @($install)
           [IO.File]::WriteAllText("$env:RUNNER_TEMP\notes.md", ($notes -join "`n").Trim() + "`n", (New-Object Text.UTF8Encoding($false)))
 
       - name: Publish
