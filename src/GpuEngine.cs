@@ -339,7 +339,8 @@ namespace GlassBell
                 finally { Marshal.Release(desk); }
                 // Windows counts every frame of this window as a change under the column, although the capture leaves
                 // the window out: a capture that brought nothing new is dropped, or each frame would ask for the next
-                if (haveDesktop && Same()) { pullWanted = false; return false; }   // what the engine has is current
+                // (while a card moves every frame is drawn anyway, so then the comparison is left out)
+                if (haveDesktop && !cards.Any(c => c.Moving(Ms)) && Same()) { pullWanted = false; return false; }   // what the engine has is current
                 Dx.CopyAll(ctx, deskPrev, deskTex);
                 haveDesktop = true;
                 captures++;
