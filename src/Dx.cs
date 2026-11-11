@@ -177,7 +177,7 @@ namespace GlassBell
                                     adapterName = Marshal.PtrToStringUni(ad, 128).TrimEnd('\0');
                                     Marshal.FreeHGlobal(ad);
                                     int level;
-                                    Check(D3D11CreateDevice(adapter, 0 /* UNKNOWN: the adapter is given */, IntPtr.Zero, 0x20 /* BGRA_SUPPORT */,
+                                    Check(D3D11CreateDevice(adapter, 0 /* UNKNOWN: the adapter is given */, IntPtr.Zero, 0x20u | 0x8u /* BGRA_SUPPORT; PREVENT_INTERNAL_THREADING_OPTIMIZATIONS: the driver's worker thread cost three times the engine */,
                                         IntPtr.Zero, 0, 7, out device, out level, out context), "D3D11CreateDevice");
                                     output = Query(outp, IID_Output1);
                                     Marshal.Release(outp);
@@ -339,9 +339,11 @@ namespace GlassBell
         }
 
         // DirectComposition: the swap chain becomes the whole content of the window
-        public static IntPtr Compose(IntPtr device, IntPtr hwnd, IntPtr chain)
+        // target: the binding of the tree to the window. It must live as long as the window shows the chain: released,
+        // it takes the tree off the window and nothing is drawn (while the chain still renders, unseen).
+        public static IntPtr Compose(IntPtr device, IntPtr hwnd, IntPtr chain, out IntPtr target)
         {
-            IntPtr dxgiDevice = Query(device, IID_DxgiDevice), dcomp, target, visual;
+            IntPtr dxgiDevice = Query(device, IID_DxgiDevice), dcomp, visual;
             Guid g = IID_DCompDevice;
             try { Check(DCompositionCreateDevice(dxgiDevice, ref g, out dcomp), "DCompositionCreateDevice"); }
             finally { Marshal.Release(dxgiDevice); }
@@ -350,8 +352,7 @@ namespace GlassBell
             Check(M<Fn_I>(visual, 15)(visual, chain), "IDCompositionVisual::SetContent");
             Check(M<Fn_I>(target, 3)(target, visual), "IDCompositionTarget::SetRoot");
             Check(M<Fn_>(dcomp, 3)(dcomp), "IDCompositionDevice::Commit");
-            Marshal.Release(visual);
-            Marshal.Release(target);   // the device keeps the tree alive
+            Marshal.Release(visual);   // the target keeps its root visual
             return dcomp;
         }
 

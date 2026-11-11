@@ -82,7 +82,8 @@ float4 ps(V i) : SV_Target
             bool excludedSet = SetWindowDisplayAffinity(hwnd, 0x11);   // WDA_EXCLUDEFROMCAPTURE
 
             IntPtr chain = Dx.CompositionSwapChain(device, (uint)W, (uint)H);
-            IntPtr dcomp = Dx.Compose(device, hwnd, chain);
+            IntPtr target;
+            IntPtr dcomp = Dx.Compose(device, hwnd, chain, out target);
             IntPtr waiter = Dx.FrameWaiter(chain);
             IntPtr backbuf = Dx.BackBuffer(chain), rtv = Dx.TargetView(device, backbuf);
             IntPtr backTex = Dx.Texture(device, (uint)W, (uint)H, Dx.BindShaderResource, 0, 0), backSrv = Dx.ShaderView(device, backTex);

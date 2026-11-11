@@ -154,8 +154,12 @@ namespace GlassBell
 
         // ---- the render thread ----
 
-        static IntPtr device, ctx, output, dup, chain, dcomp, waiter, backBuf, rtv;
+        static IntPtr device, ctx, output, dup, chain, dcomp, dtarget, waiter, backBuf, rtv;
         static IntPtr deskTex, deskSrv, blurTmp, blurTmpRtv, blurTmpSrv, blurOut, blurOutRtv, blurOutSrv;
+        // the capture before the last one, and what differs between the two in blocks of 8x8 px (see Same)
+        static IntPtr deskPrev, deskPrevSrv, diffTex, diffRtv, diffRead;
+        static int diffW, diffH;
+        static IntPtr psDiff;
         static IntPtr vs, psBlur, psShadow, psContent, psMean, sampler, blend, cb;
         static readonly IntPtr[] psLens = new IntPtr[4];
         static IntPtr hwnd, frameInfo, rectBuf, cbData;
@@ -175,7 +179,9 @@ namespace GlassBell
         static string dirtyTrace = "";
 
         // GLASSBELL_GPUDUMP=file.png (a test setting): once the first card has settled, what the engine drew over the
-        // desktop it captured under the column is saved, since screenshots cannot see the engine's window
+        // desktop it captured under the column is saved, and that capture alone next to it (file-desk.png). This is
+        // the engine's own picture, not what the screen shows: whether the window reaches the screen is seen only in a
+        // screenshot with GLASSBELL_CAPTURABLE=1.
         static readonly string DumpPath = Environment.GetEnvironmentVariable("GLASSBELL_GPUDUMP");
         static bool dumped;
 
@@ -192,10 +198,14 @@ namespace GlassBell
                 var bits = bmp.LockBits(new System.Drawing.Rectangle(0, 0, colW, colH), System.Drawing.Imaging.ImageLockMode.WriteOnly, bmp.PixelFormat);
                 var row = new byte[colW * 4];
                 var under = new byte[colW * 4];
+                var desk = new System.Drawing.Bitmap(colW, colH, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                var deskBits = desk.LockBits(new System.Drawing.Rectangle(0, 0, colW, colH), System.Drawing.Imaging.ImageLockMode.WriteOnly, desk.PixelFormat);
                 for (int yy = 0; yy < colH; yy++)
                 {
                     Marshal.Copy(IntPtr.Add(mb.Data, yy * (int)mb.RowPitch), row, 0, row.Length);
                     Marshal.Copy(IntPtr.Add(md.Data, yy * (int)md.RowPitch), under, 0, under.Length);
+                    for (int i = 3; i < under.Length; i += 4) under[i] = 255;
+                    Marshal.Copy(under, 0, IntPtr.Add(deskBits.Scan0, yy * deskBits.Stride), under.Length);
                     for (int i = 0; i < row.Length; i += 4)
                     {
                         int a = row[i + 3];   // premultiplied over the desktop
@@ -209,6 +219,9 @@ namespace GlassBell
                 Dx.Release(ref sb); Dx.Release(ref sd);
                 bmp.Save(DumpPath, System.Drawing.Imaging.ImageFormat.Png);
                 bmp.Dispose();
+                desk.UnlockBits(deskBits);
+                desk.Save(Path.ChangeExtension(DumpPath, null) + "-desk.png", System.Drawing.Imaging.ImageFormat.Png);
+                desk.Dispose();
                 Log.Write("gpu engine: dump saved to " + DumpPath);
             }
             catch (Exception e) { Log.Write("gpu engine: dump: " + e.Message); }
@@ -324,12 +337,44 @@ namespace GlassBell
                     Dx.CopyRegion(ctx, deskTex, 0, 0, desk, new Dx.Box { Left = (uint)colX, Top = (uint)colY, Right = (uint)(colX + colW), Bottom = (uint)(colY + colH), Back = 1 });
                 }
                 finally { Marshal.Release(desk); }
+                // Windows counts every frame of this window as a change under the column, although the capture leaves
+                // the window out: a capture that brought nothing new is dropped, or each frame would ask for the next
+                if (haveDesktop && Same()) { pullWanted = false; return false; }   // what the engine has is current
+                Dx.CopyAll(ctx, deskPrev, deskTex);
                 haveDesktop = true;
                 captures++;
                 captureSerial++;
                 return true;
             }
             finally { Marshal.Release(res); Dx.ReleaseFrame(dup); }
+        }
+
+        // the new capture is the previous one again: compared on the GPU, 8x8 px to a byte, read back at once (about
+        // 30 KB; the GPU has little else queued at this point)
+        static bool Same()
+        {
+            Dx.Blend(ctx, IntPtr.Zero);
+            Dx.VertexShader(ctx, vs);
+            Dx.Triangles(ctx);
+            Dx.M<Dx.Fn_V_URP>(ctx, 33)(ctx, 1, new[] { diffRtv }, IntPtr.Zero);
+            Viewport(0, 0, diffW, diffH);
+            Dx.PixelShader(ctx, psDiff);
+            Dx.Resources(ctx, deskSrv, deskPrevSrv);
+            Dx.Draw(ctx, 3);
+            Dx.Resources(ctx, IntPtr.Zero, IntPtr.Zero);
+            Dx.CopyAll(ctx, diffRead, diffTex);
+            var m = Dx.Map(ctx, diffRead);
+            try
+            {
+                var row = new byte[diffW * 4];
+                for (int y = 0; y < diffH; y++)
+                {
+                    Marshal.Copy(IntPtr.Add(m.Data, y * (int)m.RowPitch), row, 0, row.Length);
+                    for (int i = 2; i < row.Length; i += 4) if (row[i] > 1) return false;   // BGRA: the red byte holds the difference
+                }
+                return true;
+            }
+            finally { Dx.Unmap(ctx, diffRead); }
         }
 
         static bool ColumnChanged()
@@ -603,6 +648,7 @@ namespace GlassBell
             psShadow = Dx.CompileShader(device, Shaders, "shadow", "ps_5_0");
             psContent = Dx.CompileShader(device, Shaders, "content", "ps_5_0");
             psMean = Dx.CompileShader(device, Shaders, "mean", "ps_5_0");
+            psDiff = Dx.CompileShader(device, Shaders, "diff", "ps_5_0");
             for (int q = 0; q < 4; q++) psLens[q] = Dx.CompileShader(device, "#define QUALITY " + q + "\n" + Shaders, "lens", "ps_5_0");
             MakeWindow();
             MakeSurfaces();
@@ -613,12 +659,18 @@ namespace GlassBell
         static void MakeSurfaces()
         {
             chain = Dx.CompositionSwapChain(device, (uint)colW, (uint)colH);
-            dcomp = Dx.Compose(device, hwnd, chain);
+            dcomp = Dx.Compose(device, hwnd, chain, out dtarget);
             waiter = Dx.FrameWaiter(chain);
             backBuf = Dx.BackBuffer(chain);
             rtv = Dx.TargetView(device, backBuf);
             deskTex = Dx.Texture(device, (uint)colW, (uint)colH, Dx.BindShaderResource, 0, 0);
             deskSrv = Dx.ShaderView(device, deskTex);
+            deskPrev = Dx.Texture(device, (uint)colW, (uint)colH, Dx.BindShaderResource, 0, 0);
+            deskPrevSrv = Dx.ShaderView(device, deskPrev);
+            diffW = (colW + 7) / 8; diffH = (colH + 7) / 8;
+            diffTex = Dx.Texture(device, (uint)diffW, (uint)diffH, Dx.BindRenderTarget, 0, 0);
+            diffRtv = Dx.TargetView(device, diffTex);
+            diffRead = Dx.Texture(device, (uint)diffW, (uint)diffH, 0, 3 /* STAGING */, 0x20000 /* READ */);
             blurDown = -1;
             MakeBlurTargets(1);
         }
@@ -642,8 +694,9 @@ namespace GlassBell
         static void Reshape(int x, int y, int w, int h, double s, double cardXDip)
         {
             colX = x; colY = y; colW = w; colH = h; scale = s; baseXDip = cardXDip;
-            Dx.Release(ref rtv); Dx.Release(ref backBuf); Dx.Release(ref dcomp); Dx.Release(ref chain);
+            Dx.Release(ref rtv); Dx.Release(ref backBuf); Dx.Release(ref dtarget); Dx.Release(ref dcomp); Dx.Release(ref chain);
             Dx.Release(ref deskSrv); Dx.Release(ref deskTex);
+            Dx.Release(ref deskPrevSrv); Dx.Release(ref deskPrev); Dx.Release(ref diffRtv); Dx.Release(ref diffTex); Dx.Release(ref diffRead);
             SetWindowPos(hwnd, (IntPtr)(-1), colX, colY, colW, colH, 0x10 /* NOACTIVATE */);
             MakeSurfaces();
             haveDesktop = false;
@@ -750,6 +803,22 @@ float4 blur(V i) : SV_Target
 
 // ---- the text and the icon (premultiplied already) ----
 float4 content(V i) : SV_Target { return back.Sample(lin, i.uv) * g6.x; }
+
+// ---- how much an 8x8 block of the new capture differs from the one before (t0 new, t1 before) ----
+Texture2D before : register(t1);
+float4 diff(V i) : SV_Target
+{
+    int2 at = (int2)i.pos.xy * 8;
+    float m = 0.0;
+    [unroll] for (int y = 0; y < 8; y++)
+        [unroll] for (int x = 0; x < 8; x++)
+        {
+            int3 p = int3(at + int2(x, y), 0);
+            float3 d = abs(back.Load(p).rgb - before.Load(p).rgb);
+            m = max(m, max(d.r, max(d.g, d.b)));
+        }
+    return float4(m, 0.0, 0.0, 1.0);
+}
 
 // ---- the mean brightness of the backdrop behind a card ----
 float4 mean(V i) : SV_Target
