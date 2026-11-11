@@ -1,0 +1,51 @@
+# A tag v<version> builds the installer on GitHub's Windows machine and publishes it as a release, with the notes of
+# that version from CHANGELOG.md. The version in src/AssemblyInfo.cs must be the same as the tag.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        shell: powershell
+        run: powershell -NoProfile -ExecutionPolicy Bypass -File build.ps1
+
+      - name: Check the version
+        shell: powershell
+        run: |
+          $built = (Get-Item dist\GlassBell-Setup.exe).VersionInfo.ProductVersion
+          if ("v$built" -ne $env:GITHUB_REF_NAME) { throw "the tag is $env:GITHUB_REF_NAME, the build is $built" }
+
+      - name: Write the release notes
+        shell: powershell
+        run: |
+          $version = $env:GITHUB_REF_NAME.Substring(1)
+          $lines = Get-Content CHANGELOG.md -Encoding UTF8
+          $start = [array]::FindIndex($lines, [Predicate[string]]{ param($l) $l -like "## $version*" })
+          if ($start -lt 0) { throw "CHANGELOG.md has no section for $version" }
+          $end = [array]::FindIndex($lines, $start + 1, [Predicate[string]]{ param($l) $l -like '## *' })
+          if ($end -lt 0) { $end = $lines.Length }
+          $notes = @($lines[($start + 1)..($end - 1)]) + @(
+            '',
+            '### Install',
+            '',
+            '1. Download **GlassBell-Setup.exe** below and run it. No administrator rights are needed. The installer is not code-signed, so SmartScreen may warn: **More info → Run anyway**.',
+            '2. Turn on **Do not disturb** (Settings → System → Notifications), so that the Windows banners do not show next to the GlassBell ones.',
+            '',
+            'Windows 11, 64-bit. Русское описание — в [README.ru.md](https://github.com/vibegineer/GlassBell/blob/main/README.ru.md).')
+          [IO.File]::WriteAllText("$env:RUNNER_TEMP\notes.md", ($notes -join "`n").Trim() + "`n", (New-Object Text.UTF8Encoding($false)))
+
+      - name: Publish
+        shell: powershell
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create $env:GITHUB_REF_NAME dist\GlassBell-Setup.exe --title "GlassBell $($env:GITHUB_REF_NAME.Substring(1))" --notes-file "$env:RUNNER_TEMP\notes.md"
