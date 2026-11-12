@@ -39,6 +39,7 @@ namespace GlassBell
         // ---- delegate shapes (the first argument is always the object itself) ----
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)] public delegate int Fn_P(IntPtr self, out IntPtr a);
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)] public delegate int Fn_OutInt(IntPtr self, out int a);
         [UnmanagedFunctionPointer(CallingConvention.StdCall)] public delegate int Fn_UP(IntPtr self, uint a, out IntPtr b);
         [UnmanagedFunctionPointer(CallingConvention.StdCall)] public delegate int Fn_GP(IntPtr self, ref Guid a, out IntPtr b);
         [UnmanagedFunctionPointer(CallingConvention.StdCall)] public delegate int Fn_UGP(IntPtr self, uint a, ref Guid b, out IntPtr c);
@@ -354,6 +355,13 @@ namespace GlassBell
             Check(M<Fn_>(dcomp, 3)(dcomp), "IDCompositionDevice::Commit");
             Marshal.Release(visual);   // the target keeps its root visual
             return dcomp;
+        }
+
+        // IDCompositionDevice::CheckDeviceState: false once the device is lost (the graphics card was reset, ...)
+        public static bool CompositionValid(IntPtr dcomp)
+        {
+            int valid;
+            return M<Fn_OutInt>(dcomp, 26)(dcomp, out valid) >= 0 && valid != 0;
         }
 
         // ---- duplicating the desktop ----

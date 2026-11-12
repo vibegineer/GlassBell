@@ -2930,6 +2930,7 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             Relayout(b);
             b.Present();
             while (active.Count > 4) active[active.Count - 1].Dismiss();
+            RaiseStack();
             tWindow = sw.ElapsedMilliseconds - tBake;
             if (look.Sound && !redrawing)
                 b.ContentRendered += delegate { PlayChime(look); };   // once the banner is on screen, never before
@@ -2982,6 +2983,7 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             Relayout(b);
             b.Present();
             while (active.Count > 4) active[active.Count - 1].Dismiss();
+            RaiseStack();
             if (File.Exists(TraceFlag)) Log.Write("show (gpu): card and its pictures " + tCard + " ms, window " + (sw.ElapsedMilliseconds - tCard) + " ms");
             if (look.Sound) b.ContentRendered += delegate { PlayChime(look); };
             return b;
@@ -3236,6 +3238,40 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             ThreadPool.QueueUserWorkItem(delegate { Chime.Play(style, vol, adapt); });
         }
 
+        // ---- on top of everything ----
+
+        // Banners are topmost windows, but that alone does not keep them on top: another topmost window that is
+        // activated goes over them, and the engine's window, hidden and shown again between bursts, was found hours
+        // later under ordinary windows (its card drawn, but behind the apps). So with every banner and then once a
+        // second while there are any, the whole stack is put on top again: each banner with its shadow just under it
+        // (the oldest first, so the newest ends on top), the capsule, and the engine's window right under the lowest
+        // banner, so the round x and the capsule stay over its cards.
+        [DllImport("user32.dll")] static extern bool SetWindowPos(IntPtr h, IntPtr after, int x, int y, int w, int cy, uint flags);
+        DispatcherTimer raiseTimer;
+
+        void RaiseStack()
+        {
+            if (active.Count == 0) { if (raiseTimer != null) raiseTimer.Stop(); return; }
+            const uint flags = 0x13;   // NOSIZE | NOMOVE | NOACTIVATE
+            IntPtr top = (IntPtr)(-1), lowest = IntPtr.Zero;
+            for (int i = active.Count - 1; i >= 0; i--)
+            {
+                var b = active[i];
+                if (b.Shadow != null) SetWindowPos(new WindowInteropHelper(b.Shadow).Handle, top, 0, 0, 0, 0, flags);
+                IntPtr h = new WindowInteropHelper(b).Handle;
+                SetWindowPos(h, top, 0, 0, 0, 0, flags);
+                if (lowest == IntPtr.Zero) lowest = h;
+            }
+            if (pill != null && pill.Shown) SetWindowPos(new WindowInteropHelper(pill).Handle, top, 0, 0, 0, 0, flags);
+            if (active.Any(x => x.OnGpu)) GpuEngine.PlaceBelow(lowest);
+            if (raiseTimer == null)
+            {
+                raiseTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+                raiseTimer.Tick += delegate { RaiseStack(); };
+            }
+            if (!raiseTimer.IsEnabled) raiseTimer.Start();
+        }
+
         void OnDismissing(Banner b)
         {
             active.Remove(b);
@@ -3272,6 +3308,7 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
                 }
                 PlacePill();
                 pill.Appear();
+                RaiseStack();
                 return;
             }
             if (pill == null || !pill.Shown) return;

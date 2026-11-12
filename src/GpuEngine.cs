@@ -104,6 +104,14 @@ namespace GlassBell
         // without the live background: capture the column again (a banner has arrived somewhere)
         public static void Refresh() { Do(delegate { pullWanted = true; }); }
 
+        // the engine's window goes right under the given one (the lowest banner, on top of everything); done on the
+        // render thread, which owns the window
+        public static void PlaceBelow(IntPtr above)
+        {
+            if (thread == null || Failed) return;
+            Do(delegate { if (hwnd != IntPtr.Zero) SetWindowPos(hwnd, above, 0, 0, 0, 0, 0x13 /* NOSIZE | NOMOVE | NOACTIVATE */); });
+        }
+
         static void Do(Action a) { todo.Enqueue(a); wake.Set(); }
 
         // ---- moves ----
@@ -165,12 +173,26 @@ namespace GlassBell
         static IntPtr hwnd, frameInfo, rectBuf, cbData;
         static uint rectBufSize;
         static int blurDown = -1, blurW, blurH;
-        static bool shown, pullWanted, haveDesktop;
+        static bool shown, pullWanted, haveDesktop, frameWanted;
+        // The picture is tied to the window by DirectComposition, and that tie can go without a word: after the display
+        // was reconfigured (a monitor woke up or came back, a graphics reset) the engine draws on, and nothing reaches
+        // the screen. So it is tied again whenever banners come after a while without any, when Windows says the display
+        // changed or the PC woke up, and when the device says it is lost.
+        // (Each new burst of banners ties it again anyway.)
+        static string retieWhy;
+        static double tieCheckedAt;
         static double idleSince, dupRetryAt;
         static int dupFails;
         static long totalFrames;
         // GLASSBELL_GPUFAIL=start | run (a test setting): the engine fails to start, or stops after a moment of drawing
         static readonly string FailTest = Environment.GetEnvironmentVariable("GLASSBELL_GPUFAIL");
+        // GLASSBELL_GPURESHAPE=1 (a test setting): the column is built again after a moment of drawing, as when the
+        // screen or the work area changes
+        static readonly bool ReshapeTest = Environment.GetEnvironmentVariable("GLASSBELL_GPURESHAPE") == "1";
+        // GLASSBELL_GPULOSE=1 (a test setting): after a moment the tie of the picture to the window is dropped without
+        // a word, as after a display reconfiguration; the next burst must bring it back
+        static readonly bool LoseTest = Environment.GetEnvironmentVariable("GLASSBELL_GPULOSE") == "1";
+        static long reshapeFrames;
         static WndProcFn wndProc;   // kept: the window calls it
         static string adapterName;
         static long frames, captures, captureSerial;
@@ -274,7 +296,20 @@ namespace GlassBell
                     wake.WaitOne(500);
                     continue;
                 }
-                if (!shown) { ShowWindow(hwnd, 4 /* SHOWNOACTIVATE */); shown = true; }
+                if (!shown)
+                {
+                    bool lost = !Dx.CompositionValid(dcomp);
+                    Retie(lost ? "the composition device was lost" : retieWhy);   // every time: it costs about a millisecond
+                    ShowWindow(hwnd, 4 /* SHOWNOACTIVATE */);
+                    shown = true;
+                    tieCheckedAt = now;
+                }
+                else if (now - tieCheckedAt > 2000)
+                {
+                    tieCheckedAt = now;
+                    bool lost = !Dx.CompositionValid(dcomp);
+                    if (lost || retieWhy != null) Retie(lost ? "the composition device was lost" : retieWhy);
+                }
                 // the duplication is lost on a mode change and is refused while the secure desktop is up (the lock
                 // screen, a UAC prompt): asked for again twice a second, the cards keep the last picture meanwhile
                 if (dup == IntPtr.Zero && now >= dupRetryAt)
@@ -292,7 +327,7 @@ namespace GlassBell
                 bool live = cards.Any(c => c.Spec.Live);
                 bool fresh = false;
                 // the test dump waits for a frame once the card has settled, so it gets one even when nothing changes
-                bool due = LumDue(now) || (DumpPath != null && !dumped && now - cards[cards.Count - 1].Added > 900);
+                bool due = frameWanted || LumDue(now) || (DumpPath != null && !dumped && now - cards[cards.Count - 1].Added > 900);
                 if (dup == IntPtr.Zero) { if (moving) WaitForSingleObject(waiter, 100); else if (!due) { wake.WaitOne(100); continue; } }
                 else if (!haveDesktop) fresh = Pull(100);
                 else if (moving) { WaitForSingleObject(waiter, 100); if (live || pullWanted) fresh = Pull(0); }
@@ -305,7 +340,13 @@ namespace GlassBell
                 int hr = Dx.Present(chain, 1);
                 if (hr < 0) throw new InvalidOperationException("Present failed: 0x" + hr.ToString("X8"));
                 frames++;
+                frameWanted = false;
                 if (FailTest == "run" && ++totalFrames == 90) throw new InvalidOperationException("GLASSBELL_GPUFAIL=run");
+                if ((ReshapeTest || LoseTest) && ++reshapeFrames == 30)
+                {
+                    if (ReshapeTest) Reshape(colX, colY, colW, colH, scale, baseXDip);
+                    else { Dx.Release(ref dtarget); Log.Write("gpu engine: test: the tie to the window dropped"); }
+                }
                 ReadLuminance(Ms);
                 if (DumpPath != null && !dumped && cards.Count > 0 && Ms - cards[cards.Count - 1].Added > 900) { dumped = true; Dump(); }
                 if (Ms - statsAt >= 5000 && File.Exists(TraceFile))
@@ -708,6 +749,25 @@ namespace GlassBell
 
         delegate IntPtr WndProcFn(IntPtr h, uint msg, IntPtr w, IntPtr l);
 
+        static IntPtr WndProc(IntPtr h, uint msg, IntPtr w, IntPtr l)
+        {
+            if (msg == 0x007E) retieWhy = "the display changed";                                   // WM_DISPLAYCHANGE
+            else if (msg == 0x031E) retieWhy = "the compositor changed";                           // WM_DWMCOMPOSITIONCHANGED
+            else if (msg == 0x0218 && ((int)w == 7 || (int)w == 0x12)) retieWhy = "the PC woke up";  // WM_POWERBROADCAST, resumed
+            return DefWindowProc(h, msg, w, l);
+        }
+
+        // a new DirectComposition device and target for the same window and swap chain (why: logged, null for the
+        // routine tie at the start of a burst)
+        static void Retie(string why)
+        {
+            Dx.Release(ref dtarget); Dx.Release(ref dcomp);
+            dcomp = Dx.Compose(device, hwnd, chain, out dtarget);
+            if (why != null) Log.Write("gpu engine: the picture is tied to the window again: " + why);
+            retieWhy = null;
+            frameWanted = true;
+        }
+
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         struct WNDCLASSEX
         {
@@ -738,7 +798,7 @@ namespace GlassBell
 
         static void MakeWindow()
         {
-            wndProc = DefWindowProc;
+            wndProc = WndProc;
             var wc = new WNDCLASSEX { cbSize = Marshal.SizeOf(typeof(WNDCLASSEX)), lpfnWndProc = wndProc, hInstance = GetModuleHandle(IntPtr.Zero), lpszClassName = "GlassBellGpu" + Program.Instance };
             RegisterClassEx(ref wc);
             // no redirection surface (DirectComposition draws it all), on top, no taskbar button, never active, and every
