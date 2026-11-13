@@ -3,6 +3,8 @@
 # ---- banners ----
 banner.app = اعلان
 banner.now = اکنون
+banner.close = بستن
+banner.closeAll = بستن همه
 preview.title = پیش‌نمایش
 preview.body = بنر با تنظیمات شما این‌گونه به نظر می‌رسد.
 test.title1 = همه‌چیز کار می‌کند
@@ -13,6 +15,7 @@ test.body2 = سلام، هستی؟ لطفاً یه نگاه به چیزی که �
 # ---- tray icon menu ----
 tray.settings = تنظیمات…
 tray.test = اعلان آزمایشی
+tray.closeAll = بستن همه اعلان‌ها
 tray.autostart = اجرا همراه با Windows
 tray.exit = خروج
 
@@ -56,6 +59,12 @@ settings.live = پس‌زمینه زنده
 settings.liveHint = شیشه پیوسته خود را با آنچه پشتش است تطبیق می‌دهد، حتی وقتی بنر در حال حرکت است. انرژی بیشتری مصرف می‌کند.
 settings.liveFps = فریم در ثانیه
 settings.liveFpsHint = هرچه بیشتر، روان‌تر، اما بار پردازنده هم بیشتر.
+settings.engine = رندر
+engine.gpu = کارت گرافیک
+engine.classic = کلاسیک
+settings.engineHint = «کارت گرافیک» هم‌پای صفحه با نرخ نوسازی خودش پیش می‌رود و تقریباً از پردازنده استفاده نمی‌کند. «کلاسیک» روش قبلی است، برای وقتی که کارت گرافیک مشکل دارد.
+settings.liveFpsGpu = با کارت گرافیک، شیشه با نرخ نوسازی صفحه آن را دنبال می‌کند.
+settings.engineFailed = این کارت گرافیک نمی‌تواند اعلان‌ها را این‌گونه رسم کند، بنابراین روش کلاسیک استفاده می‌شود.
 settings.color = رنگ
 color.auto = خودکار (مطابق طرح زمینه Windows)
 color.autoName = خودکار — مطابق طرح زمینه Windows

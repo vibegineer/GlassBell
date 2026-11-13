@@ -3,6 +3,8 @@
 # ---- banners ----
 banner.app = Notificação
 banner.now = agora
+banner.close = Fechar
+banner.closeAll = Fechar tudo
 preview.title = Pré-visualização
 preview.body = É assim que fica uma faixa com as suas configurações.
 test.title1 = Tudo funcionando
@@ -13,6 +15,7 @@ test.body2 = Tá aí? Dá uma olhada no que eu te mandei, por favor — é uma m
 # ---- tray icon menu ----
 tray.settings = Configurações…
 tray.test = Notificação de teste
+tray.closeAll = Fechar todas as notificações
 tray.autostart = Iniciar com o Windows
 tray.exit = Sair
 
@@ -56,6 +59,12 @@ settings.live = Fundo em tempo real
 settings.liveHint = O vidro se ajusta continuamente ao que está atrás dele, mesmo enquanto a faixa se move. Consome mais energia.
 settings.liveFps = Quadros por segundo
 settings.liveFpsHint = Quanto maior, mais suave, mas usa mais o processador.
+settings.engine = Renderização
+engine.gpu = Placa de vídeo
+engine.classic = Clássico
+settings.engineHint = “Placa de vídeo” acompanha a tela na própria taxa de atualização e quase não usa o processador. “Clássico” é o modo anterior, caso a placa de vídeo dê problema.
+settings.liveFpsGpu = Com a placa de vídeo, o vidro acompanha a tela na própria taxa de atualização dela.
+settings.engineFailed = Esta placa de vídeo não consegue desenhar as faixas assim, por isso o modo clássico é usado.
 settings.color = Cor
 color.auto = Automática (segue o tema do Windows)
 color.autoName = Automática — segue o tema do Windows

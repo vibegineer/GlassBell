@@ -3,6 +3,8 @@
 # ---- banners ----
 banner.app = Benachrichtigung
 banner.now = jetzt
+banner.close = Schließen
+banner.closeAll = Alle schließen
 preview.title = Vorschau
 preview.body = So sieht ein Banner mit Ihren Einstellungen aus.
 test.title1 = Es funktioniert
@@ -13,6 +15,7 @@ test.body2 = Bist du da? Schau dir bitte mal an, was ich dir geschickt habe – 
 # ---- tray icon menu ----
 tray.settings = Einstellungen…
 tray.test = Testbenachrichtigung
+tray.closeAll = Alle Benachrichtigungen schließen
 tray.autostart = Mit Windows starten
 tray.exit = Beenden
 
@@ -56,6 +59,12 @@ settings.live = Live-Hintergrund
 settings.liveHint = Das Glas passt sich laufend an das an, was dahinter liegt – auch während sich das Banner bewegt. Verbraucht mehr Energie.
 settings.liveFps = Bilder pro Sekunde
 settings.liveFpsHint = Je höher, desto flüssiger, aber desto mehr Prozessorlast.
+settings.engine = Darstellung
+engine.gpu = Grafikkarte
+engine.classic = Klassisch
+settings.engineHint = „Grafikkarte“ hält mit dem Bildschirm in dessen Bildwiederholrate Schritt und belastet den Prozessor kaum. „Klassisch“ ist der bisherige Weg, falls die Grafikkarte Probleme macht.
+settings.liveFpsGpu = Mit der Grafikkarte folgt das Glas dem Bildschirm in dessen Bildwiederholrate.
+settings.engineFailed = Diese Grafikkarte kann die Banner so nicht zeichnen, daher wird der klassische Weg verwendet.
 settings.color = Farbe
 color.auto = Automatisch (folgt dem Windows-Design)
 color.autoName = Automatisch – folgt dem Windows-Design

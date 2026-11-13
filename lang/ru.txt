@@ -3,6 +3,8 @@
 # ---- banners ----
 banner.app = Уведомление
 banner.now = сейчас
+banner.close = Закрыть
+banner.closeAll = Закрыть все
 preview.title = Предпросмотр
 preview.body = Так выглядит баннер с вашими настройками.
 test.title1 = Всё работает
@@ -13,6 +15,7 @@ test.body2 = Ты тут? Посмотри, пожалуйста, что я ск
 # ---- tray icon menu ----
 tray.settings = Настройки…
 tray.test = Тестовое уведомление
+tray.closeAll = Закрыть все уведомления
 tray.autostart = Запускать вместе с Windows
 tray.exit = Выход
 
@@ -56,6 +59,12 @@ settings.live = Живой фон
 settings.liveHint = Стекло постоянно подстраивается под то, что за ним, и пока баннер едет. Нагружает сильнее.
 settings.liveFps = Кадров в секунду
 settings.liveFpsHint = Чем выше, тем плавнее, но тем сильнее нагрузка на процессор.
+settings.engine = Отрисовка
+engine.gpu = Видеокарта
+engine.classic = Классическая
+settings.engineHint = «Видеокарта» успевает за экраном на его частоте и почти не тратит процессор. «Классическая» — прежний способ, на случай проблем с видеокартой.
+settings.liveFpsGpu = С отрисовкой на видеокарте стекло следует за экраном с его частотой.
+settings.engineFailed = Эта видеокарта так рисовать не умеет, поэтому используется классический способ.
 settings.color = Цвет
 color.auto = Авто (по теме Windows)
 color.autoName = Авто — по теме Windows

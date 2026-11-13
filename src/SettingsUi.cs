@@ -432,8 +432,8 @@ namespace GlassBell
         readonly CheckBox soundOn = new CheckBox(), soundAdapt = new CheckBox(), liveSwitch = new CheckBox();
         readonly Grid liveRow = new Grid();
         readonly StackPanel liveFpsRow = new StackPanel();
-        readonly List<RadioButton> fpsButtons = new List<RadioButton>();
-        readonly TextBlock qualityNote = new TextBlock(), timing = new TextBlock();
+        readonly List<RadioButton> fpsButtons = new List<RadioButton>(), engineButtons = new List<RadioButton>();
+        readonly TextBlock qualityNote = new TextBlock(), timing = new TextBlock(), engineNote = new TextBlock(), fpsHint = new TextBlock();
         TextBlock colorName;   // created by Section(), which hands it out
         readonly TextBox hex = new TextBox();
         readonly Border hexChip = new Border { Width = 22, Height = 22, CornerRadius = new CornerRadius(11), BorderThickness = new Thickness(1), BorderBrush = Hue("#48484A") };
@@ -873,6 +873,32 @@ namespace GlassBell
             qualityNote.Margin = new Thickness(2, 6, 0, 0);
             p.Children.Add(qualityNote);
 
+            // who draws the banners: the graphics card from capture to screen (GpuEngine), or WPF as in 1.0
+            TextBlock unused;
+            p.Children.Add(Section(L.T("settings.engine"), out unused, 16));
+            var engineSeg = new UniformGrid { Rows = 1 };
+            var engineHost = new Border { Background = Hue("#1C1C1E"), CornerRadius = new CornerRadius(9), Padding = new Thickness(3), Child = engineSeg };
+            string[] engines = { "gpu", "classic" };
+            for (int i = 0; i < engines.Length; i++)
+            {
+                string engine = engines[i];
+                var rb = new RadioButton
+                {
+                    Content = L.T("engine." + engine), Tag = engine, GroupName = "engine", Style = (Style)FindResource("Seg"),
+                    IsChecked = Settings.Engine == engine, Margin = new Thickness(i > 0 ? 2 : 0, 0, 0, 0)
+                };
+                rb.Checked += delegate { if (!loading) { Settings.Engine = engine; Manager.EngineChanged(); Changed(); } };
+                AutomationProperties.SetAutomationId(rb, "engine-" + engine);
+                engineButtons.Add(rb);
+                engineSeg.Children.Add(rb);
+            }
+            p.Children.Add(engineHost);
+            engineNote.FontSize = 11.5;
+            engineNote.Foreground = Hue("#8E8E93");
+            engineNote.TextWrapping = TextWrapping.Wrap;
+            engineNote.Margin = new Thickness(2, 6, 0, 0);
+            p.Children.Add(engineNote);
+
             // live background: its own switch, because following the screen all the time (also while a banner moves) costs
             liveRow.Margin = new Thickness(0, 16, 0, 0);
             liveRow.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
@@ -917,7 +943,9 @@ namespace GlassBell
             Grid.SetColumn(fpsHost, 1);
             fpsLine.Children.Add(fpsHost);
             liveFpsRow.Children.Add(fpsLine);
-            var fpsHint = Gray(L.T("settings.liveFpsHint"), 11.5);
+            fpsHint.FontSize = 11.5;
+            fpsHint.Foreground = Hue("#8E8E93");
+            fpsHint.TextWrapping = TextWrapping.Wrap;
             fpsHint.Margin = new Thickness(0, 5, 0, 0);
             liveFpsRow.Children.Add(fpsHint);
             p.Children.Add(liveFpsRow);
@@ -1136,7 +1164,12 @@ namespace GlassBell
         {
             qualityNote.Text = QualityNotes[Math.Max(0, Math.Min(3, Settings.Quality))];
             liveRow.IsEnabled = Settings.Glass;
+            // the graphics card follows the screen at its own refresh rate: the rate is the classic way's only
+            bool gpu = Settings.Engine == "gpu" && !GpuEngine.Failed;
+            engineNote.Text = Settings.Engine == "gpu" && GpuEngine.Failed ? L.T("settings.engineFailed") : L.T("settings.engineHint");
             liveFpsRow.IsEnabled = Settings.Glass && Settings.LiveBackground;
+            fpsHint.Text = gpu ? L.T("settings.liveFpsGpu") : L.T("settings.liveFpsHint");
+            foreach (var rb in fpsButtons) rb.IsEnabled = !gpu;
             foreach (var r in rows)
             {
                 bool off = r.GlassOnly && !Settings.Glass;
@@ -1164,6 +1197,7 @@ namespace GlassBell
             hex.Text = Settings.ColorSpec == "auto" ? "" : Settings.ColorSpec;
             liveSwitch.IsChecked = Settings.LiveBackground;
             foreach (var rb in fpsButtons) rb.IsChecked = (string)rb.Content == Settings.LiveFps.ToString();
+            foreach (var rb in engineButtons) rb.IsChecked = (string)rb.Tag == Settings.Engine;
             foreach (var r in rows) { r.Slider.Value = r.Get(); r.Value.Text = (int)r.Slider.Value + "%"; }
             soundOn.IsChecked = Settings.Sound;
             soundAdapt.IsChecked = Settings.SoundAdapt;
@@ -1171,13 +1205,14 @@ namespace GlassBell
             loading = false;
             Settings.Save();
             Refresh();
+            Manager.EngineChanged();
             if (Gpu.Ok) Gpu.Shader(Settings.Quality);
             RebakeAll();
         }
 
         void ResetTab()
         {
-            if (tab == 0) { Settings.Quality = 2; Settings.LiveBackground = false; Settings.LiveFps = 30; Settings.ColorSpec = "auto"; Settings.TintIntensity = 60; Settings.Intensity = 60; Settings.Blur = 35; }
+            if (tab == 0) { Settings.Quality = 2; Settings.Engine = "gpu"; Settings.LiveBackground = false; Settings.LiveFps = 30; Settings.ColorSpec = "auto"; Settings.TintIntensity = 60; Settings.Intensity = 60; Settings.Blur = 35; }
             else if (tab == 1) { Settings.ShadowIntensity = 40; Settings.ShadowSoftness = 60; Settings.ShadowOffset = 40; }
             else { Settings.Sound = true; Settings.SoundStyle = 1; Settings.SoundVolume = 65; Settings.SoundAdapt = true; }
             Sync();
@@ -1186,7 +1221,7 @@ namespace GlassBell
         void ResetAll()
         {
             Settings.Glass = true;
-            Settings.Quality = 2; Settings.LiveBackground = false; Settings.LiveFps = 30; Settings.ColorSpec = "auto"; Settings.TintIntensity = 60; Settings.Intensity = 60; Settings.Blur = 35;
+            Settings.Quality = 2; Settings.Engine = "gpu"; Settings.LiveBackground = false; Settings.LiveFps = 30; Settings.ColorSpec = "auto"; Settings.TintIntensity = 60; Settings.Intensity = 60; Settings.Blur = 35;
             Settings.ShadowIntensity = 40; Settings.ShadowSoftness = 60; Settings.ShadowOffset = 40;
             Settings.Sound = true; Settings.SoundStyle = 1; Settings.SoundVolume = 65; Settings.SoundAdapt = true;
             Sync();

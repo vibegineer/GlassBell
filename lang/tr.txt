@@ -3,6 +3,8 @@
 # ---- banners ----
 banner.app = Bildirim
 banner.now = şimdi
+banner.close = Kapat
+banner.closeAll = Tümünü kapat
 preview.title = Önizleme
 preview.body = Ayarlarınızla bir bildirim böyle görünür.
 test.title1 = Çalışıyor
@@ -13,6 +15,7 @@ test.body2 = Orada mısın? Az önce sana attığım şeye bir bakar mısın lü
 # ---- tray icon menu ----
 tray.settings = Ayarlar…
 tray.test = Test bildirimi
+tray.closeAll = Tüm bildirimleri kapat
 tray.autostart = Windows ile başlat
 tray.exit = Çıkış
 
@@ -56,6 +59,12 @@ settings.live = Canlı arka plan
 settings.liveHint = Bildirim hareket ederken bile cam, arkasındakine sürekli uyum sağlar. Daha fazla güç kullanır.
 settings.liveFps = Saniyedeki kare sayısı
 settings.liveFpsHint = Ne kadar yüksekse o kadar akıcı, ama işlemciyi o kadar yorar.
+settings.engine = Çizim
+engine.gpu = Ekran kartı
+engine.classic = Klasik
+settings.engineHint = “Ekran kartı” ekranı kendi yenileme hızında takip eder ve işlemciyi neredeyse hiç kullanmaz. “Klasik” önceki yöntemdir; ekran kartında sorun olursa diye.
+settings.liveFpsGpu = Ekran kartıyla cam, ekranı kendi yenileme hızında takip eder.
+settings.engineFailed = Bu ekran kartı bildirimleri bu şekilde çizemiyor, bu yüzden klasik yöntem kullanılıyor.
 settings.color = Renk
 color.auto = Otomatik (Windows temasını izler)
 color.autoName = Otomatik — Windows temasını izler

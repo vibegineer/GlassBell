@@ -5,6 +5,7 @@
 //   GlassBell.exe --title T --body B [--app A] [--app-id AUMID] [--seconds S]
 //                                               show a banner (starts the daemon if needed)
 //   GlassBell.exe --settings | --test | --quit
+//   GlassBell.exe --close-all                   close every banner on the screen
 //   GlassBell.exe --install | --uninstall       start with Windows on / off, for a copy run without the installer
 //   GlassBell.exe --update                      swap in GlassBell.new.exe from the exe's folder and restart
 //   GlassBell.exe --stats                       write the memory use of the running copy to log.txt
@@ -105,7 +106,7 @@ namespace GlassBell
         {
             Settings.Load();
             L.Init(Settings.Language);
-            bool daemon = false, test = false, quit = false, settings = false, install = false, uninstall = false, update = false, stats = false;
+            bool daemon = false, test = false, quit = false, closeAll = false, settings = false, install = false, uninstall = false, update = false, stats = false;
             string app = "", title = "", body = "", appId = "", seconds = "";
             for (int i = 0; i < args.Length; i++)
             {
@@ -115,6 +116,7 @@ namespace GlassBell
                     case "--daemon": daemon = true; break;
                     case "--test": test = true; break;
                     case "--quit": quit = true; break;
+                    case "--close-all": closeAll = true; break;
                     case "--settings": settings = true; break;
                     case "--install": install = true; break;
                     case "--uninstall": uninstall = true; break;
@@ -132,6 +134,7 @@ namespace GlassBell
             if (install) return Startup.Install();
             if (uninstall) return Startup.Uninstall();
             if (quit) { TrySend("\u0001quit", 50); return 0; }
+            if (closeAll) { TrySend("\u0001closeall", 500); return 0; }
             if (update) { TrySend("\u0001update", 500); return 0; }
             if (stats) { TrySend("\u0001stats", 500); return 0; }
             // a double click on the exe: start the program (if it is not running) and open its settings
@@ -302,6 +305,7 @@ namespace GlassBell
         public static bool LiveBackground = false;  // the glass follows what is behind it all the time, also while it moves
         public static int LiveFps = 30;             // how often a live glass that stands still is captured again: one of LiveRates
         public static readonly int[] LiveRates = { 10, 20, 30, 60 };
+        public static string Engine = "gpu";        // "gpu": the GPU engine draws the banners (GpuEngine), "classic": WPF does
         public static string Language = "auto";     // "auto" (the Windows display language) or one of L.Codes
 
         public static readonly string[] QualityKeys = { "low", "medium", "high", "ultra" };
@@ -357,6 +361,7 @@ namespace GlassBell
                             if (int.TryParse(v, out fps)) LiveFps = LiveRates.OrderBy(r => Math.Abs(r - fps)).First();
                             break;
                         case "lang": Language = v.Length == 0 ? "auto" : v; break;
+                        case "engine": Engine = v.ToLowerInvariant() == "classic" ? "classic" : "gpu"; break;
                         case "quality":
                             int q = Array.IndexOf(QualityKeys, v.ToLowerInvariant());
                             Quality = q >= 0 ? q : Math.Min(3, Num(v, Quality));
@@ -379,7 +384,7 @@ namespace GlassBell
                     "\r\nshadowoffset=" + ShadowOffset + "\r\nquality=" + QualityKeys[Quality] +
                     "\r\nsound=" + (Sound ? "1" : "0") + "\r\nsoundstyle=" + SoundStyle + "\r\nsoundvol=" + SoundVolume +
                     "\r\nsoundadapt=" + (SoundAdapt ? "1" : "0") + "\r\nscene=" + Scene +
-                    "\r\nlivebg=" + (LiveBackground ? "1" : "0") + "\r\nlivefps=" + LiveFps + "\r\nlang=" + Language + "\r\n");
+                    "\r\nlivebg=" + (LiveBackground ? "1" : "0") + "\r\nlivefps=" + LiveFps + "\r\nengine=" + Engine + "\r\nlang=" + Language + "\r\n");
             }
             catch { }
         }
@@ -1286,8 +1291,9 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
         // banner's own layered window would swallow mouse clicks. The playground keeps them inside the card.
         public bool ExternalShadows;
         public ShadowSpec Shadow;
-        readonly bool capsule;
+        readonly bool capsule, engine;
         readonly bool gpu = Gpu.Ok;
+        FrameworkElement contentHost;   // the text and the icon
         // CPU fallback: everything baked into one bitmap
         readonly Image glassImage = new Image { Stretch = Stretch.Fill, IsHitTestVisible = false };
         // GPU path: a clipped host holding the (blurred) backdrop, with the lens shader on top, plus two shadow layers
@@ -1340,11 +1346,14 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
 
         static Brush Solid(Color c) { var b = new SolidColorBrush(c); b.Freeze(); return b; }
 
+        // engine: the card of a banner the GPU engine draws (see GpuEngine): no glass and no shadow of its own, only the
+        // text and the icon, which the engine gets as a picture (RenderContent)
         public GlassCard(Look look, double width, double minHeight, bool capsule,
-            string app, string title, string body, ImageSource icon)
+            string app, string title, string body, ImageSource icon, bool engine = false)
         {
             Look = look;
             this.capsule = capsule;
+            this.engine = engine;
             Width = width;
             MinHeight = minHeight;
             Background = Brushes.Transparent;
@@ -1352,7 +1361,8 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             System.Windows.Documents.TextElement.SetFontFamily(this, new FontFamily("Segoe UI Variable Text, Segoe UI"));
             Language = System.Windows.Markup.XmlLanguage.GetLanguage(L.Ietf);   // picks the fallback font for CJK text
 
-            if (gpu)
+            if (engine) { }
+            else if (gpu)
             {
                 lens = new LensEffect(look.Quality);
                 lensHost.Effect = lens;
@@ -1370,6 +1380,7 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             else Children.Add(glassImage);
 
             var content = new Grid { Margin = capsule ? new Thickness(22, 0, 22, 2) : new Thickness(16, 13, 16, 14) };
+            contentHost = content;
             bool notification = app.Length > 0;
             Brush white = Brushes.White;
             if (notification)
@@ -1520,7 +1531,7 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
         // out the same as before (same backdrop pixels, same constants) is left alone, so WPF has nothing to redraw.
         public void Bake(Cap cap, double scale)
         {
-            if (released) return;
+            if (released || engine) return;
             if (gpu) BakeGpu(cap, scale); else BakeCpu(cap, scale);
         }
 
@@ -1739,6 +1750,29 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
 
         static readonly Brush DarkText = Solid(Color.FromRgb(0x1D, 0x1D, 0x1F)), LightText = Solid(Color.FromRgb(0xFF, 0xFF, 0xFF));
 
+        // the text and the icon as premultiplied BGRA pixels, with light or dark text (the engine picks one by what is
+        // behind the card); the card must be laid out (LayoutNow) and not yet inside a window
+        public byte[] RenderContent(double scale, bool dark, out int w, out int h)
+        {
+            ApplyText(dark);
+            w = Math.Max(1, (int)Math.Round(Width * scale));
+            h = Math.Max(1, (int)Math.Round(CardH * scale));
+            UpdateLayout();
+            var rtb = new RenderTargetBitmap(w, h, 96 * scale, 96 * scale, PixelFormats.Pbgra32);
+            rtb.Render(this);
+            var px = new byte[w * h * 4];
+            rtb.CopyPixels(px, w * 4, 0);
+            return px;
+        }
+
+        // a card that only takes the mouse: nothing of it is drawn, but its area stays solid enough (1/255) for the
+        // layered window to send it clicks
+        public void Hollow()
+        {
+            if (contentHost != null) contentHost.Visibility = Visibility.Hidden;
+            Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
+        }
+
         // text follows what the glass ended up looking like, like Apple's adaptive light/dark glass
         void ApplyText(bool dark)
         {
@@ -1755,9 +1789,10 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
     sealed class Banner : Window
     {
         public const double CardW = 360, EdgeR = 14;
-        // Room around the card inside the window. The card draws nothing outside itself (its shadow has a window of
-        // its own), and a layered window is read back from the GPU in full on every frame, transparent pixels too.
-        public const double Pad = 2;
+        // Room around the card inside the window, for the close button over its corner. The card draws nothing outside
+        // itself (its shadow has a window of its own), and a layered window is read back from the GPU in full on
+        // every frame, transparent pixels too, so no more than that.
+        public const double Pad = 10;
         // GLASSBELL_CAPTURABLE=1 lets screenshots see the banners (a test setting; the glass still does not, see Snap)
         public static readonly bool Capturable = Environment.GetEnvironmentVariable("GLASSBELL_CAPTURABLE") == "1";
 
@@ -1768,6 +1803,21 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
         public readonly GlassCard Card;
         readonly TranslateTransform slide = new TranslateTransform();
         readonly Grid unit = new Grid();
+        readonly Border closeButton = new Border
+        {
+            Width = 20, Height = 20, CornerRadius = new CornerRadius(10), Opacity = 0, IsHitTestVisible = false, Cursor = Cursors.Hand,
+            HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top,
+            Margin = new Thickness(Pad - 7, Pad - 7, 0, 0),
+            Background = new SolidColorBrush(Color.FromArgb(0xEB, 0x3A, 0x3A, 0x3C)),
+            BorderBrush = new SolidColorBrush(Color.FromArgb(0x50, 0xFF, 0xFF, 0xFF)), BorderThickness = new Thickness(0.8)
+        };
+        public event Action<Banner, bool> Hover;   // the pointer came onto the banner (true) or left it
+
+        void ShowClose(bool on)
+        {
+            closeButton.IsHitTestVisible = on && !closing;
+            closeButton.BeginAnimation(OpacityProperty, new DoubleAnimation(on && !closing ? 1 : 0, TimeSpan.FromMilliseconds(on ? 120 : 180)));
+        }
         readonly DispatcherTimer timer = new DispatcherTimer();
         bool closing, sliding;
 
@@ -1793,10 +1843,16 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
         public bool Settled { get { return !closing && !sliding && !Shifting; } }
         public double CardHeight { get { return Card.CardH; } }
 
-        public Banner(GlassCard card, string appId, double seconds)
+        // drawn by the GPU engine (GpuEngine): this window is hollow and only takes the mouse, the engine draws the card
+        public readonly int GpuId;
+        public bool OnGpu { get { return GpuId > 0; } }
+        public Func<Banner> Redraw;   // the same banner again, drawn by WPF (should the engine stop)
+
+        public Banner(GlassCard card, string appId, double seconds, int gpuId = 0)
         {
             Card = card;
             AppId = appId;
+            GpuId = gpuId;
             WindowStyle = WindowStyle.None;
             AllowsTransparency = true;
             Background = Brushes.Transparent;
@@ -1812,19 +1868,41 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             // the slide and the fade move one cached bitmap of the card: without the cache every animation frame
             // ran the blur and the lens again (about a quarter of what a banner cost). A live glass changes on every
             // frame of a move anyway, so there the cache would only be one more copy.
-            if (!card.Look.LiveBackdrop) card.CacheMode = new BitmapCache { SnapsToDevicePixels = true };
+            if (OnGpu) card.Hollow();
+            else if (!card.Look.LiveBackdrop) card.CacheMode = new BitmapCache { SnapsToDevicePixels = true };
             unit.Children.Add(card);
+            unit.Children.Add(closeButton);
             unit.RenderTransform = slide;
             unit.Opacity = 0;
             var root = new Grid();
             root.Children.Add(unit);
             Content = root;
 
+            // the close button over the card's top left corner, like the one of macOS, shown while the pointer is on the
+            // banner; it closes the banner without opening what it points to (so does a right click)
+            closeButton.Child = new System.Windows.Shapes.Path
+            {
+                Data = Geometry.Parse("M 0,0 L 7,7 M 7,0 L 0,7"), Stroke = Brushes.White, StrokeThickness = 1.6,
+                StrokeStartLineCap = PenLineCap.Round, StrokeEndLineCap = PenLineCap.Round,
+                HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center
+            };
+            closeButton.ToolTip = L.T("banner.close");
+            System.Windows.Automation.AutomationProperties.SetName(closeButton, L.T("banner.close"));
+            closeButton.MouseLeftButtonUp += delegate(object s, MouseButtonEventArgs e) { e.Handled = true; Dismiss(); };
+
             timer.Interval = TimeSpan.FromSeconds(seconds);
             timer.Tick += delegate { Dismiss(); };
-            card.MouseEnter += delegate { timer.Stop(); };
-            card.MouseLeave += delegate
+            // the pointer on the card or on its close button keeps the banner
+            unit.MouseEnter += delegate
             {
+                timer.Stop();
+                ShowClose(true);
+                if (Hover != null) Hover(this, true);
+            };
+            unit.MouseLeave += delegate
+            {
+                ShowClose(false);
+                if (Hover != null) Hover(this, false);
                 if (closing) return;
                 timer.Interval = TimeSpan.FromSeconds(2);
                 timer.Start();
@@ -1876,7 +1954,23 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             if (Moving != null) Moving(this);
             slide.BeginAnimation(TranslateTransform.XProperty, anim);
             unit.BeginAnimation(OpacityProperty, Look.Anim(0, 1, 200, null));
+            if (OnGpu)
+            {
+                GpuEngine.Move(GpuId, 'x', off, 0, 340, GpuEngine.EaseOut, 0);
+                GpuEngine.Move(GpuId, 'o', 0, 1, 200, GpuEngine.Linear, 0);
+            }
             timer.Start();
+        }
+
+        // gone at once, without its slide out
+        public void Vanish()
+        {
+            if (closing) return;
+            closing = true;
+            timer.Stop();
+            if (Shadow != null) Shadow.Close();
+            if (Dismissing != null) Dismissing(this);
+            Close();
         }
 
         public void Dismiss()
@@ -1884,6 +1978,7 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             if (closing) return;
             closing = true;
             timer.Stop();
+            ShowClose(false);
             if (Shadow != null) Shadow.Dismiss(Look);
             if (Dismissing != null) Dismissing(this);
             var move = Look.Anim(0, SlideOff, 240, EasingMode.EaseIn);
@@ -1894,6 +1989,12 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             var fade = Look.Anim(1, 0, 200, null);
             fade.BeginTime = TimeSpan.FromMilliseconds(40);
             unit.BeginAnimation(OpacityProperty, fade);
+            if (OnGpu)
+            {
+                GpuEngine.Move(GpuId, 'x', double.NaN, SlideOff, 240, GpuEngine.EaseIn, 0);
+                GpuEngine.Move(GpuId, 'o', double.NaN, 0, 200, GpuEngine.Linear, 40);
+                GpuEngine.Remove(GpuId);
+            }
         }
     }
 
@@ -1968,6 +2069,79 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             var fade = look.Anim(1, 0, 200, null);
             fade.BeginTime = TimeSpan.FromMilliseconds(40);
             unit.BeginAnimation(OpacityProperty, fade);
+        }
+    }
+
+    // "Close all": a small capsule under the stack, there while the pointer is on one of two or more banners (or on
+    // the capsule itself). Its own window, so that it never takes room in a banner.
+    sealed class ClosePill : Window
+    {
+        [DllImport("user32.dll")] static extern bool SetWindowDisplayAffinity(IntPtr h, uint affinity);
+
+        readonly Border pill;
+        bool shown;
+        public event Action Clicked;
+        public event Action<bool> Hover;
+
+        public ClosePill()
+        {
+            WindowStyle = WindowStyle.None;
+            AllowsTransparency = true;
+            Background = Brushes.Transparent;
+            ShowInTaskbar = false;
+            ShowActivated = false;
+            Topmost = true;
+            ResizeMode = ResizeMode.NoResize;
+            SizeToContent = SizeToContent.WidthAndHeight;
+            FontFamily = new FontFamily("Segoe UI Variable Text, Segoe UI");
+            Language = System.Windows.Markup.XmlLanguage.GetLanguage(L.Ietf);
+            if (L.Rtl) FlowDirection = FlowDirection.RightToLeft;
+            pill = new Border
+            {
+                CornerRadius = new CornerRadius(14), Padding = new Thickness(14, 5, 14, 6), Margin = new Thickness(4), Cursor = Cursors.Hand,
+                Background = new SolidColorBrush(Color.FromArgb(0xEB, 0x2C, 0x2C, 0x2E)),
+                BorderBrush = new SolidColorBrush(Color.FromArgb(0x50, 0xFF, 0xFF, 0xFF)), BorderThickness = new Thickness(0.8),
+                Child = new TextBlock { Text = L.T("banner.closeAll"), Foreground = Brushes.White, FontSize = 12.5, FontWeight = FontWeights.SemiBold }
+            };
+            System.Windows.Automation.AutomationProperties.SetName(pill, L.T("banner.closeAll"));
+            pill.MouseEnter += delegate { pill.Background = new SolidColorBrush(Color.FromArgb(0xF2, 0x48, 0x48, 0x4A)); if (Hover != null) Hover(true); };
+            pill.MouseLeave += delegate { pill.Background = new SolidColorBrush(Color.FromArgb(0xEB, 0x2C, 0x2C, 0x2E)); if (Hover != null) Hover(false); };
+            pill.MouseLeftButtonUp += delegate { if (Clicked != null) Clicked(); };
+            Content = pill;
+            Opacity = 0;
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+            IntPtr h = Banner.Passive(this, false);
+            if (!Banner.Capturable) SetWindowDisplayAffinity(h, 0x11);   // the glass of the banners must not see it
+        }
+
+        public bool Shown { get { return shown; } }
+
+        // centred under the card column, its top at y (DIP)
+        public void Place(double cardX, double y)
+        {
+            UpdateLayout();
+            Left = cardX + (Banner.CardW - ActualWidth) / 2;
+            Top = y;
+        }
+
+        public void Appear()
+        {
+            if (shown) return;
+            shown = true;
+            IsHitTestVisible = true;
+            BeginAnimation(OpacityProperty, new DoubleAnimation(1, TimeSpan.FromMilliseconds(140)));
+        }
+
+        public void Fade()
+        {
+            if (!shown) return;
+            shown = false;
+            IsHitTestVisible = false;
+            BeginAnimation(OpacityProperty, new DoubleAnimation(0, TimeSpan.FromMilliseconds(200)));
         }
     }
 
@@ -2353,6 +2527,11 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
         {
             this.app = app;
             ui = app.Dispatcher;
+            // the engine stopped while it drew banners: their windows are hollow, so WPF draws them again
+            GpuEngine.Stopped += delegate
+            {
+                ui.BeginInvoke(new Action(RedrawWithoutGpu));
+            };
         }
 
         public void Start()
@@ -2389,6 +2568,8 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             if (shownAny) return;
             try { Show("GlassBell", "Warm-up", "Drawn off-screen once at startup.", "", 0.4, null, true); }
             catch (Exception e) { Log.Write("warm-up: " + e.Message); }
+            // the GPU engine sets itself up meanwhile (device, shaders, window), so the first banner does not wait for it
+            if (Settings.Engine == "gpu") StartGpu(false);
         }
 
         public void Stop()
@@ -2421,6 +2602,7 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             if (msg == "\u0001quit") { ui.BeginInvoke(new Action(delegate { app.Shutdown(); })); return; }
             if (msg == "\u0001settings") { ui.BeginInvoke(new Action(OpenSettings)); return; }
             if (msg == "\u0001ping") return;
+            if (msg == "\u0001closeall") { ui.BeginInvoke(new Action(DismissAll)); return; }
             if (msg == "\u0001update") { ui.BeginInvoke(new Action(ApplyUpdate)); return; }
             if (msg == "\u0001stats") { ui.BeginInvoke(new Action(LogStats)); return; }
             string[] f = msg.Split(Program.Sep);
@@ -2685,6 +2867,11 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             var sw = Stopwatch.StartNew();
             if (!offscreen) shownAny = true;
             var look = Look.Current();
+            if (!offscreen && Settings.Engine == "gpu" && !GpuEngine.Failed)
+            {
+                var gb = ShowOnGpu(app, title, body, appId, seconds, logo, look, sw);
+                if (gb != null) return gb;
+            }
             var card = new GlassCard(look, Banner.CardW, 0, false, app, title, body, logo) { ExternalShadows = true };
             card.LayoutNow();
             var b = new Banner(card, appId, seconds);
@@ -2716,6 +2903,7 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             {
                 b.Dismissing += OnDismissing;
                 b.Activated2 += OnActivated;
+                b.Hover += OnHover;
                 b.Moving += delegate(Banner m) { LiveMove(m, CardAt(m)); };
             }
             long tWindow = 0;
@@ -2742,12 +2930,129 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             Relayout(b);
             b.Present();
             while (active.Count > 4) active[active.Count - 1].Dismiss();
+            RaiseStack();
             tWindow = sw.ElapsedMilliseconds - tBake;
-            if (look.Sound)
+            if (look.Sound && !redrawing)
                 b.ContentRendered += delegate { PlayChime(look); };   // once the banner is on screen, never before
 
             if (Live(b)) LiveStart();
             return b;
+        }
+
+        // ---- banners drawn by the GPU engine (Settings.Engine = "gpu") -----------------
+
+        // The engine draws the card (see GpuEngine); the WPF window is hollow and only takes the clicks and the hover.
+        // null when the engine cannot run here: then the banner is drawn as before.
+        // the column: from the shadow's room left of the cards to the right edge of the work area, in screen px
+        static bool StartGpu(bool wait)
+        {
+            double scale = Scale();
+            var wa = SystemParameters.WorkArea;
+            double cardX = CardX();
+            int x = (int)Math.Floor((cardX - GlassCard.ShadowPad) * scale), y = (int)Math.Floor(wa.Top * scale);
+            int w = (int)Math.Ceiling(wa.Right * scale) - x, h = (int)Math.Ceiling(wa.Bottom * scale) - y;
+            return GpuEngine.Start(x, y, w, h, scale, cardX, wait);
+        }
+
+        // the engine was picked in the settings: started now (in the background) rather than with the next banner.
+        // Banners already on the screen stay with the way that drew them.
+        public static void EngineChanged()
+        {
+            if (Settings.Engine == "gpu" && !GpuEngine.Failed) StartGpu(false);
+        }
+
+        Banner ShowOnGpu(string app, string title, string body, string appId, double seconds, ImageSource logo, Look look, Stopwatch sw)
+        {
+            double scale = Scale();
+            var wa = SystemParameters.WorkArea;
+            if (!StartGpu(true)) return null;
+            var card = new GlassCard(look, Banner.CardW, 0, false, app, title, body, logo, true);
+            card.LayoutNow();
+            int id = GpuEngine.Add(GpuSpec(card, look, scale), -10000);   // its place comes from Relayout
+            long tCard = sw.ElapsedMilliseconds;
+            var b = new Banner(card, appId, seconds, id);
+            b.Redraw = delegate { return Show(app, title, body, appId, seconds, logo, false); };
+            b.Left = wa.Right - b.Width;
+            b.Top = -10000;
+            b.Dismissing += OnDismissing;
+            b.Activated2 += OnActivated;
+            b.Hover += OnHover;
+            b.Show();
+            b.UpdateLayout();
+            active.Insert(0, b);
+            Relayout(b);
+            b.Present();
+            while (active.Count > 4) active[active.Count - 1].Dismiss();
+            RaiseStack();
+            if (File.Exists(TraceFlag)) Log.Write("show (gpu): card and its pictures " + tCard + " ms, window " + (sw.ElapsedMilliseconds - tCard) + " ms");
+            if (look.Sound) b.ContentRendered += delegate { PlayChime(look); };
+            return b;
+        }
+
+        // the engine has stopped: the banners it drew leave at once and come back drawn by WPF, the oldest first so the
+        // newest stays on top
+        bool redrawing;
+
+        void RedrawWithoutGpu()
+        {
+            var drawn = active.Where(x => x.OnGpu).ToList();
+            foreach (var b in drawn) b.Vanish();
+            redrawing = true;   // they chimed when they came
+            try
+            {
+                for (int i = drawn.Count - 1; i >= 0; i--)
+                {
+                    var old = drawn[i];
+                    if (old.Redraw == null) continue;
+                    var nb = old.Redraw();
+                    nb.Toast = old.Toast;
+                }
+            }
+            finally { redrawing = false; }
+            Log.Write("gpu engine: " + drawn.Count + " banner(s) drawn again by WPF");
+        }
+
+        // what the engine needs of a card: its pictures, and the lens and shadow of its look worked out as for WPF
+        static GpuCardSpec GpuSpec(GlassCard card, Look look, double scale)
+        {
+            int w, h;
+            var s = new GpuCardSpec();
+            s.Dark = card.RenderContent(scale, true, out w, out h);
+            s.Light = card.RenderContent(scale, false, out w, out h);
+            s.CardW = w;
+            s.CardH = h;
+            bool glass = look.Glass;
+            double rPx = card.RadiusPx(scale);
+            int m = glass ? Glass.Margin(look, scale, w, h) : 0;
+            double bezel, thick, strength;
+            Glass.Lens(look, scale, w, h, out bezel, out thick, out strength);
+            double k = glass ? look.K : 0, ll = Math.Sqrt(0.55 * 0.55 + 0.83 * 0.83);
+            s.Lens = new float[]
+            {
+                w + 2 * m, h + 2 * m, w, h,
+                m, (float)rPx, (float)bezel, glass ? (float)(strength * thick) : 0,
+                glass ? (float)look.DispersionK : 0, glass ? (float)(1 + 0.65 * k) : 1, glass ? (float)(0.025 + 0.045 * k) : 0, (float)k,
+                look.Tint.R / 255f, look.Tint.G / 255f, look.Tint.B / 255f, (float)look.TintAlpha,
+                (float)(-0.55 / ll), (float)(-0.83 / ll), (float)scale, glass ? 1 : 0
+            };
+            s.Margin = m;
+            s.Quality = look.Quality;
+            s.Sigma = glass ? (float)Glass.Sigma(look, scale) : 0;
+            s.RadiusPx = (float)rPx;
+            s.Inset = (float)scale;   // the WPF shadow is cast by the card inset by 1 DIP
+            s.BlurA = (float)(look.ShadowBlurDip * scale);
+            s.DepthA = (float)(look.ShadowDepthDip * scale);
+            s.OpA = (float)look.AmbientOpacity;
+            s.BlurB = (float)(Math.Max(3, look.ShadowBlurDip * 0.12) * scale);
+            s.DepthB = (float)(look.ShadowDepthDip * 0.3 * scale);
+            s.OpB = (float)look.ContactOpacity;
+            s.TwoShadows = look.TwoShadows;
+            s.Live = look.LiveBackdrop && glass;
+            s.Glass = glass;
+            s.LumTint = (float)look.LumTint;
+            s.TintAlpha = (float)look.TintAlpha;
+            s.K = (float)k;
+            return s;
         }
 
         // ---- live backdrop (Settings.LiveBackground) --------------------------------
@@ -2766,7 +3071,7 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
         int liveCount;
         double liveMs, liveSnapMs, liveDue;
 
-        static bool Live(Banner b) { return b.Look.LiveBackdrop && b.Look.Glass; }
+        static bool Live(Banner b) { return b.Look.LiveBackdrop && b.Look.Glass && !b.OnGpu; }   // the engine has its own
 
         // where the card of a banner is (screen DIP), now and at the end of its current moves
         static Point CardAt(Banner b) { return new Point(b.Left + Banner.Pad + b.SlideX, b.Top + Banner.Pad); }
@@ -2933,10 +3238,119 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             ThreadPool.QueueUserWorkItem(delegate { Chime.Play(style, vol, adapt); });
         }
 
+        // ---- on top of everything ----
+
+        // Banners are topmost windows, but that alone does not keep them on top: another topmost window that is
+        // activated goes over them, and the engine's window, hidden and shown again between bursts, was found hours
+        // later under ordinary windows (its card drawn, but behind the apps). So with every banner and then once a
+        // second while there are any, the whole stack is put on top again: each banner with its shadow just under it
+        // (the oldest first, so the newest ends on top), the capsule, and the engine's window right under the lowest
+        // banner, so the round x and the capsule stay over its cards.
+        [DllImport("user32.dll")] static extern bool SetWindowPos(IntPtr h, IntPtr after, int x, int y, int w, int cy, uint flags);
+        DispatcherTimer raiseTimer;
+
+        void RaiseStack()
+        {
+            if (active.Count == 0) { if (raiseTimer != null) raiseTimer.Stop(); return; }
+            const uint flags = 0x13;   // NOSIZE | NOMOVE | NOACTIVATE
+            IntPtr top = (IntPtr)(-1), lowest = IntPtr.Zero;
+            for (int i = active.Count - 1; i >= 0; i--)
+            {
+                var b = active[i];
+                if (b.Shadow != null) SetWindowPos(new WindowInteropHelper(b.Shadow).Handle, top, 0, 0, 0, 0, flags);
+                IntPtr h = new WindowInteropHelper(b).Handle;
+                SetWindowPos(h, top, 0, 0, 0, 0, flags);
+                if (lowest == IntPtr.Zero) lowest = h;
+            }
+            if (pill != null && pill.Shown) SetWindowPos(new WindowInteropHelper(pill).Handle, top, 0, 0, 0, 0, flags);
+            if (active.Any(x => x.OnGpu)) GpuEngine.PlaceBelow(lowest);
+            if (raiseTimer == null)
+            {
+                raiseTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+                raiseTimer.Tick += delegate { RaiseStack(); };
+            }
+            if (!raiseTimer.IsEnabled) raiseTimer.Start();
+        }
+
         void OnDismissing(Banner b)
         {
             active.Remove(b);
+            hovered.Remove(b);
             Relayout(null);
+            UpdatePill();
+        }
+
+        // ---- closing banners: one by one (the close button of each), all at once (the capsule, the tray menu) ----
+
+        ClosePill pill;
+        readonly HashSet<Banner> hovered = new HashSet<Banner>();
+        bool pillHovered;
+        DispatcherTimer pillTimer;
+
+        void OnHover(Banner b, bool over)
+        {
+            if (over) hovered.Add(b); else hovered.Remove(b);
+            UpdatePill();
+        }
+
+        void UpdatePill()
+        {
+            bool want = active.Count >= 2 && (hovered.Count > 0 || pillHovered);
+            if (want)
+            {
+                if (pillTimer != null) pillTimer.Stop();
+                if (pill == null)
+                {
+                    pill = new ClosePill { Left = -10000, Top = -10000 };
+                    pill.Clicked += DismissAll;
+                    pill.Hover += delegate(bool over) { pillHovered = over; UpdatePill(); };
+                    pill.Show();
+                }
+                PlacePill();
+                pill.Appear();
+                RaiseStack();
+                return;
+            }
+            if (pill == null || !pill.Shown) return;
+            // a moment to get from a banner down to the capsule; with fewer than two banners it goes at once
+            if (pillTimer == null)
+            {
+                pillTimer = new DispatcherTimer();
+                pillTimer.Tick += delegate
+                {
+                    pillTimer.Stop();
+                    if (active.Count < 2 || (hovered.Count == 0 && !pillHovered)) pill.Fade();
+                };
+            }
+            pillTimer.Stop();
+            pillTimer.Interval = TimeSpan.FromMilliseconds(active.Count >= 2 ? 700 : 1);
+            pillTimer.Start();
+        }
+
+        // under the lowest banner, where the stack is once its shifts are done
+        void PlacePill()
+        {
+            if (pill == null) return;
+            double y = SystemParameters.WorkArea.Top + 12;
+            foreach (var b in active) y += b.CardHeight + 10;
+            pill.Place(CardX(), y - 4);
+        }
+
+        public void DismissAll()
+        {
+            var open = active.ToList();
+            hovered.Clear();
+            pillHovered = false;
+            if (pill != null) pill.Fade();
+            // one after the other, the top one first, so they leave as a wave rather than all at once
+            for (int i = 0; i < open.Count; i++)
+            {
+                var b = open[i];
+                if (i == 0) { b.Dismiss(); continue; }
+                var t = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(45 * i) };
+                t.Tick += delegate { t.Stop(); b.Dismiss(); };
+                t.Start();
+            }
         }
 
         [DllImport("user32.dll")] static extern bool AllowSetForegroundWindow(int pid);
@@ -2984,6 +3398,7 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
                 {
                     b.Top = top;
                     if (b.Shadow != null) b.Shadow.Top = shadowTop;
+                    if (b.OnGpu) GpuEngine.Set(b.GpuId, 'y', slot);
                 }
                 else
                 {
@@ -2996,6 +3411,7 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
                         moved.Shifting = false;
                         // the glass shows what is behind its new place (the low level keeps the old picture; a live
                         // glass has followed all the way and is refreshed by OnLiveFrame)
+                        if (moved.OnGpu) { if (!moved.Look.LiveBackdrop) GpuEngine.Refresh(); return; }   // the engine captures again
                         if (!moved.IsClosing && moved.Look.Glass && moved.Look.RebakeOnShift && !Live(moved) && Math.Abs(moved.BakedSlotY - slot) > 1)
                             BakeOnScreen(moved, slot);
                     };
@@ -3003,11 +3419,13 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
                     b.TargetTop = top;
                     b.BeginAnimation(Window.TopProperty, anim);
                     LiveMove(b, from);
+                    if (b.OnGpu) GpuEngine.Move(b.GpuId, 'y', double.NaN, slot, 260, GpuEngine.EaseOut, 0);
                     if (b.Shadow != null)
                         b.Shadow.BeginAnimation(Window.TopProperty, b.Look.Anim(null, shadowTop, 260, EasingMode.EaseOut));
                 }
                 y += b.CardHeight + 10;
             }
+            if (pill != null && pill.Shown) PlacePill();   // the capsule stays under the stack
         }
 
         // ---- settings + tray -------------------------------------------------------
@@ -3140,6 +3558,10 @@ float4 main(float2 uv : TEXCOORD0) : COLOR
             if (L.Rtl) menu.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             menu.Items.Add(L.T("tray.settings"), null, delegate { OpenSettings(); });
             menu.Items.Add(L.T("tray.test"), null, delegate { Preview(); });
+            var closeAll = new System.Windows.Forms.ToolStripMenuItem(L.T("tray.closeAll"));
+            closeAll.Click += delegate { DismissAll(); };
+            menu.Opening += delegate { closeAll.Enabled = active.Count > 0; };
+            menu.Items.Add(closeAll);
             menu.Items.Add(new System.Windows.Forms.ToolStripSeparator());
             var auto = new System.Windows.Forms.ToolStripMenuItem(L.T("tray.autostart"));
             auto.Click += delegate { Startup.Set(!Startup.Enabled); };

@@ -3,6 +3,8 @@
 # ---- banners ----
 banner.app = Powiadomienie
 banner.now = teraz
+banner.close = Zamknij
+banner.closeAll = Zamknij wszystkie
 preview.title = Podgląd
 preview.body = Tak wygląda baner przy obecnych ustawieniach.
 test.title1 = Wszystko działa
@@ -13,6 +15,7 @@ test.body2 = Jesteś tam? Zerknij, proszę, na to, co ci wysłałem – to dług
 # ---- tray icon menu ----
 tray.settings = Ustawienia…
 tray.test = Powiadomienie testowe
+tray.closeAll = Zamknij wszystkie powiadomienia
 tray.autostart = Uruchamiaj z systemem Windows
 tray.exit = Zakończ
 
@@ -56,6 +59,12 @@ settings.live = Tło na żywo
 settings.liveHint = Szkło stale dopasowuje się do tego, co jest za nim, nawet gdy baner się przesuwa. Zużywa więcej energii.
 settings.liveFps = Klatki na sekundę
 settings.liveFpsHint = Im wyżej, tym płynniej, ale tym większe obciążenie procesora.
+settings.engine = Renderowanie
+engine.gpu = Karta graficzna
+engine.classic = Klasyczny
+settings.engineHint = „Karta graficzna” nadąża za ekranem z jego własną częstotliwością odświeżania i prawie nie obciąża procesora. „Klasyczny” to dotychczasowy sposób, na wypadek problemów z kartą graficzną.
+settings.liveFpsGpu = Z kartą graficzną szkło podąża za ekranem z jego częstotliwością odświeżania.
+settings.engineFailed = Ta karta graficzna nie potrafi tak rysować powiadomień, więc używany jest sposób klasyczny.
 settings.color = Kolor
 color.auto = Automatyczny (według motywu systemu Windows)
 color.autoName = Automatyczny – według motywu systemu Windows

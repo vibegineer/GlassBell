@@ -41,7 +41,7 @@ function Compile([string]$out, [string[]]$extra, [string[]]$sources) {
 $app = Join-Path $bin 'GlassBell.exe'
 Compile $app (@("/win32icon:$ico", "/resource:$ico,GlassBell.ico") + $langs) @(
     "$here\src\GlassBell.cs", "$here\src\Chime.cs", "$here\src\SettingsUi.cs",
-    "$here\src\Lang.cs", "$here\src\Sandbox.cs", "$here\src\AssemblyInfo.cs")
+    "$here\src\Lang.cs", "$here\src\Sandbox.cs", "$here\src\Dx.cs", "$here\src\GpuEngine.cs", "$here\src\AssemblyInfo.cs")
 
 # the installer carries the program, the icon, the license and the translations inside it
 Compile (Join-Path $dist 'GlassBell-Setup.exe') (@(

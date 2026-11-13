@@ -3,6 +3,8 @@
 # ---- banners ----
 banner.app = सूचना
 banner.now = अभी
+banner.close = बंद करें
+banner.closeAll = सभी बंद करें
 preview.title = पूर्वावलोकन
 preview.body = आपकी सेटिंग्स के साथ बैनर ऐसा दिखता है।
 test.title1 = यह काम कर रहा है
@@ -13,6 +15,7 @@ test.body2 = अरे, हो क्या? प्लीज़ ज़रा द
 # ---- tray icon menu ----
 tray.settings = सेटिंग्स…
 tray.test = परीक्षण सूचना
+tray.closeAll = सभी सूचनाएँ बंद करें
 tray.autostart = Windows के साथ प्रारंभ करें
 tray.exit = बाहर निकलें
 
@@ -56,6 +59,12 @@ settings.live = लाइव पृष्ठभूमि
 settings.liveHint = बैनर के चलते समय भी काँच अपने पीछे की चीज़ों के अनुसार लगातार ढलता रहता है। अधिक पावर का उपयोग करता है।
 settings.liveFps = फ़्रेम प्रति सेकंड
 settings.liveFpsHint = जितना ज़्यादा, उतना सहज, लेकिन प्रोसेसर पर भार भी ज़्यादा।
+settings.engine = रेंडरिंग
+engine.gpu = ग्राफ़िक्स कार्ड
+engine.classic = क्लासिक
+settings.engineHint = “ग्राफ़िक्स कार्ड” स्क्रीन की अपनी रिफ़्रेश दर पर साथ चलता है और प्रोसेसर का लगभग उपयोग नहीं करता। “क्लासिक” पहले वाला तरीका है, अगर ग्राफ़िक्स कार्ड में समस्या हो।
+settings.liveFpsGpu = ग्राफ़िक्स कार्ड के साथ, ग्लास स्क्रीन की अपनी रिफ़्रेश दर पर उसका अनुसरण करता है।
+settings.engineFailed = यह ग्राफ़िक्स कार्ड बैनर इस तरह नहीं बना सकता, इसलिए क्लासिक तरीका उपयोग हो रहा है।
 settings.color = रंग
 color.auto = स्वचालित (Windows थीम के अनुसार)
 color.autoName = स्वचालित — Windows थीम के अनुसार

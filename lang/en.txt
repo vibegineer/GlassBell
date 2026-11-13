@@ -8,6 +8,9 @@
 banner.app = Notification
 # the time label at the top right of every banner (max 10)
 banner.now = now
+# the round button over the corner of a banner (its tooltip), and the capsule under two or more banners (max 18)
+banner.close = Close
+banner.closeAll = Close all
 preview.title = Preview
 preview.body = This is how a banner looks with your settings.
 # two sample banners for "GlassBell.exe --test"; the second is a chat message that must be too long for two lines
@@ -19,6 +22,7 @@ test.body2 = Are you there? Please take a look at what I sent — it's a long me
 # ---- tray icon menu ----
 tray.settings = Settings…
 tray.test = Test notification
+tray.closeAll = Close all notifications
 tray.autostart = Start with Windows
 tray.exit = Exit
 
@@ -72,6 +76,14 @@ settings.liveHint = The glass keeps adjusting to what is behind it, even while t
 # under the live background switch: a label (max 22) next to the four rates 10, 20, 30, 60, and a note under them
 settings.liveFps = Frames per second
 settings.liveFpsHint = Higher is smoother but uses more processor time.
+# the way the banners are drawn: two segments (max 14 each), a note under them, the note of the frame rate row while
+# the graphics card draws, and what is said when this graphics card cannot
+settings.engine = Rendering
+engine.gpu = Graphics card
+engine.classic = Classic
+settings.engineHint = "Graphics card" keeps up with the screen at its own refresh rate and barely uses the processor. "Classic" is the earlier way, in case the graphics card has trouble.
+settings.liveFpsGpu = With the graphics card, the glass follows the screen at its own refresh rate.
+settings.engineFailed = This graphics card cannot draw the banners this way, so the classic way is used.
 settings.color = Color
 # tooltip of the first color swatch, and the color heading while it is picked
 color.auto = Auto (follows the Windows theme)

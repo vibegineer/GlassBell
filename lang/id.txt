@@ -3,6 +3,8 @@
 # ---- banners ----
 banner.app = Pemberitahuan
 banner.now = baru saja
+banner.close = Tutup
+banner.closeAll = Tutup semua
 preview.title = Pratinjau
 preview.body = Beginilah tampilan banner dengan pengaturan Anda.
 test.title1 = Sudah berfungsi
@@ -13,6 +15,7 @@ test.body2 = Kamu lagi di situ? Tolong lihat yang barusan aku kirim, ya — pesa
 # ---- tray icon menu ----
 tray.settings = Pengaturan…
 tray.test = Pemberitahuan uji
+tray.closeAll = Tutup semua pemberitahuan
 tray.autostart = Mulai bersama Windows
 tray.exit = Keluar
 
@@ -56,6 +59,12 @@ settings.live = Latar belakang dinamis
 settings.liveHint = Kaca terus menyesuaikan diri dengan apa yang ada di belakangnya, bahkan saat banner bergerak. Menggunakan lebih banyak daya.
 settings.liveFps = Bingkai per detik
 settings.liveFpsHint = Makin tinggi makin halus, tetapi makin membebani prosesor.
+settings.engine = Perenderan
+engine.gpu = Kartu grafis
+engine.classic = Klasik
+settings.engineHint = “Kartu grafis” mengikuti layar pada laju segarnya sendiri dan hampir tidak memakai prosesor. “Klasik” adalah cara sebelumnya, jika kartu grafis bermasalah.
+settings.liveFpsGpu = Dengan kartu grafis, kaca mengikuti layar pada laju segarnya sendiri.
+settings.engineFailed = Kartu grafis ini tidak dapat menggambar banner dengan cara ini, jadi cara klasik yang digunakan.
 settings.color = Warna
 color.auto = Otomatis (mengikuti tema Windows)
 color.autoName = Otomatis — mengikuti tema Windows
